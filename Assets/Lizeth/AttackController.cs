@@ -56,7 +56,7 @@ public class AttackController : MonoBehaviour
         while (zombiesIndex < zombiesObjects.Length && enemiesIndex < enemiesObjects.Length)
         {
             GameObject zombieObject = zombiesObjects[zombiesIndex];
-            GameObject enemyObject = zombiesObjects[zombiesIndex];
+            GameObject enemyObject = enemiesObjects[enemiesIndex];
             initialZombieObjectPosition = zombieObject.transform.position;
             initialEnemyObjectPosition = enemyObject.transform.position;
 
@@ -68,8 +68,6 @@ public class AttackController : MonoBehaviour
 
                 // Move the good object towards the bad object and perform the attack
                 yield return StartCoroutine(Attack(zombieObject, enemyObject));
-
-                Debug.Log("Good object attacked!");
 
                 // Enable movement of the good object again
                 enemyObject.GetComponent<Rigidbody>().isKinematic = false;
@@ -99,7 +97,7 @@ public class AttackController : MonoBehaviour
                 enemiesIndex++;
 
                 // Retreat the bad object
-                yield return StartCoroutine(Retreat(enemyObject, initialZombieObjectPosition));
+                yield return StartCoroutine(Retreat(enemyObject, initialEnemyObjectPosition));
 
                 attackZombieObject = true;
             }
@@ -114,14 +112,20 @@ public class AttackController : MonoBehaviour
 
     private IEnumerator Attack(GameObject attacker, GameObject target)
     {
+        Debug.Log("atacar!1 "+ attacker);
+        Debug.Log("atacar!2 " + target);
+
         Vector3 direction = target.transform.position - attacker.transform.position;
         direction.Normalize();
 
         float distance = Vector3.Distance(attacker.transform.position, target.transform.position);
-        float movementSpeed = 5f; // Adjust the movement speed as needed
+        float movementSpeed = 0.5f; // Adjust the movement speed as needed
+
+        
 
         while (distance > 0f)
         {
+            Debug.Log("distacia!1 " + distance);
             attacker.transform.position = Vector3.MoveTowards(attacker.transform.position, target.transform.position, movementSpeed * Time.deltaTime);
             distance = Vector3.Distance(attacker.transform.position, target.transform.position);
             // Perform the attack
