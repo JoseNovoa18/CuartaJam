@@ -11,6 +11,7 @@ public class SpawnCharacter : MonoBehaviour
 
     public void SpawnCharacter1()
     {
+        Debug.Log("Hola");
         Vector3 randomSpawnPosition = GetRandomSpawnPosition();
         Instantiate(prefabToSpawn1, randomSpawnPosition, Quaternion.identity);
     }
@@ -35,6 +36,6 @@ public class SpawnCharacter : MonoBehaviour
 
     private Vector3 GetRandomSpawnPosition()
     {
-        return new Vector3(Random.Range(-2f, 0f), 1f, Random.Range(-2f, 3f));
+        return new Vector3(Random.Range(-3f, 1f), 2f, Random.Range(-2f, 3f));
     }
 }

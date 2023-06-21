@@ -13,12 +13,12 @@ public class SceneController : MonoBehaviour
 
     public void SelectCharactersScene()
     {
-        SceneManager.LoadScene("SelectCharacters");
+        SceneManager.LoadScene("LevelPrototype");
     }
 
     public void TestGameScene()
     {
-        SceneManager.LoadScene("TestSceneGame");
+        SceneManager.LoadScene("LevelPrototype");
     }
 
     public void Quit()

@@ -11,10 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/JoseScenes/MainMenu.unity
     guid: ac86f0ea4e2c5f94aa892361bae8aff2
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/JoseScenes/SelectCharacters.unity
     guid: c4f81fb9d26f379439e1679fa59d75c0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/JoseScenes/TestSceneGame.unity
     guid: a2c822c5637489540920c907ffe9ce48
+  - enabled: 1
+    path: Assets/Scenes/JoseScenes/LevelPrototype.unity
+    guid: 472a49a454f8fca45b2aba3019321d89
   m_configObjects: {}
