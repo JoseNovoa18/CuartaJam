@@ -1136,7 +1136,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 948722760}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd4cdcaba60b75b43bf3749a17d76993, type: 3}
+  m_Script: {fileID: 11500000, guid: eeda2f2e13b87b34f97b9c7315f33143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1029071373
@@ -1359,7 +1359,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 948722765}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: Quit
         m_Mode: 1
@@ -2086,8 +2086,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 948722765}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: ChangeGameScene
+        m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
+        m_MethodName: TestGameScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

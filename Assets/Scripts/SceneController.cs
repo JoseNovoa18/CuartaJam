@@ -3,11 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
+
+public class SceneController : MonoBehaviour
 {
-    public void ChangeGameScene()
+    public void MainMenuScene()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void SelectCharactersScene()
     {
         SceneManager.LoadScene("SelectCharacters");
+    }
+
+    public void TestGameScene()
+    {
+        SceneManager.LoadScene("TestSceneGame");
     }
 
     public void Quit()
