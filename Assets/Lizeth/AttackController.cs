@@ -1,17 +1,20 @@
+using Mono.Cecil.Cil;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
+using Random = UnityEngine.Random;
 
 public class AttackController : MonoBehaviour
 {
     public GameObject[] enemiesObjects; // Array of zombies
     public GameObject[] zombiesObjects; // Array of enemies
     private Rigidbody rb;
-    private bool attackInProgress = false; // Control if an atrack is in progress
-    //public GameObject zombieObjectPrefab;
-    //public Vector3 specificPosition;
+   
+    public GameObject zombieObjectPrefab;
+    public Vector3 specificPosition;
 
     Vector3 initialZombieObjectPosition;
     Vector3 initialEnemyObjectPosition;
@@ -24,39 +27,90 @@ public class AttackController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>(); // Get the Rigidbody component of the object
         rb.constraints = RigidbodyConstraints.FreezeRotation; // Apply rotation constraint
+
+        StartCoroutine(PerformAttacks());
+
+        // Suscribirse al evento OnObjectDestroyed de cada objeto enemigo
+        foreach (var enemyObject in enemiesObjects)
+        {
+            Health lifeComponent = enemyObject.GetComponent<Health>();
+            if (lifeComponent != null)
+            {
+                lifeComponent.OnObjectDestroyed += RemoveDestroyedObject;
+            }
+        }
+
+        // Suscribirse al evento OnObjectDestroyed de cada objeto zombie
+        foreach (var zombieObject in zombiesObjects)
+        {
+            Health lifeComponent = zombieObject.GetComponent<Health>();
+            if (lifeComponent != null)
+            {
+                lifeComponent.OnObjectDestroyed += RemoveDestroyedObject;
+            }
+        }
+    }
+
+    private void RemoveDestroyedObject(GameObject destroyedObject)
+    {
+        // Eliminar el objeto del arreglo enemiesObjects
+        if (ArrayContainsGameObject(enemiesObjects, destroyedObject))
+        {
+            enemiesObjects = RemoveGameObjectFromArray(enemiesObjects, destroyedObject);
+        }
+
+        // Eliminar el objeto del arreglo zombiesObjects
+        if (ArrayContainsGameObject(zombiesObjects, destroyedObject))
+        {
+            zombiesObjects = RemoveGameObjectFromArray(zombiesObjects, destroyedObject);
+        }
+    }
+
+    private bool ArrayContainsGameObject(GameObject[] array, GameObject gameObject)
+    {
+        foreach (var obj in array)
+        {
+            if (obj == gameObject)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private GameObject[] RemoveGameObjectFromArray(GameObject[] array, GameObject gameObject)
+    {
+        List<GameObject> list = new List<GameObject>(array);
+        list.Remove(gameObject);
+        return list.ToArray();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !attackInProgress) // Check if there is no attack in progress
-        {
-            StartCoroutine(PerformAttacks());
-        }
+        
 
         if (Input.GetKeyDown(KeyCode.A)) // Check if the A key is pressed
         {
-            /*GameObject zombieObject = Instantiate(zombieObjectPrefab, specificPosition, Quaternion.identity);
+            GameObject zombieObject = Instantiate(zombieObjectPrefab, specificPosition, Quaternion.identity);
             Rigidbody zombieObjectRigidbody = zombieObject.GetComponent<Rigidbody>();
 
             if (zombieObjectRigidbody != null)
             {
                 zombieObjectRigidbody.isKinematic = true;
-            }*/
+            }
 
         }
     }
 
     private IEnumerator PerformAttacks()
     {
-        attackInProgress = true;
 
-        int zombiesIndex = 0; // Index to iterate through the good objects
-        int enemiesIndex = 0; // Index to iterate through the bad objects
-
-        while (zombiesIndex < zombiesObjects.Length && enemiesIndex < enemiesObjects.Length)
+        while (zombiesObjects.Length > 0 && enemiesObjects.Length > 0)
         {
+            int zombiesIndex = Random.Range(0, zombiesObjects.Length-1); 
+            int enemiesIndex = Random.Range(0, enemiesObjects.Length-1);
             GameObject zombieObject = zombiesObjects[zombiesIndex];
-            GameObject enemyObject = enemiesObjects[enemiesIndex];
+            GameObject enemyObject = enemiesObjects[zombiesIndex];
             initialZombieObjectPosition = zombieObject.transform.position;
             initialEnemyObjectPosition = enemyObject.transform.position;
 
@@ -72,8 +126,7 @@ public class AttackController : MonoBehaviour
                 // Enable movement of the good object again
                 enemyObject.GetComponent<Rigidbody>().isKinematic = false;
 
-                // Increment the index of good objects
-                zombiesIndex++;
+                yield return StartCoroutine(Health(enemyObject));
 
                 // Retreat the good object
                 yield return StartCoroutine(Retreat(zombieObject, initialZombieObjectPosition));
@@ -88,13 +141,10 @@ public class AttackController : MonoBehaviour
                 // Move the bad object towards the good object and perform the attack
                 yield return StartCoroutine(Attack(enemyObject, zombieObject));
 
-                Debug.Log("Bad object attacked!");
-
                 // Enable movement of the bad object again
                 zombieObject.GetComponent<Rigidbody>().isKinematic = false;
 
-                // Increment the index of bad objects
-                enemiesIndex++;
+                yield return StartCoroutine(Health(zombieObject));
 
                 // Retreat the bad object
                 yield return StartCoroutine(Retreat(enemyObject, initialEnemyObjectPosition));
@@ -103,29 +153,25 @@ public class AttackController : MonoBehaviour
             }
 
             // Wait for a short moment before continuing with the next attack
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
         }
 
         attackZombieObject = true;
-        attackInProgress = false;
+       
     }
 
     private IEnumerator Attack(GameObject attacker, GameObject target)
     {
-        Debug.Log("atacar!1 "+ attacker);
-        Debug.Log("atacar!2 " + target);
-
         Vector3 direction = target.transform.position - attacker.transform.position;
         direction.Normalize();
 
         float distance = Vector3.Distance(attacker.transform.position, target.transform.position);
-        float movementSpeed = 0.5f; // Adjust the movement speed as needed
+        float movementSpeed = 10f; // Adjust the movement speed as needed
 
-        
+
 
         while (distance > 0f)
         {
-            Debug.Log("distacia!1 " + distance);
             attacker.transform.position = Vector3.MoveTowards(attacker.transform.position, target.transform.position, movementSpeed * Time.deltaTime);
             distance = Vector3.Distance(attacker.transform.position, target.transform.position);
             // Perform the attack
@@ -135,10 +181,24 @@ public class AttackController : MonoBehaviour
 
     private IEnumerator Retreat(GameObject obj, Vector3 initialPosition)
     {
-        float movementSpeed = 5f; // Adjust the movement speed as needed
-        obj.transform.position = Vector3.MoveTowards(obj.transform.position, initialPosition, movementSpeed * Time.deltaTime);
-        obj.transform.position = initialPosition;
+        float movementSpeed = 5f; // Ajusta la velocidad de movimiento según tus necesidades
+
+        while (obj.transform.position != initialPosition)
+        {
+            obj.transform.position = Vector3.MoveTowards(obj.transform.position, initialPosition, movementSpeed * Time.deltaTime);
+            yield return null;
+        }
+    }
+
+    private IEnumerator Health(GameObject obj)
+    {
+        // Reduce the life of the target object
+        Health lifeController = obj.GetComponent<Health>();
+        if (lifeController != null)
+        {
+            lifeController.ReduceHealth(10); // Adjust the amount of life to reduce according to your needs
+        }
         yield return null;
     }
-}
 
+}
