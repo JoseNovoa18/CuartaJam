@@ -11,7 +11,6 @@ public class SpawnCharacter : MonoBehaviour
 
     public void SpawnCharacter1()
     {
-        Debug.Log("Hola");
         Vector3 randomSpawnPosition = GetRandomSpawnPosition();
         Instantiate(prefabToSpawn1, randomSpawnPosition, Quaternion.identity);
     }
