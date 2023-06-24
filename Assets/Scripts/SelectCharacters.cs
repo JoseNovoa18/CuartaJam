@@ -40,7 +40,7 @@ public class SelectCharacters : MonoBehaviour
     {
         if (brains >= characterBrains1)
         {
-            Vector3 randomSpawnPosition = GetRandomSpawnPosition();
+            Vector3 randomSpawnPosition = new Vector3(Random.Range(-0.4f, -3.5f), 1.65f, -1.72f);
             GameObject newCharacter = Instantiate(prefabToSpawn1, randomSpawnPosition, Quaternion.identity);
             spawnedCharacters1.Add(newCharacter);
             brains -= characterBrains1;
@@ -52,7 +52,7 @@ public class SelectCharacters : MonoBehaviour
     {
         if (brains >= characterBrains2)
         {
-            Vector3 randomSpawnPosition = GetRandomSpawnPosition();
+            Vector3 randomSpawnPosition = new Vector3(Random.Range(-0.4f, -3.5f), 1.65f, -0.21f);
             GameObject newCharacter = Instantiate(prefabToSpawn2, randomSpawnPosition, Quaternion.identity);
             spawnedCharacters2.Add(newCharacter);
             brains -= characterBrains2;
@@ -76,12 +76,18 @@ public class SelectCharacters : MonoBehaviour
     {
         if (brains >= characterBrains4)
         {
-            Vector3 randomSpawnPosition = new Vector3(Random.Range(-0.4f, -3.5f), 1.65f, Random.Range(-3.4f, 1.8f));
+            Vector3 randomSpawnPosition = new Vector3(Random.Range(-0.4f, -3.5f), 1.65f, 1f);
             GameObject newCharacter = Instantiate(prefabToSpawn4, randomSpawnPosition, Quaternion.identity);
             spawnedCharacters4.Add(newCharacter);
             brains -= characterBrains4;
             UpdateBrainsText();
         }
+    }
+
+    private Vector3 GetRandomSpawnPosition()
+    {
+        return new Vector3(Random.Range(-0.4f, -3.5f), 1.65f, 2.5f);
+        //return new Vector3(Random.Range(-0.4f, -3.5f), 0.15f, Random.Range(-3.4f, 1.8f));
     }
 
     public void DestroyCharacter1()
@@ -130,11 +136,7 @@ public class SelectCharacters : MonoBehaviour
             brains += characterBrains4;
             UpdateBrainsText();
         }
-    }
-    private Vector3 GetRandomSpawnPosition()
-    {
-        return new Vector3(Random.Range(-0.4f, -3.5f), 0.15f, Random.Range(-3.4f, 1.8f));
-    }
+    }    
 }
 
 

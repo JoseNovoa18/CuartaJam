@@ -23969,13 +23969,13 @@ MonoBehaviour:
   characterBrains2: 15
   characterBrains3: 20
   characterBrains4: 25
-  prefabToSpawn1: {fileID: 919132149155446097, guid: 388b09dbaeb300942abad83b56413a0a,
+  prefabToSpawn1: {fileID: 6137846846591422395, guid: 42f0e46f79f2d694290b079f044692a7,
     type: 3}
-  prefabToSpawn2: {fileID: 919132149155446097, guid: 75c588ef696659f42b5717a0a38cd55a,
+  prefabToSpawn2: {fileID: 6744716883098536671, guid: 9d404748e754543448a757e24e708048,
     type: 3}
-  prefabToSpawn3: {fileID: 919132149155446097, guid: 1fad7e53e56c0304b8c14ab7fcbe594e,
+  prefabToSpawn3: {fileID: 1446759505701584986, guid: dde9b7d64208c824f87b77df1a823b6d,
     type: 3}
-  prefabToSpawn4: {fileID: 919132149155446097, guid: f006b6c27315f7d42a2017a36eb10aef,
+  prefabToSpawn4: {fileID: 5391999170863588730, guid: 6597cc92b94bf1a4396d7719ff1204b2,
     type: 3}
   brainsTextArray:
   - {fileID: 1609431739}
