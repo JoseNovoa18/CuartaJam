@@ -665,6 +665,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40cb3e20107b2d846b2fb31a8c122789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterBrains1: 10
+  characterBrains2: 15
+  characterBrains3: 20
+  characterBrains4: 25
   prefabToSpawn1: {fileID: 919132149155446097, guid: 388b09dbaeb300942abad83b56413a0a,
     type: 3}
   prefabToSpawn2: {fileID: 919132149155446097, guid: 75c588ef696659f42b5717a0a38cd55a,
@@ -673,6 +677,7 @@ MonoBehaviour:
     type: 3}
   prefabToSpawn4: {fileID: 919132149155446097, guid: f006b6c27315f7d42a2017a36eb10aef,
     type: 3}
+  brainsTextArray: []
 --- !u!4 &1732129735
 Transform:
   m_ObjectHideFlags: 0

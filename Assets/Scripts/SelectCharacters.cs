@@ -5,7 +5,7 @@ using TMPro;
 
 public class SelectCharacters : MonoBehaviour
 {
-    [SerializeField]private int brains = 150;
+    [SerializeField]private int brains;
     public int characterBrains1 = 10;
     public int characterBrains2 = 15;
     public int characterBrains3 = 20;
@@ -25,9 +25,9 @@ public class SelectCharacters : MonoBehaviour
 
     private void Start()
     {
+        brains = CountBrains.Instance.currentBrains;
         UpdateBrainsText();
     }
-
     private void UpdateBrainsText()
     {
         string brainsString = brains.ToString();
@@ -36,7 +36,6 @@ public class SelectCharacters : MonoBehaviour
             textMeshProUGUI.text = brainsString;
         }
     }
-
     public void SpawnCharacter1()
     {
         if (brains >= characterBrains1)
