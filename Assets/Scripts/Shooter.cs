@@ -6,10 +6,20 @@ using UnityEngine;
 public class Shooter : MonoBehaviour
 {
     public GameObject projectilePrefab; // Prefab of the projectile to shoot
-    public Transform shootPoint; // Point of origin for the shoot
+    public GameObject[] enemiesObjects; // Array of zombies
 
 
     public float shootForce = 10f; // Force with which the projectile is shot
+
+    private void Start()
+    {
+        Enemy[] enemies = FindObjectsOfType<Enemy>(); // Obtener todos los objetos de tipo Zombie en la escena
+
+        // Convertir la matriz de zombies a una matriz de GameObjects
+        enemiesObjects = System.Array.ConvertAll(enemies, enemy => enemy.gameObject);
+
+      
+    }
 
     private void Update()
     {
@@ -26,23 +36,16 @@ public class Shooter : MonoBehaviour
         GameObject newProjectile = Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
         Rigidbody projectileRigidbody = newProjectile.GetComponent<Rigidbody>();
 
-        if (projectileRigidbody != null)
-        {
-            Vector3 newPosition = newProjectile.transform.position;
-            newPosition.y = 2;
-            newProjectile.transform.position = newPosition;
-
-            StartCoroutine(MoveTowardsTarget(newProjectile.transform, shootPoint.position));
-
-        }
+        StartCoroutine(MoveTowardsTarget(newProjectile.transform));
     }
 
-    private IEnumerator MoveTowardsTarget(Transform objectToMove, Vector3 target)
+    private IEnumerator MoveTowardsTarget(Transform objectToMove)
     {
         float duration = 1.0f; // Duration of the movement
         float elapsedTime = 0.0f;
 
         Vector3 initialPosition = objectToMove.position;
+        Vector3 target = enemiesObjects[0].transform.position;
 
         while (elapsedTime < duration)
         {
@@ -59,6 +62,6 @@ public class Shooter : MonoBehaviour
         }
 
         // Once the target is reached, you can perform other actions or destroy the object if necessary
-        //Destroy(objectToMove.gameObject);
+        Destroy(objectToMove.gameObject);
     }
 }

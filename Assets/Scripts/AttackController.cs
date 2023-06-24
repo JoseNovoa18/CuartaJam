@@ -2,6 +2,7 @@ using Mono.Cecil.Cil;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
@@ -16,6 +17,10 @@ public class AttackController : MonoBehaviour
     public GameObject zombieObjectPrefab;
     public Vector3 specificPosition;
 
+    public AudioClip attackSound; // Sonido de ataque
+    private AudioSource audioSource; // Referencia al componente AudioSource
+
+
     Vector3 initialZombieObjectPosition;
     Vector3 initialEnemyObjectPosition;
 
@@ -25,6 +30,14 @@ public class AttackController : MonoBehaviour
 
     private void Start()
     {
+        Zombie[] zombies = FindObjectsOfType<Zombie>(); // Obtener todos los objetos de tipo Zombie en la escena
+
+        // Convertir la matriz de zombies a una matriz de GameObjects
+        zombiesObjects = System.Array.ConvertAll(zombies, zombie => zombie.gameObject);
+
+        audioSource = GetComponent<AudioSource>(); // Obtener el componente AudioSource del objeto
+        audioSource.clip = attackSound; // Asignar el archivo de sonido al componente AudioSource
+
         rb = GetComponent<Rigidbody>(); // Get the Rigidbody component of the object
         rb.constraints = RigidbodyConstraints.FreezeRotation; // Apply rotation constraint
 
@@ -104,13 +117,12 @@ public class AttackController : MonoBehaviour
 
     private IEnumerator PerformAttacks()
     {
-
         while (zombiesObjects.Length > 0 && enemiesObjects.Length > 0)
         {
             int zombiesIndex = Random.Range(0, zombiesObjects.Length-1); 
             int enemiesIndex = Random.Range(0, enemiesObjects.Length-1);
             GameObject zombieObject = zombiesObjects[zombiesIndex];
-            GameObject enemyObject = enemiesObjects[zombiesIndex];
+            GameObject enemyObject = enemiesObjects[enemiesIndex];
             initialZombieObjectPosition = zombieObject.transform.position;
             initialEnemyObjectPosition = enemyObject.transform.position;
 
@@ -177,6 +189,9 @@ public class AttackController : MonoBehaviour
             // Perform the attack
             yield return null;
         }
+
+        // Reproducir el sonido de ataque
+        audioSource.Play();
     }
 
     private IEnumerator Retreat(GameObject obj, Vector3 initialPosition)
