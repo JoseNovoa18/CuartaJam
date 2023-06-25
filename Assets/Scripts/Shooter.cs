@@ -6,37 +6,43 @@ using UnityEngine;
 public class Shooter : MonoBehaviour
 {
     public GameObject projectilePrefab; // Prefab of the projectile to shoot
-    public GameObject[] enemiesObjects; // Array of zombies
+    private GameObject[] enemiesObjects; // Array of zombies
 
 
     public float shootForce = 10f; // Force with which the projectile is shot
 
     private void Start()
     {
-        Enemy[] enemies = FindObjectsOfType<Enemy>(); // Obtener todos los objetos de tipo Zombie en la escena
+        //Enemy[] enemies = FindObjectsOfType<Enemy>(); // Obtener todos los objetos de tipo Zombie en la escena
+
+        CharacterManager.Instance.AddEnemy();
 
         // Convertir la matriz de zombies a una matriz de GameObjects
-        enemiesObjects = System.Array.ConvertAll(enemies, enemy => enemy.gameObject);
+        enemiesObjects = CharacterManager.Instance.GetEnemies();
 
-      
+
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.S)) // Check if the S key was pressed
         {
-            Debug.Log("Shooting");
             Shoot();
         }
     }
 
     public void Shoot()
     {
-        // Instantiate the projectile from the prefab and place it at the shoot point
-        GameObject newProjectile = Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
-        Rigidbody projectileRigidbody = newProjectile.GetComponent<Rigidbody>();
+        enemiesObjects = CharacterManager.Instance.GetEnemies();
 
-        StartCoroutine(MoveTowardsTarget(newProjectile.transform));
+        if (enemiesObjects.Length > 0)
+        {
+            // Instantiate the projectile from the prefab and place it at the shoot point
+            GameObject newProjectile = Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
+            Rigidbody projectileRigidbody = newProjectile.GetComponent<Rigidbody>();
+
+            StartCoroutine(MoveTowardsTarget(projectileRigidbody.transform));
+        }
     }
 
     private IEnumerator MoveTowardsTarget(Transform objectToMove)
@@ -44,8 +50,10 @@ public class Shooter : MonoBehaviour
         float duration = 1.0f; // Duration of the movement
         float elapsedTime = 0.0f;
 
+        int zombiesIndex = Random.Range(0, enemiesObjects.Length - 1);
+
         Vector3 initialPosition = objectToMove.position;
-        Vector3 target = enemiesObjects[0].transform.position;
+        Vector3 target = enemiesObjects[zombiesIndex].transform.position;
 
         while (elapsedTime < duration)
         {
@@ -63,5 +71,7 @@ public class Shooter : MonoBehaviour
 
         // Once the target is reached, you can perform other actions or destroy the object if necessary
         Destroy(objectToMove.gameObject);
+        //Debug.Log("le dio!!!! lo mato veci, lo mato");
+
     }
 }

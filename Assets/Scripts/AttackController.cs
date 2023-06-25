@@ -13,7 +13,7 @@ public class AttackController : MonoBehaviour
     public GameObject[] enemiesObjects; // Array of zombies
     public GameObject[] zombiesObjects; // Array of enemies
     private Rigidbody rb;
-   
+
     public GameObject zombieObjectPrefab;
     public Vector3 specificPosition;
 
@@ -24,12 +24,13 @@ public class AttackController : MonoBehaviour
     Vector3 initialZombieObjectPosition;
     Vector3 initialEnemyObjectPosition;
 
-    //public GameObject zombieObject;
-
     private bool attackZombieObject = true;
 
     private void Start()
     {
+        CharacterManager.Instance.AddEnemy();
+        enemiesObjects = CharacterManager.Instance.GetEnemies();
+
         Zombie[] zombies = FindObjectsOfType<Zombie>(); // Obtener todos los objetos de tipo Zombie en la escena
 
         // Convertir la matriz de zombies a una matriz de GameObjects
@@ -66,6 +67,8 @@ public class AttackController : MonoBehaviour
 
     private void RemoveDestroyedObject(GameObject destroyedObject)
     {
+        CharacterManager.Instance.RemoveEnemy(enemiesObjects, destroyedObject);
+
         // Eliminar el objeto del arreglo enemiesObjects
         if (ArrayContainsGameObject(enemiesObjects, destroyedObject))
         {
@@ -100,8 +103,6 @@ public class AttackController : MonoBehaviour
 
     private void Update()
     {
-        
-
         if (Input.GetKeyDown(KeyCode.A)) // Check if the A key is pressed
         {
             GameObject zombieObject = Instantiate(zombieObjectPrefab, specificPosition, Quaternion.identity);
@@ -119,8 +120,8 @@ public class AttackController : MonoBehaviour
     {
         while (zombiesObjects.Length > 0 && enemiesObjects.Length > 0)
         {
-            int zombiesIndex = Random.Range(0, zombiesObjects.Length-1); 
-            int enemiesIndex = Random.Range(0, enemiesObjects.Length-1);
+            int zombiesIndex = Random.Range(0, zombiesObjects.Length - 1);
+            int enemiesIndex = Random.Range(0, enemiesObjects.Length - 1);
             GameObject zombieObject = zombiesObjects[zombiesIndex];
             GameObject enemyObject = enemiesObjects[enemiesIndex];
             initialZombieObjectPosition = zombieObject.transform.position;
@@ -142,6 +143,8 @@ public class AttackController : MonoBehaviour
 
                 // Retreat the good object
                 yield return StartCoroutine(Retreat(zombieObject, initialZombieObjectPosition));
+
+
 
                 attackZombieObject = false;
             }
@@ -169,7 +172,7 @@ public class AttackController : MonoBehaviour
         }
 
         attackZombieObject = true;
-       
+
     }
 
     private IEnumerator Attack(GameObject attacker, GameObject target)
@@ -198,7 +201,7 @@ public class AttackController : MonoBehaviour
     {
         float movementSpeed = 5f; // Ajusta la velocidad de movimiento según tus necesidades
 
-        while (obj.transform.position != initialPosition)
+        while (Vector3.Distance(obj.transform.position, initialPosition) > 0.01f)
         {
             obj.transform.position = Vector3.MoveTowards(obj.transform.position, initialPosition, movementSpeed * Time.deltaTime);
             yield return null;
@@ -211,7 +214,7 @@ public class AttackController : MonoBehaviour
         Health lifeController = obj.GetComponent<Health>();
         if (lifeController != null)
         {
-            lifeController.ReduceHealth(10); // Adjust the amount of life to reduce according to your needs
+            lifeController.ReduceHealth(10, obj); // Adjust the amount of life to reduce according to your needs
         }
         yield return null;
     }
