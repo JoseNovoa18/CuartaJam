@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
 using Random = UnityEngine.Random;
 
@@ -12,6 +13,8 @@ public class AttackController : MonoBehaviour
 {
     public GameObject[] enemiesObjects; // Array of zombies
     public GameObject[] zombiesObjects; // Array of enemies
+    public Button startGame;
+
     private Rigidbody rb;
 
     public GameObject zombieObjectPrefab;
@@ -26,7 +29,7 @@ public class AttackController : MonoBehaviour
 
     private bool attackZombieObject = true;
 
-    private void Start()
+    private void StartGame()
     {
         CharacterManager.Instance.AddEnemy();
         enemiesObjects = CharacterManager.Instance.GetEnemies();
@@ -64,6 +67,8 @@ public class AttackController : MonoBehaviour
             }
         }
     }
+
+  
 
     private void RemoveDestroyedObject(GameObject destroyedObject)
     {
@@ -114,6 +119,14 @@ public class AttackController : MonoBehaviour
             }
 
         }
+
+    }
+
+    public void OnButtonClick()
+    {
+        // Acciones que deseas realizar cuando se hace clic en el botón
+        Debug.Log("Botón clickeado: " + gameObject.name);
+        StartGame();
     }
 
     private IEnumerator PerformAttacks()
