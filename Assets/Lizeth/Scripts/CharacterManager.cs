@@ -5,7 +5,7 @@ public class CharacterManager : MonoBehaviour
 {
     public static CharacterManager Instance { get; private set; } // Instancia del singleton
     public GameObject[] enemiesObjects; // Array of zombies
-    public GameObject[] zoombiesObjects;
+    public GameObject[] zombiesObjects;
 
 
     private void Awake()
@@ -35,7 +35,7 @@ public class CharacterManager : MonoBehaviour
         }
         else if (typeof(T) == typeof(Zombie))
         {
-            zoombiesObjects = System.Array.ConvertAll(characters, character => character.gameObject);
+            zombiesObjects = System.Array.ConvertAll(characters, character => character.gameObject);
         }
     }
 
@@ -50,9 +50,9 @@ public class CharacterManager : MonoBehaviour
         }
         else if (typeof(T) == typeof(Zombie))
         {
-            if (ArrayContainsGameObject(zoombiesObjects, destroyedObject))
+            if (ArrayContainsGameObject(zombiesObjects, destroyedObject))
             {
-                zoombiesObjects = RemoveGameObjectFromArray(zoombiesObjects, destroyedObject);
+                zombiesObjects = RemoveGameObjectFromArray(zombiesObjects, destroyedObject);
             }
         }
     }
@@ -79,9 +79,9 @@ public class CharacterManager : MonoBehaviour
     {
         return enemiesObjects;
     }
-    public GameObject[] GetZoombies()
+    public GameObject[] GetZombies()
     {
-        return zoombiesObjects;
+        return zombiesObjects;
     }
 
     private bool ArrayContainsGameObject(GameObject[] array, GameObject gameObject)

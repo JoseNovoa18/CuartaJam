@@ -5,7 +5,6 @@ public class Zombie : Character
 {
     protected override IEnumerator PerformAttack(GameObject target)
     {
-        Debug.Log("LLEGO AQUI 3");
         // Lógica de ataque para el zombie
         Debug.Log("Zombie attacking: " + target.name);
 
@@ -21,18 +20,13 @@ public class Zombie : Character
 
         while (distance > 0f)
         {
-            Debug.Log("moviendo");
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);
             distance = Vector3.Distance(transform.position, target.transform.position);
-
-            // Realizar el ataque al objetivo (puedes agregar la lógica correspondiente aquí)
 
             yield return null; // Permitir que el motor de juego actualice la posición del objeto en cada iteración
         }
 
-        // Finalizar el ataque
-        Debug.Log("Zombie attack finished");
-
+        yield return new WaitForSeconds(0.5f);
         // Iniciar el retroceso del zombie hacia su posición inicial
         yield return StartCoroutine(Retreat(initialPosition));
     }
@@ -42,7 +36,7 @@ public class Zombie : Character
         // Lógica de retroceso para el zombie
         Debug.Log("Zombie retreating");
 
-        float movementSpeed = 3f; // Ajusta la velocidad de movimiento según tus necesidades
+        float movementSpeed = 5f; // Ajusta la velocidad de movimiento según tus necesidades
         float delayBetweenIterations = 0.1f; // Ajusta el tiempo de espera entre iteraciones
 
         while (Vector3.Distance(transform.position, initialPosition) > 0.01f)
@@ -53,6 +47,17 @@ public class Zombie : Character
 
         // Retroceso completado, volver al estado normal
         Debug.Log("Zombie retreat finished");
+    }
+
+    protected override IEnumerator Health(GameObject target)
+    {
+        // Reduce the life of the target object
+        Health lifeController = target.GetComponent<Health>();
+        if (lifeController != null)
+        {
+            lifeController.ReduceHealth(10, target); // Adjust the amount of life to reduce according to your needs
+        }
+        yield return null;
     }
 
 }
