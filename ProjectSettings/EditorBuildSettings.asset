@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/JoseScenes/MainMenu.unity
     guid: ac86f0ea4e2c5f94aa892361bae8aff2
   - enabled: 0
@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/JoseScenes/LevelPrototype.unity
     guid: 472a49a454f8fca45b2aba3019321d89
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/JoseScenes/JulianProto.unity
     guid: fece1723d5515b34ebb6d52d450d8d01
   m_configObjects: {}
