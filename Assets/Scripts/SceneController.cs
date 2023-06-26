@@ -21,15 +21,6 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-    public void SelectCharactersScene()
-    {
-        SceneManager.LoadScene("LevelPrototype");
-    }
-
-    public void TestGameScene()
-    {
-        SceneManager.LoadScene("LevelPrototype");
-    }
 
     public void Quit()
     {
