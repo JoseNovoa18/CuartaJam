@@ -8,6 +8,7 @@ public class AttackController2 : MonoBehaviour
     public GameObject[] enemiesObjects; // Array of zombies
     public GameObject[] zombiesObjects; // Array of enemies
     public Button startGame;
+    private bool attackZombieObject = true;
 
     private List<Character> characters = new List<Character>(); // Lista de personajes
 
@@ -49,21 +50,32 @@ public class AttackController2 : MonoBehaviour
     {
         while (zombiesObjects.Length > 0 && enemiesObjects.Length > 0)
         {
-            // Obtener los objetos de los enemigos y zombies nuevamente
-            //enemiesObjects = GameObject.FindGameObjectsWithTag("Enemy");
-            //zombiesObjects = GameObject.FindGameObjectsWithTag("Zombie");
+            int zombiesIndex = Random.Range(0, zombiesObjects.Length - 1);
+            int enemiesIndex = Random.Range(0, enemiesObjects.Length - 1);
 
-            // Seleccionar un objeto de ataque y un objetivo al azar
-            int attackerIndex = Random.Range(0, characters.Count);
-            int targetIndex = Random.Range(0, characters.Count);
+            Character zombieCharacter = zombiesObjects[zombiesIndex].GetComponent<Character>();
+            Character enemyCharacter = enemiesObjects[enemiesIndex].GetComponent<Character>();
 
-            Character attacker = characters[attackerIndex];
-            Character target = characters[targetIndex];
+            GameObject zombieObject = zombieCharacter.gameObject;
+            GameObject enemyObject = enemyCharacter.gameObject;
 
-            // Realizar el ataque
-            attacker.Attack(target.gameObject);
+            Debug.Log("zombieObject "+ zombieObject.name);
+            Debug.Log("enemyObject " + enemyObject.name);
 
-            yield return new WaitForSeconds(1f); // Esperar antes de continuar con el próximo ataque
+            if (attackZombieObject)
+            {
+                // Realizar el ataque
+                zombieCharacter.Attack(enemyObject);
+                attackZombieObject = false;
+            }
+            else
+            {
+                // Realizar el ataque
+                enemyCharacter.Attack(zombieObject);
+                attackZombieObject = true;
+            }
+
+            yield return new WaitForSeconds(8f); // Esperar antes de continuar con el próximo ataque
         }
     }
 }

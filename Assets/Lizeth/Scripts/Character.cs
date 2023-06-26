@@ -5,6 +5,7 @@ public abstract class Character : MonoBehaviour
 {
     protected abstract IEnumerator PerformAttack(GameObject target);
     protected abstract IEnumerator Retreat(Vector3 initialPosition);
+    protected abstract IEnumerator Health(GameObject target);
 
     public void Attack(GameObject target)
     {
@@ -13,7 +14,6 @@ public abstract class Character : MonoBehaviour
 
     private IEnumerator AttackCoroutine(GameObject target)
     {
-        Debug.Log("LLEGO A CHARACTER");
         yield return StartCoroutine(PerformAttack(target));
         yield return StartCoroutine(Retreat(transform.position));
     }

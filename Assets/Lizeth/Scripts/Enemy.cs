@@ -8,10 +8,6 @@ public class Enemy : Character
         // Lógica de ataque para el enemigo
         Debug.Log("Enemy attacking: " + target.name);
 
-        // Reproducir el sonido de ataque (si se requiere)
-        AudioSource audioSource = GetComponent<AudioSource>();
-        audioSource.Play();
-
         // Obtener la posición inicial del enemigo
         Vector3 initialPosition = transform.position;
 
@@ -31,11 +27,7 @@ public class Enemy : Character
             yield return null;
         }
 
-        // Finalizar el ataque
-        Debug.Log("Enemy attack finished");
-
-        // Iniciar el retroceso del enemigo hacia su posición inicial
-        Retreat(initialPosition);
+        yield return StartCoroutine(Retreat(initialPosition));
     }
 
     protected override IEnumerator Retreat(Vector3 initialPosition)
@@ -44,15 +36,28 @@ public class Enemy : Character
         Debug.Log("Enemy retreating");
 
         float movementSpeed = 5f; // Ajusta la velocidad de movimiento según tus necesidades
+        float delayBetweenIterations = 0.1f; // Ajusta el tiempo de espera entre iteraciones
 
         while (Vector3.Distance(transform.position, initialPosition) > 0.01f)
         {
             transform.position = Vector3.MoveTowards(transform.position, initialPosition, movementSpeed * Time.deltaTime);
+            yield return new WaitForSeconds(delayBetweenIterations);
         }
 
         // Retroceso completado, volver al estado normal
         Debug.Log("Enemy retreat finished");
         
+        yield return null;
+    }
+
+    protected override IEnumerator Health(GameObject target)
+    {
+        // Reduce the life of the target object
+        Health lifeController = target.GetComponent<Health>();
+        if (lifeController != null)
+        {
+            lifeController.ReduceHealth(10, target); // Adjust the amount of life to reduce according to your needs
+        }
         yield return null;
     }
 }
