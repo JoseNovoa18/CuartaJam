@@ -5,6 +5,7 @@ public class CharacterManager : MonoBehaviour
 {
     public static CharacterManager Instance { get; private set; } // Instancia del singleton
     public GameObject[] enemiesObjects; // Array of zombies
+    public GameObject[] zoombiesObjects;
 
 
     private void Awake()
@@ -24,6 +25,38 @@ public class CharacterManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void AddCharacter<T>() where T : MonoBehaviour
+    {
+        T[] characters = FindObjectsOfType<T>(); // Obtener todos los objetos del tipo especificado en la escena
+
+        if (typeof(T) == typeof(Enemy))
+        {
+            enemiesObjects = System.Array.ConvertAll(characters, character => character.gameObject);
+        }
+        else if (typeof(T) == typeof(Zombie))
+        {
+            zoombiesObjects = System.Array.ConvertAll(characters, character => character.gameObject);
+        }
+    }
+
+    public void RemoveCharacter<T>(GameObject destroyedObject) where T : MonoBehaviour
+    {
+        if (typeof(T) == typeof(Enemy))
+        {
+            if (ArrayContainsGameObject(enemiesObjects, destroyedObject))
+            {
+                enemiesObjects = RemoveGameObjectFromArray(enemiesObjects, destroyedObject);
+            }
+        }
+        else if (typeof(T) == typeof(Zombie))
+        {
+            if (ArrayContainsGameObject(zoombiesObjects, destroyedObject))
+            {
+                zoombiesObjects = RemoveGameObjectFromArray(zoombiesObjects, destroyedObject);
+            }
+        }
+    }
+
     public void AddEnemy()
     {
         Enemy[] enemies = FindObjectsOfType<Enemy>(); // Obtener todos los objetos de tipo Zombie en la escena
@@ -31,6 +64,7 @@ public class CharacterManager : MonoBehaviour
         // Convertir la matriz de zombies a una matriz de GameObjects
         enemiesObjects = System.Array.ConvertAll(enemies, enemy => enemy.gameObject);
     }
+
 
     public void RemoveEnemy(GameObject[] enemiesObject, GameObject destroyedObject)
     {
@@ -45,6 +79,11 @@ public class CharacterManager : MonoBehaviour
     {
         return enemiesObjects;
     }
+    public GameObject[] GetZoombies()
+    {
+        return zoombiesObjects;
+    }
+
     private bool ArrayContainsGameObject(GameObject[] array, GameObject gameObject)
     {
         foreach (var obj in array)

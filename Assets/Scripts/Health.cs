@@ -8,6 +8,8 @@ public class Health : MonoBehaviour
     public int maxHealth = 20; // The maximum health of the object
     private int currentHealth; // The current health of the object
     public event Action<GameObject> OnObjectDestroyed;
+    public event Action<GameObject> OnCollisionDetected;
+
 
     private void Start()
     {
@@ -40,10 +42,19 @@ public class Health : MonoBehaviour
         GameObject thisObject = gameObject; // Objeto actual al que se le asigna este script
         GameObject otherObject = collision.collider.gameObject; // Otro objeto que colisionó con este objeto
 
+        
+
         // Verificar si los nombres de los objetos contienen las palabras clave
         if (thisObject.name.Contains("Secretary") && otherObject.name.Contains("Brick"))
         {
             ReduceHealth(1, thisObject);
+        }
+
+        if (thisObject.name.Contains("Secretary") && otherObject.name.Contains("Doctor"))
+        {
+            Debug.Log("colisiono " + thisObject.name + "con " + otherObject.name);
+            // Notificar a AttackController sobre la colisión
+            OnCollisionDetected?.Invoke(otherObject);
         }
     }
 }

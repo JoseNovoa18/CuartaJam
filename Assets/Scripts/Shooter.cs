@@ -20,15 +20,7 @@ public class Shooter : MonoBehaviour
         // Convertir la matriz de zombies a una matriz de GameObjects
         enemiesObjects = CharacterManager.Instance.GetEnemies();
 
-
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.S)) // Check if the S key was pressed
-        {
-            Shoot();
-        }
+        InvokeRepeating("Shoot", 2f, 2f);
     }
 
     public void Shoot()
@@ -71,7 +63,6 @@ public class Shooter : MonoBehaviour
 
         // Once the target is reached, you can perform other actions or destroy the object if necessary
         Destroy(objectToMove.gameObject);
-        //Debug.Log("le dio!!!! lo mato veci, lo mato");
 
     }
 }
