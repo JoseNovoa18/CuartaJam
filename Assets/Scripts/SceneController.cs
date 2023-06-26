@@ -6,6 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
+    public void SelectLevel()
+    {
+        SceneManager.LoadScene("SelectLevels");
+    }
+
+    public void Level1()
+    {
+        SceneManager.LoadScene("PracticeLevelPrototype");
+    }
+
     public void MainMenuScene()
     {
         SceneManager.LoadScene("MainMenu");

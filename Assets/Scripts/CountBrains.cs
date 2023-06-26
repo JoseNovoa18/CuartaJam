@@ -10,6 +10,7 @@ public class CountBrains : MonoBehaviour
 
     public int currentBrains = 150;
     //public TextMeshProUGUI currentBrainsText;
+    public TextMeshProUGUI[] currentBrainsTextArray;
 
     private void Awake()
     {
@@ -22,10 +23,15 @@ public class CountBrains : MonoBehaviour
             _instance = this;
         }
     }
-    /*
     private void Update()
     {
+        string brainsString = currentBrains.ToString();
+        foreach (TextMeshProUGUI textMeshProUGUI in currentBrainsTextArray)
+        {
+            textMeshProUGUI.text = brainsString;
+        }
+    /*
         currentBrainsText.text = currentBrains.ToString();
-    }
     */
+    }
 }
