@@ -30,7 +30,7 @@ public class AttackController : MonoBehaviour
         CharacterManager.Instance.AddCharacter<Zombie>();
 
         enemiesObjects = CharacterManager.Instance.GetEnemies();
-        zombiesObjects = CharacterManager.Instance.GetZoombies();
+        zombiesObjects = CharacterManager.Instance.GetZombies();
 
         audioSource = GetComponent<AudioSource>(); // Obtener el componente AudioSource del objeto
         audioSource.clip = attackSound; // Asignar el archivo de sonido al componente AudioSource
@@ -86,7 +86,7 @@ public class AttackController : MonoBehaviour
         while (zombiesObjects.Length > 0 && enemiesObjects.Length > 0)
         {
             zombiesObjects = CharacterManager.Instance.GetEnemies();
-            enemiesObjects = CharacterManager.Instance.GetZoombies();
+            enemiesObjects = CharacterManager.Instance.GetZombies();
 
             int zombiesIndex = Random.Range(0, zombiesObjects.Length - 1);
             int enemiesIndex = Random.Range(0, enemiesObjects.Length - 1);
