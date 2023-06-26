@@ -1,39 +1,36 @@
-using Mono.Cecil.Cil;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
-using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
+
 
 public class AttackController : MonoBehaviour
 {
     public GameObject[] enemiesObjects; // Array of zombies
     public GameObject[] zombiesObjects; // Array of enemies
+    public Button startGame;
+
     private Rigidbody rb;
-   
-    public GameObject zombieObjectPrefab;
+
     public Vector3 specificPosition;
 
     public AudioClip attackSound; // Sonido de ataque
     private AudioSource audioSource; // Referencia al componente AudioSource
 
-
     Vector3 initialZombieObjectPosition;
     Vector3 initialEnemyObjectPosition;
 
-    //public GameObject zombieObject;
-
     private bool attackZombieObject = true;
 
-    private void Start()
-    {
-        Zombie[] zombies = FindObjectsOfType<Zombie>(); // Obtener todos los objetos de tipo Zombie en la escena
 
-        // Convertir la matriz de zombies a una matriz de GameObjects
-        zombiesObjects = System.Array.ConvertAll(zombies, zombie => zombie.gameObject);
+    void StartGame()
+    {
+        CharacterManager.Instance.AddCharacter<Enemy>();
+        CharacterManager.Instance.AddCharacter<Zombie>();
+
+        enemiesObjects = CharacterManager.Instance.GetEnemies();
+        zombiesObjects = CharacterManager.Instance.GetZoombies();
 
         audioSource = GetComponent<AudioSource>(); // Obtener el componente AudioSource del objeto
         audioSource.clip = attackSound; // Asignar el archivo de sonido al componente AudioSource
@@ -66,61 +63,33 @@ public class AttackController : MonoBehaviour
 
     private void RemoveDestroyedObject(GameObject destroyedObject)
     {
-        // Eliminar el objeto del arreglo enemiesObjects
-        if (ArrayContainsGameObject(enemiesObjects, destroyedObject))
+        // Verificar si el objeto destruido es un Enemy
+        if (destroyedObject.GetComponent<Enemy>() is Enemy)
         {
-            enemiesObjects = RemoveGameObjectFromArray(enemiesObjects, destroyedObject);
+            CharacterManager.Instance.RemoveCharacter<Enemy>(destroyedObject);
         }
-
-        // Eliminar el objeto del arreglo zombiesObjects
-        if (ArrayContainsGameObject(zombiesObjects, destroyedObject))
+        // Verificar si el objeto destruido es un Zombie
+        else if (destroyedObject.GetComponent<Zombie>() is Zombie)
         {
-            zombiesObjects = RemoveGameObjectFromArray(zombiesObjects, destroyedObject);
+            CharacterManager.Instance.RemoveCharacter<Zombie>(destroyedObject);
         }
     }
-
-    private bool ArrayContainsGameObject(GameObject[] array, GameObject gameObject)
+  
+    public void OnButtonClick()
     {
-        foreach (var obj in array)
-        {
-            if (obj == gameObject)
-            {
-                return true;
-            }
-        }
-        return false;
+        StartGame();
     }
 
-    private GameObject[] RemoveGameObjectFromArray(GameObject[] array, GameObject gameObject)
-    {
-        List<GameObject> list = new List<GameObject>(array);
-        list.Remove(gameObject);
-        return list.ToArray();
-    }
-
-    private void Update()
-    {
-        
-
-        if (Input.GetKeyDown(KeyCode.A)) // Check if the A key is pressed
-        {
-            GameObject zombieObject = Instantiate(zombieObjectPrefab, specificPosition, Quaternion.identity);
-            Rigidbody zombieObjectRigidbody = zombieObject.GetComponent<Rigidbody>();
-
-            if (zombieObjectRigidbody != null)
-            {
-                zombieObjectRigidbody.isKinematic = true;
-            }
-
-        }
-    }
 
     private IEnumerator PerformAttacks()
     {
         while (zombiesObjects.Length > 0 && enemiesObjects.Length > 0)
         {
-            int zombiesIndex = Random.Range(0, zombiesObjects.Length-1); 
-            int enemiesIndex = Random.Range(0, enemiesObjects.Length-1);
+            zombiesObjects = CharacterManager.Instance.GetEnemies();
+            enemiesObjects = CharacterManager.Instance.GetZoombies();
+
+            int zombiesIndex = Random.Range(0, zombiesObjects.Length - 1);
+            int enemiesIndex = Random.Range(0, enemiesObjects.Length - 1);
             GameObject zombieObject = zombiesObjects[zombiesIndex];
             GameObject enemyObject = enemiesObjects[enemiesIndex];
             initialZombieObjectPosition = zombieObject.transform.position;
@@ -169,7 +138,7 @@ public class AttackController : MonoBehaviour
         }
 
         attackZombieObject = true;
-       
+
     }
 
     private IEnumerator Attack(GameObject attacker, GameObject target)
@@ -179,8 +148,6 @@ public class AttackController : MonoBehaviour
 
         float distance = Vector3.Distance(attacker.transform.position, target.transform.position);
         float movementSpeed = 10f; // Adjust the movement speed as needed
-
-
 
         while (distance > 0f)
         {
@@ -198,7 +165,7 @@ public class AttackController : MonoBehaviour
     {
         float movementSpeed = 5f; // Ajusta la velocidad de movimiento según tus necesidades
 
-        while (obj.transform.position != initialPosition)
+        while (Vector3.Distance(obj.transform.position, initialPosition) > 0.01f)
         {
             obj.transform.position = Vector3.MoveTowards(obj.transform.position, initialPosition, movementSpeed * Time.deltaTime);
             yield return null;
@@ -211,9 +178,8 @@ public class AttackController : MonoBehaviour
         Health lifeController = obj.GetComponent<Health>();
         if (lifeController != null)
         {
-            lifeController.ReduceHealth(10); // Adjust the amount of life to reduce according to your needs
+            lifeController.ReduceHealth(10, obj); // Adjust the amount of life to reduce according to your needs
         }
         yield return null;
     }
-
 }
