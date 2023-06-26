@@ -763,7 +763,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1643929439}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1685183915}
+        m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
+        m_MethodName: MainMenuScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1643929439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -802,6 +814,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1643929436}
   m_CullTransparentMesh: 1
+--- !u!1 &1685183914
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1685183916}
+  - component: {fileID: 1685183915}
+  m_Layer: 0
+  m_Name: SceneController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1685183915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1685183914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeda2f2e13b87b34f97b9c7315f33143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1685183916
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1685183914}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 242, y: 136, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1786120835
 GameObject:
   m_ObjectHideFlags: 0
@@ -989,7 +1045,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1830401171}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1685183915}
+        m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
+        m_MethodName: Level1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1830401171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1412,6 +1480,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: CountBrains
       objectReference: {fileID: 0}
+    - target: {fileID: 6206930320018323175, guid: 71dcf50bfaa5d254e9c727b2ff4960f7,
+        type: 3}
+      propertyPath: currentBrainsTextArray.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6206930320018323175, guid: 71dcf50bfaa5d254e9c727b2ff4960f7,
+        type: 3}
+      propertyPath: currentBrainsTextArray.Array.data[0]
+      value: 
+      objectReference: {fileID: 588645374}
     - target: {fileID: 6206930320018323176, guid: 71dcf50bfaa5d254e9c727b2ff4960f7,
         type: 3}
       propertyPath: m_RootOrder

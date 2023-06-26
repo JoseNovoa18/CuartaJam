@@ -702,6 +702,7 @@ GameObject:
   - component: {fileID: -4681357890900361798}
   - component: {fileID: 1020622910184708127}
   - component: {fileID: -1623471407703949471}
+  - component: {fileID: 5721440057752785787}
   m_Layer: 0
   m_Name: Worker
   m_TagString: Untagged
@@ -789,6 +790,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.026133513, y: 0.05714049, z: 0.020054506}
   m_Center: {x: 0.0015188826, y: 0.023474911, z: 0.0020389697}
+--- !u!114 &5721440057752785787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6744716883098536671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9be8a7c2ce214fd43bae4cad2218ce4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 432109081154705953, guid: af97d474efc7a0d46a2d6a551c92581a,
+    type: 3}
+  shootForce: 10
 --- !u!1 &6799983574487067012
 GameObject:
   m_ObjectHideFlags: 0
