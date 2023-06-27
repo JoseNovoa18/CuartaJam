@@ -16,15 +16,27 @@ public class Enemy : Character
         direction.Normalize();
 
         float distance = Vector3.Distance(transform.position, target.transform.position);
-        float movementSpeed = 10f; // Ajusta la velocidad de movimiento según tus necesidades
+        float movementSpeed = 6f; // Ajusta la velocidad de movimiento según tus necesidades
 
-        while (distance > 0f)
+        while (distance > 1.2f)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);
             distance = Vector3.Distance(transform.position, target.transform.position);
 
             // Realizar el ataque al objetivo (puedes agregar la lógica correspondiente aquí)
             yield return null;
+        }
+
+        yield return StartCoroutine(Health(target, initialPosition));
+    }
+
+    protected override IEnumerator Health(GameObject target, Vector3 initialPosition)
+    {
+        // Reduce the life of the target object
+        Health lifeController = target.GetComponent<Health>();
+        if (lifeController != null)
+        {
+            lifeController.ReduceHealth(10, target); // Adjust the amount of life to reduce according to your needs
         }
 
         yield return StartCoroutine(Retreat(initialPosition));
@@ -47,17 +59,6 @@ public class Enemy : Character
         // Retroceso completado, volver al estado normal
         Debug.Log("Enemy retreat finished");
         
-        yield return null;
-    }
-
-    protected override IEnumerator Health(GameObject target)
-    {
-        // Reduce the life of the target object
-        Health lifeController = target.GetComponent<Health>();
-        if (lifeController != null)
-        {
-            lifeController.ReduceHealth(10, target); // Adjust the amount of life to reduce according to your needs
-        }
         yield return null;
     }
 }
