@@ -1,8 +1,10 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class Enemy : Character
 {
+    public int hasBrains = 0;
     protected override IEnumerator PerformAttack(GameObject target)
     {
         // Obtener la posición inicial del enemigo
@@ -30,6 +32,12 @@ public class Enemy : Character
 
     protected override IEnumerator Health(GameObject target, Vector3 initialPosition)
     {
+        if (target == null)
+        {
+            // El objetivo ya no existe, salimos del método
+            yield break;
+        }
+
         // Reduce the life of the target object
         Health lifeController = target.GetComponent<Health>();
         if (lifeController != null)
@@ -42,8 +50,6 @@ public class Enemy : Character
 
     protected override IEnumerator Retreat(Vector3 initialPosition)
     {
-        // Lógica de retroceso para el enemigo
-        Debug.Log("Enemy retreating");
 
         float movementSpeed = 5f; // Ajusta la velocidad de movimiento según tus necesidades
         float delayBetweenIterations = 0.1f; // Ajusta el tiempo de espera entre iteraciones
@@ -54,9 +60,6 @@ public class Enemy : Character
             yield return new WaitForSeconds(delayBetweenIterations);
         }
 
-        // Retroceso completado, volver al estado normal
-        Debug.Log("Enemy retreat finished");
-        
         yield return null;
     }
 }

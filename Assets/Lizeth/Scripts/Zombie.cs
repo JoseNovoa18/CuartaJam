@@ -17,7 +17,7 @@ public class Zombie : Character
         float movementSpeed = 6f; // Ajusta la velocidad de movimiento según tus necesidades
 
 
-        while (distance > 1.2f)
+        while (distance > 1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);
             distance = Vector3.Distance(transform.position, target.transform.position);
@@ -31,11 +31,17 @@ public class Zombie : Character
 
     protected override IEnumerator Health(GameObject target, Vector3 initialPosition)
     {
+        if (target == null)
+        {
+            // El objetivo ya no existe, salimos del método
+            yield break;
+        }
+
         // Reduce the life of the target object
         Health lifeController = target.GetComponent<Health>();
         if (lifeController != null)
         {
-            lifeController.ReduceHealth(10, target); 
+            lifeController.ReduceHealth(10, target); // Adjust the amount of life to reduce according to your needs
         }
 
         yield return StartCoroutine(Retreat(initialPosition));

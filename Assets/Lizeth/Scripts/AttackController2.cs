@@ -9,8 +9,8 @@ public class AttackController2 : MonoBehaviour
     public GameObject[] zombiesObjects; // Array of enemies
     public Button startGame;
     private bool attackZombieObject = true;
-    private bool isGameStartet  = false;
-    private bool isAttacking = false;
+    private bool isGameStartet = false;
+    private Coroutine attackCoroutine;
 
     private bool shouldContinue = true; // Bandera para controlar el bucle
 
@@ -26,7 +26,15 @@ public class AttackController2 : MonoBehaviour
         if (isGameStartet)
         {
             SelectCharacters.OnCharacterSpawned += HandleCharacterSpawned;
-        }           
+        }
+    }
+
+    private void StopAttacks()
+    {
+        if (attackCoroutine != null)
+        {
+            StopCoroutine(attackCoroutine);
+        }
     }
 
     private void HandleCharacterSpawned(GameObject newCharacter)
@@ -34,13 +42,24 @@ public class AttackController2 : MonoBehaviour
         CharacterManager.Instance.AddCharacter<Enemy>();
         CharacterManager.Instance.AddCharacter<Zombie>();
 
-        shouldContinue = false;
+        StartCoroutine(UpdateCharacterLists());
+        StartCoroutine(StartAttacksAfterDelay());
+    }
+
+    private IEnumerator UpdateCharacterLists()
+    {
+        yield return null; // Esperar un frame para permitir que los personajes se agreguen correctamente
+
         enemiesObjects = CharacterManager.Instance.GetEnemies();
         zombiesObjects = CharacterManager.Instance.GetZombies();
         shouldContinue = true;
         StartCoroutine(WaitAndRestartAttacks());
+    }
 
-        Debug.Log("Se agrego un nuevo personaje");
+    private IEnumerator StartAttacksAfterDelay()
+    {
+        yield return new WaitForSeconds(80f); // Esperar dos segundos antes de comenzar los ataques
+        attackCoroutine = StartCoroutine(PerformAttacks());
     }
 
     private void HandleObjectDestroyed(GameObject destroyedObject)
@@ -49,10 +68,7 @@ public class AttackController2 : MonoBehaviour
         CharacterManager.Instance.RemoveCharacter<Enemy>(destroyedObject);
         CharacterManager.Instance.RemoveCharacter<Zombie>(destroyedObject);
 
-        enemiesObjects = CharacterManager.Instance.GetEnemies();
-        zombiesObjects = CharacterManager.Instance.GetZombies();
-        shouldContinue = true;
-        StartCoroutine(WaitAndRestartAttacks());
+        StartCoroutine(UpdateCharacterLists());
     }
 
     private void StartGame()
@@ -65,7 +81,17 @@ public class AttackController2 : MonoBehaviour
         enemiesObjects = CharacterManager.Instance.GetEnemies();
         zombiesObjects = CharacterManager.Instance.GetZombies();
 
-        
+        // Asignar valor aleatorio solo a un enemigo
+        if (enemiesObjects.Length > 0)
+        {
+            int randomEnemyIndex = Random.Range(0, enemiesObjects.Length);
+            GameObject randomEnemyObject = enemiesObjects[randomEnemyIndex];
+            Enemy randomEnemy = randomEnemyObject.GetComponent<Enemy>();
+            if (randomEnemy != null)
+            {
+                randomEnemy.hasBrains = 10; 
+            }
+        }
 
         // Suscribirse al evento OnObjectDestroyed de cada objeto enemigo
         foreach (var enemyObject in enemiesObjects)
@@ -92,26 +118,36 @@ public class AttackController2 : MonoBehaviour
 
     private IEnumerator WaitAndRestartAttacks()
     {
-        yield return new WaitForSeconds(2f); // Esperar dos segundos
-
-        StartCoroutine(PerformAttacks());
+        yield return new WaitForSeconds(80f); // Esperar dos segundos
+        StopAttacks();
+        attackCoroutine = StartCoroutine(PerformAttacks());
     }
 
     private IEnumerator PerformAttacks()
     {
         while (shouldContinue && zombiesObjects.Length > 0 && enemiesObjects.Length > 0)
         {
-            int zombiesIndex = Random.Range(0, zombiesObjects.Length - 1);
-            int enemiesIndex = Random.Range(0, enemiesObjects.Length - 1);
+            int zombiesIndex = Random.Range(0, zombiesObjects.Length);
+            int enemiesIndex = Random.Range(0, enemiesObjects.Length);
 
-            Character zombieCharacter = zombiesObjects[zombiesIndex].GetComponent<Character>();
-            Character enemyCharacter = enemiesObjects[enemiesIndex].GetComponent<Character>();
+            GameObject zombieObject = zombiesObjects[zombiesIndex];
+            GameObject enemyObject = enemiesObjects[enemiesIndex];
 
-            GameObject zombieObject = zombieCharacter.gameObject;
-            GameObject enemyObject = enemyCharacter.gameObject;
+            // Verificar si el objeto zombie aún existe y no ha sido destruido
+            if (zombieObject == null || zombieObject.GetComponent<Character>() == null)
+            {
+                continue;
+            }
 
-            Debug.Log("zombieObject "+ zombieObject.name);
-            Debug.Log("enemyObject " + enemyObject.name);
+            // Verificar si el objeto enemigo aún existe y no ha sido destruido
+            if (enemyObject == null || enemyObject.GetComponent<Character>() == null)
+            {
+                continue;
+            }
+
+            // Acceder a los componentes de los personajes
+            Character zombieCharacter = zombieObject.GetComponent<Character>();
+            Character enemyCharacter = enemyObject.GetComponent<Character>();
 
             if (attackZombieObject)
             {
@@ -128,5 +164,7 @@ public class AttackController2 : MonoBehaviour
 
             yield return new WaitForSeconds(5f); // Esperar antes de continuar con el próximo ataque
         }
+
+
     }
 }

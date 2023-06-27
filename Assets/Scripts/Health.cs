@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -9,11 +10,16 @@ public class Health : MonoBehaviour
     private int currentHealth; // The current health of the object
     public event Action<GameObject> OnObjectDestroyed;
     public event Action<GameObject> OnCollisionDetected;
+    public TextMeshProUGUI brainsText;
 
+    private CountBrains countBrains; // Referencia a la instancia de CountBrains
 
     private void Start()
     {
         currentHealth = maxHealth; // Set the initial life as the maximum life
+
+        // Obtener la instancia de CountBrains
+        countBrains = CountBrains.Instance;
     }
 
     public void ReduceHealth(int amount, GameObject objectDestroy)
@@ -27,6 +33,13 @@ public class Health : MonoBehaviour
             {
                 CharacterManager.Instance.RemoveCharacter<Enemy>(objectDestroy);
                 Destroy(gameObject);
+                // Actualizar el valor de currentBrains en CountBrains
+                if (countBrains != null)
+                {                  
+                    Enemy enemy = objectDestroy.GetComponent<Enemy>();
+                    countBrains.currentBrains += enemy.hasBrains;
+                    brainsText.text = countBrains.currentBrains.ToString();
+                }
             }
             // Verificar si el objeto destruido es un Zombie
             else if (objectDestroy.GetComponent<Zombie>() is Zombie)
@@ -34,9 +47,6 @@ public class Health : MonoBehaviour
                 CharacterManager.Instance.RemoveCharacter<Zombie>(objectDestroy);
                 Destroy(gameObject);
             }
-
-            //GameObject[] enemies = CharacterManager.Instance.GetEnemies();
-            //CharacterManager.Instance.RemoveEnemy(enemies, objectDestroy);
 
             // Trigger the OnObjectDestroyed event
             if (OnObjectDestroyed != null)
@@ -51,12 +61,15 @@ public class Health : MonoBehaviour
         GameObject thisObject = gameObject; // Objeto actual al que se le asigna este script
         GameObject otherObject = collision.collider.gameObject; // Otro objeto que colisionó con este objeto
 
-        
-
         // Verificar si los nombres de los objetos contienen las palabras clave
         if (thisObject.name.Contains("Secretary") && otherObject.name.Contains("Brick"))
         {
             ReduceHealth(1, thisObject);
+            // Actualizar el valor de currentBrains en CountBrains
+            if (countBrains != null)
+            {
+                countBrains.currentBrains -= 1; // Ajusta la cantidad de cerebros a reducir según tus necesidades
+            }
         }
 
         if (thisObject.name.Contains("Secretary") && otherObject.name.Contains("Doctor"))
