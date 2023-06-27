@@ -5,7 +5,7 @@ public abstract class Character : MonoBehaviour
 {
     protected abstract IEnumerator PerformAttack(GameObject target);
     protected abstract IEnumerator Retreat(Vector3 initialPosition);
-    protected abstract IEnumerator Health(GameObject target);
+    protected abstract IEnumerator Health(GameObject target, Vector3 initialPosition);
 
     public void Attack(GameObject target)
     {

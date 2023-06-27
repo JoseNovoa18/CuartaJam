@@ -16,9 +16,9 @@ public class Zombie : Character
         direction.Normalize();
 
         float distance = Vector3.Distance(transform.position, target.transform.position);
-        float movementSpeed = 8f; // Ajusta la velocidad de movimiento según tus necesidades
+        float movementSpeed = 6f; // Ajusta la velocidad de movimiento según tus necesidades
 
-        while (distance > 0f)
+        while (distance > 1.2f)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);
             distance = Vector3.Distance(transform.position, target.transform.position);
@@ -28,6 +28,19 @@ public class Zombie : Character
 
         yield return new WaitForSeconds(0.5f);
         // Iniciar el retroceso del zombie hacia su posición inicial
+        //yield return StartCoroutine(Retreat(initialPosition));
+        yield return StartCoroutine(Health(target, initialPosition));
+    }
+
+    protected override IEnumerator Health(GameObject target, Vector3 initialPosition)
+    {
+        // Reduce the life of the target object
+        Health lifeController = target.GetComponent<Health>();
+        if (lifeController != null)
+        {
+            lifeController.ReduceHealth(10, target); // Adjust the amount of life to reduce according to your needs
+        }
+
         yield return StartCoroutine(Retreat(initialPosition));
     }
 
@@ -43,21 +56,7 @@ public class Zombie : Character
         {
             transform.position = Vector3.MoveTowards(transform.position, initialPosition, movementSpeed * Time.deltaTime);
             yield return new WaitForSeconds(delayBetweenIterations);
-        }
-
-        // Retroceso completado, volver al estado normal
-        Debug.Log("Zombie retreat finished");
-    }
-
-    protected override IEnumerator Health(GameObject target)
-    {
-        // Reduce the life of the target object
-        Health lifeController = target.GetComponent<Health>();
-        if (lifeController != null)
-        {
-            lifeController.ReduceHealth(10, target); // Adjust the amount of life to reduce according to your needs
-        }
-        yield return null;
+        }        
     }
 
 }

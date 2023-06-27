@@ -65,16 +65,6 @@ public class CharacterManager : MonoBehaviour
         enemiesObjects = System.Array.ConvertAll(enemies, enemy => enemy.gameObject);
     }
 
-
-    public void RemoveEnemy(GameObject[] enemiesObject, GameObject destroyedObject)
-    {
-        // Eliminar el objeto del arreglo enemiesObjects
-        if (ArrayContainsGameObject(enemiesObjects, destroyedObject))
-        {
-            enemiesObjects = RemoveGameObjectFromArray(enemiesObjects, destroyedObject);
-        }
-    }
-
     public GameObject[] GetEnemies()
     {
         return enemiesObjects;
