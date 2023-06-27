@@ -16,6 +16,5 @@ public class MoveForward : MonoBehaviour
         //Move to character
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
         animation.SetTrigger("Run");
-
     }
 }
