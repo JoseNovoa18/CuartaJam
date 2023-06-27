@@ -5,17 +5,17 @@ using UnityEngine;
 public class MoveForwardAnimals : MonoBehaviour
 {
     public float speed;
-    Animator animation;
+    Animator animator;
 
     private void Start()
     {
-        animation = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
     void Update()
     {
         //Move to character
         transform.Translate(Vector3.left * Time.deltaTime * speed);
-        animation.SetTrigger("Run");
+        animator.SetTrigger("Run");
 
     }
 }

@@ -5,7 +5,8 @@ using UnityEngine;
 public class MoveForward : MonoBehaviour
 {
     public float speed;
-    Animator animation;
+    public Animator animation;
+    
 
     private void Start()
     {
