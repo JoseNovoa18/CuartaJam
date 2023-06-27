@@ -23,11 +23,20 @@ public class Health : MonoBehaviour
         // Check if the object has lost all its life
         if (maxHealth <= 0)
         {
-            // The object has died, perform additional actions if necessary
-            Destroy(gameObject); // Destroy the object
+            if (objectDestroy.GetComponent<Enemy>() is Enemy)
+            {
+                CharacterManager.Instance.RemoveCharacter<Enemy>(objectDestroy);
+                Destroy(gameObject);
+            }
+            // Verificar si el objeto destruido es un Zombie
+            else if (objectDestroy.GetComponent<Zombie>() is Zombie)
+            {
+                CharacterManager.Instance.RemoveCharacter<Zombie>(objectDestroy);
+                Destroy(gameObject);
+            }
 
-            GameObject[] enemies = CharacterManager.Instance.GetEnemies();
-            CharacterManager.Instance.RemoveEnemy(enemies, objectDestroy);
+            //GameObject[] enemies = CharacterManager.Instance.GetEnemies();
+            //CharacterManager.Instance.RemoveEnemy(enemies, objectDestroy);
 
             // Trigger the OnObjectDestroyed event
             if (OnObjectDestroyed != null)
