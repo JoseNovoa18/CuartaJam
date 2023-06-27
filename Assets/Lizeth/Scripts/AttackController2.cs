@@ -19,6 +19,11 @@ public class AttackController2 : MonoBehaviour
         StartGame();
     }
 
+    /*private void Update()
+    {
+        Debug.Log("Seactualiza");
+    }*/
+
     private void StartGame()
     {
         CharacterManager.Instance.AddCharacter<Enemy>();
@@ -65,7 +70,7 @@ public class AttackController2 : MonoBehaviour
 
     private IEnumerator WaitAndRestartAttacks()
     {
-        yield return new WaitForSeconds(12f); // Esperar dos segundos
+        yield return new WaitForSeconds(2f); // Esperar dos segundos
 
         StartCoroutine(PerformAttacks());
     }

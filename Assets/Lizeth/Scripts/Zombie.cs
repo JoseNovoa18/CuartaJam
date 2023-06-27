@@ -11,12 +11,22 @@ public class Zombie : Character
         // Obtener la posición inicial del zombie
         Vector3 initialPosition = transform.position;
 
+        // Obtener el componente Animator del objeto
+        //Animator animator = GetComponent<Animator>();
+
+        // Iniciar la animación de ataque
+        //animator.SetTrigger("Attack");
+
+        // Esperar un breve momento para permitir que la animación se reproduzca
+        yield return new WaitForSeconds(0.5f);
+
         // Mover al zombie hacia el objetivo y realizar el ataque
         Vector3 direction = target.transform.position - transform.position;
         direction.Normalize();
 
         float distance = Vector3.Distance(transform.position, target.transform.position);
         float movementSpeed = 6f; // Ajusta la velocidad de movimiento según tus necesidades
+
 
         while (distance > 1.2f)
         {
