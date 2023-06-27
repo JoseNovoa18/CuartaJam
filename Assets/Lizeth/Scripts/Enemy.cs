@@ -5,9 +5,6 @@ public class Enemy : Character
 {
     protected override IEnumerator PerformAttack(GameObject target)
     {
-        // Lógica de ataque para el enemigo
-        Debug.Log("Enemy attacking: " + target.name);
-
         // Obtener la posición inicial del enemigo
         Vector3 initialPosition = transform.position;
 
@@ -27,6 +24,7 @@ public class Enemy : Character
             yield return null;
         }
 
+        yield return new WaitForSeconds(1f);
         yield return StartCoroutine(Health(target, initialPosition));
     }
 

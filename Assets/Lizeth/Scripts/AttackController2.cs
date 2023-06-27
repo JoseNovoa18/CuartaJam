@@ -9,6 +9,8 @@ public class AttackController2 : MonoBehaviour
     public GameObject[] zombiesObjects; // Array of enemies
     public Button startGame;
     private bool attackZombieObject = true;
+    private bool isGameStartet  = false;
+    private bool isAttacking = false;
 
     private bool shouldContinue = true; // Bandera para controlar el bucle
 
@@ -19,13 +21,43 @@ public class AttackController2 : MonoBehaviour
         StartGame();
     }
 
-    /*private void Update()
+    private void Update()
     {
-        Debug.Log("Seactualiza");
-    }*/
+        if (isGameStartet)
+        {
+            SelectCharacters.OnCharacterSpawned += HandleCharacterSpawned;
+        }           
+    }
+
+    private void HandleCharacterSpawned(GameObject newCharacter)
+    {
+        CharacterManager.Instance.AddCharacter<Enemy>();
+        CharacterManager.Instance.AddCharacter<Zombie>();
+
+        shouldContinue = false;
+        enemiesObjects = CharacterManager.Instance.GetEnemies();
+        zombiesObjects = CharacterManager.Instance.GetZombies();
+        shouldContinue = true;
+        StartCoroutine(WaitAndRestartAttacks());
+
+        Debug.Log("Se agrego un nuevo personaje");
+    }
+
+    private void HandleObjectDestroyed(GameObject destroyedObject)
+    {
+        shouldContinue = false;
+        CharacterManager.Instance.RemoveCharacter<Enemy>(destroyedObject);
+        CharacterManager.Instance.RemoveCharacter<Zombie>(destroyedObject);
+
+        enemiesObjects = CharacterManager.Instance.GetEnemies();
+        zombiesObjects = CharacterManager.Instance.GetZombies();
+        shouldContinue = true;
+        StartCoroutine(WaitAndRestartAttacks());
+    }
 
     private void StartGame()
     {
+        isGameStartet = true;
         CharacterManager.Instance.AddCharacter<Enemy>();
         CharacterManager.Instance.AddCharacter<Zombie>();
 
@@ -58,16 +90,6 @@ public class AttackController2 : MonoBehaviour
         StartCoroutine(PerformAttacks());
     }
 
-    private void HandleObjectDestroyed(GameObject destroyedObject)
-    {
-        // Si se destruye un objeto, se detiene el bucle
-        shouldContinue = false;
-        enemiesObjects = CharacterManager.Instance.GetEnemies();
-        zombiesObjects = CharacterManager.Instance.GetZombies();
-        shouldContinue = true;
-        StartCoroutine(WaitAndRestartAttacks());
-    }
-
     private IEnumerator WaitAndRestartAttacks()
     {
         yield return new WaitForSeconds(2f); // Esperar dos segundos
@@ -77,7 +99,6 @@ public class AttackController2 : MonoBehaviour
 
     private IEnumerator PerformAttacks()
     {
-        Debug.Log("volvio"); 
         while (shouldContinue && zombiesObjects.Length > 0 && enemiesObjects.Length > 0)
         {
             int zombiesIndex = Random.Range(0, zombiesObjects.Length - 1);

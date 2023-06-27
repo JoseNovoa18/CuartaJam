@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
+using Random = UnityEngine.Random;
 
 public class SelectCharacters : MonoBehaviour
 {
@@ -17,6 +19,8 @@ public class SelectCharacters : MonoBehaviour
     public GameObject prefabToSpawn4;
 
     public TextMeshProUGUI[] brainsTextArray;
+
+    public static event Action<GameObject> OnCharacterSpawned;
 
     private List<GameObject> spawnedCharacters1 = new List<GameObject>();
     private List<GameObject> spawnedCharacters2 = new List<GameObject>();
@@ -45,6 +49,12 @@ public class SelectCharacters : MonoBehaviour
             spawnedCharacters1.Add(newCharacter);
             brains -= characterBrains1;
             UpdateBrainsText();
+
+            // Disparar el evento para notificar la adición del nuevo personaje
+            if (OnCharacterSpawned != null)
+            {
+                OnCharacterSpawned.Invoke(newCharacter);
+            }
         }
     }
 

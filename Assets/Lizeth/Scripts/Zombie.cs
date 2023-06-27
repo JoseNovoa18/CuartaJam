@@ -5,19 +5,8 @@ public class Zombie : Character
 {
     protected override IEnumerator PerformAttack(GameObject target)
     {
-        // Lógica de ataque para el zombie
-        Debug.Log("Zombie attacking: " + target.name);
-
         // Obtener la posición inicial del zombie
         Vector3 initialPosition = transform.position;
-
-        // Obtener el componente Animator del objeto
-        //Animator animator = GetComponent<Animator>();
-
-        // Iniciar la animación de ataque
-        //animator.SetTrigger("Attack");
-
-        // Esperar un breve momento para permitir que la animación se reproduzca
         yield return new WaitForSeconds(0.5f);
 
         // Mover al zombie hacia el objetivo y realizar el ataque
@@ -37,8 +26,6 @@ public class Zombie : Character
         }
 
         yield return new WaitForSeconds(0.5f);
-        // Iniciar el retroceso del zombie hacia su posición inicial
-        //yield return StartCoroutine(Retreat(initialPosition));
         yield return StartCoroutine(Health(target, initialPosition));
     }
 
@@ -48,7 +35,7 @@ public class Zombie : Character
         Health lifeController = target.GetComponent<Health>();
         if (lifeController != null)
         {
-            lifeController.ReduceHealth(10, target); // Adjust the amount of life to reduce according to your needs
+            lifeController.ReduceHealth(10, target); 
         }
 
         yield return StartCoroutine(Retreat(initialPosition));
@@ -56,9 +43,6 @@ public class Zombie : Character
 
     protected override IEnumerator Retreat(Vector3 initialPosition)
     {
-        // Lógica de retroceso para el zombie
-        Debug.Log("Zombie retreating");
-
         float movementSpeed = 5f; // Ajusta la velocidad de movimiento según tus necesidades
         float delayBetweenIterations = 0.1f; // Ajusta el tiempo de espera entre iteraciones
 
