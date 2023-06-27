@@ -5,6 +5,47 @@ using TMPro;
 
 public class CountBrains : MonoBehaviour
 {
+    private static CountBrains instance;
+
+    public static CountBrains Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<CountBrains>();
+                DontDestroyOnLoad(instance.gameObject);
+            }
+            return instance;
+        }
+    }
+
+    private int brains = 1500;
+    private int originalBrains; // Variable para almacenar el valor original de brains
+
+    public int Brainss
+    {
+        get { return brains; }
+        set { brains = value; }
+    }
+
+    private void Awake()
+    {
+        originalBrains = brains; // Guardar el valor original de brains
+    }
+
+    public void SaveBrains()
+    {
+        originalBrains = brains; // Actualizar el valor original de brains
+    }
+
+    public void RestoreOriginalBrains()
+    {
+        brains = originalBrains; // Restaurar el valor original de brains
+    }
+
+
+    /*
     private static CountBrains _instance;
     public static CountBrains Instance { get { return _instance; } }
 
@@ -32,6 +73,7 @@ public class CountBrains : MonoBehaviour
         }
     /*
         currentBrainsText.text = currentBrains.ToString();
-    */
+    
     }
+    */
 }
