@@ -712,7 +712,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5253253908544711764}
-  m_LocalRotation: {x: 0.000000051554522, y: -0.00000003004743, z: 0.00000010339781, w: 1}
+  m_LocalRotation: {x: 0.000000051554522, y: -0.00000003004743, z: 0.00000010339781,
+    w: 1}
   m_LocalPosition: {x: 0.9796582, y: -1.0533072, z: 0.34974942}
   m_LocalScale: {x: 1, y: 1, z: 1.0000001}
   m_ConstrainProportionsScale: 0
@@ -1678,8 +1679,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8414340760899266426}
   - component: {fileID: 8308867714738600623}
+  - component: {fileID: 1568718057583394655}
   m_Layer: 0
-  m_Name: PigAnim
+  m_Name: Pig_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1694,7 +1696,7 @@ Transform:
   m_GameObject: {fileID: 9191405917362322880}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.64, z: -8.04}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.22218, y: 0.22218, z: 0.22218}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8862508913160833733}
@@ -1728,3 +1730,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &1568718057583394655
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9191405917362322880}
+  m_Material: {fileID: 13400000, guid: 27df744838897a04e93c94c5bc83ffc4, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.7854636, y: 2.8817225, z: 1.3629756}
+  m_Center: {x: 0.042273883, y: -0.20611463, z: 0.12158438}
