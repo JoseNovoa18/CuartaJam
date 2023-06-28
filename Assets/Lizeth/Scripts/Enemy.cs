@@ -17,7 +17,7 @@ public class Enemy : Character
         float distance = Vector3.Distance(transform.position, target.transform.position);
         float movementSpeed = 6f; // Ajusta la velocidad de movimiento según tus necesidades
 
-        while (distance > 1.2f)
+        while (distance > 1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);
             distance = Vector3.Distance(transform.position, target.transform.position);
