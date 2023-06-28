@@ -176,7 +176,7 @@ public class AttackController2 : MonoBehaviour
                     zombiesIndex = Random.Range(0, zombiesObjects.Length);
                     zombieObject = zombiesObjects[zombiesIndex];
                     zombieCharacter = zombieObject.GetComponent<Character>();
-                } while (zombieObject.name.Contains("Worker"));
+                } while (zombieObject.name.Contains("Worker") && zombiesObjects.Length > 1);
                 zombieCharacter.Attack(enemyObject);
                 attackZombieObject = false;
             }

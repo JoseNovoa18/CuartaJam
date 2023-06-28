@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Zombie : Character
 {
+    public int damage = 15;
     protected override IEnumerator PerformAttack(GameObject target)
     {
         // Obtener la posición inicial del zombie
@@ -41,7 +42,7 @@ public class Zombie : Character
         Health lifeController = target.GetComponent<Health>();
         if (lifeController != null)
         {
-            lifeController.ReduceHealth(10, target); // Adjust the amount of life to reduce according to your needs
+            lifeController.ReduceHealth(damage, target); // Adjust the amount of life to reduce according to your needs
         }
 
         yield return StartCoroutine(Retreat(initialPosition));
