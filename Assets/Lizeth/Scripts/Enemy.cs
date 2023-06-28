@@ -40,6 +40,7 @@ public class Enemy : Character
 
         // Reduce the life of the target object
         Health lifeController = target.GetComponent<Health>();
+        Debug.Log("lifeController: " + lifeController); 
         if (lifeController != null)
         {
             lifeController.ReduceHealth(10, target); // Adjust the amount of life to reduce according to your needs

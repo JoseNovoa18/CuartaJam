@@ -7,7 +7,8 @@ public class AttackController2 : MonoBehaviour
 {
     public GameObject[] enemiesObjects; // Array of zombies
     public GameObject[] zombiesObjects; // Array of enemies
-    public Button startGame;
+    public GameObject win;
+    public GameObject lost;
     private bool attackZombieObject = true;
     private bool isGameStartet = false;
     private Coroutine attackCoroutine;
@@ -26,6 +27,21 @@ public class AttackController2 : MonoBehaviour
         if (isGameStartet)
         {
             SelectCharacters.OnCharacterSpawned += HandleCharacterSpawned;
+
+            if (zombiesObjects.Length > 0 && enemiesObjects.Length < 1) {
+                if (win != null)
+                {
+                    win.SetActive(true);
+                }
+            }
+
+            if (enemiesObjects.Length > 0 && zombiesObjects.Length < 1)
+            {
+                if (lost != null)
+                {
+                    lost.SetActive(true);
+                }
+            }
         }
     }
 
@@ -41,6 +57,7 @@ public class AttackController2 : MonoBehaviour
     {
         CharacterManager.Instance.AddCharacter<Enemy>();
         CharacterManager.Instance.AddCharacter<Zombie>();
+        CharacterManager.Instance.AddCharacter<ZombieWorker>();
 
         StartCoroutine(UpdateCharacterLists());
         StartCoroutine(StartAttacksAfterDelay());
@@ -74,8 +91,11 @@ public class AttackController2 : MonoBehaviour
     private void StartGame()
     {
         isGameStartet = true;
-        CharacterManager.Instance.AddCharacter<Enemy>();
-        CharacterManager.Instance.AddCharacter<Zombie>();
+
+        CharacterManager characterManager = CharacterManager.Instance;
+        characterManager.AddCharacter<Enemy>();
+        characterManager.AddCharacter<Zombie>();
+        characterManager.AddCharacter<ZombieWorker>();
 
         // Obtener los objetos de los enemigos y zombies
         enemiesObjects = CharacterManager.Instance.GetEnemies();
@@ -128,11 +148,10 @@ public class AttackController2 : MonoBehaviour
         while (shouldContinue && zombiesObjects.Length > 0 && enemiesObjects.Length > 0)
         {
             int zombiesIndex = Random.Range(0, zombiesObjects.Length);
-            int enemiesIndex = Random.Range(0, enemiesObjects.Length);
-
             GameObject zombieObject = zombiesObjects[zombiesIndex];
-            GameObject enemyObject = enemiesObjects[enemiesIndex];
 
+            int enemiesIndex = Random.Range(0, enemiesObjects.Length);
+            GameObject enemyObject = enemiesObjects[enemiesIndex];
             // Verificar si el objeto zombie aún existe y no ha sido destruido
             if (zombieObject == null || zombieObject.GetComponent<Character>() == null)
             {
@@ -152,6 +171,12 @@ public class AttackController2 : MonoBehaviour
             if (attackZombieObject)
             {
                 // Realizar el ataque
+                do
+                {                  
+                    zombiesIndex = Random.Range(0, zombiesObjects.Length);
+                    zombieObject = zombiesObjects[zombiesIndex];
+                    zombieCharacter = zombieObject.GetComponent<Character>();
+                } while (zombieObject.name.Contains("Worker"));
                 zombieCharacter.Attack(enemyObject);
                 attackZombieObject = false;
             }
