@@ -178,7 +178,7 @@ public class AttackController : MonoBehaviour
         Health lifeController = obj.GetComponent<Health>();
         if (lifeController != null)
         {
-            lifeController.ReduceHealth(10, obj); // Adjust the amount of life to reduce according to your needs
+            lifeController.ReduceHealth(10, obj); 
         }
         yield return null;
     }
