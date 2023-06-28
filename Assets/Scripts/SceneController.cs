@@ -25,7 +25,7 @@ public class SceneController : MonoBehaviour
     }
     public void SelectLevel()
     {
-        SceneManager.LoadScene("SelectLevels");
+        SceneManager.LoadScene("PracticeLevelPrototypeFinal");
     }
 
     public void Level1()
