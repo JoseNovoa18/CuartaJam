@@ -5,7 +5,7 @@ using UnityEngine;
 public class FadesDownText : MonoBehaviour
 {
     public float fadeInDuration = 1.0f;     // Duration of the fade-in animation
-    public float descendDuration = 1.0f;    // Duration of the descent animation
+    public float descendDuration = 1.0f;    // Duration of the  animation
     public float targetYPosition = 400.3f;  // Target Y position of the text
 
     private RectTransform rectTransform;
