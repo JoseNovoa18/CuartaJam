@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class ZombieWorker : Character
 {
-    private Animator animator;
-
-    private void Start()
-    {
-        animator = GetComponent<Animator>();    
-    }
+    
     protected override IEnumerator Health(GameObject target, Vector3 initialPosition)
     {
         yield break;
@@ -17,7 +12,6 @@ public class ZombieWorker : Character
 
     protected override IEnumerator PerformAttack(GameObject target)
     {
-        animator.SetTrigger("Attack");
         yield break;
     }
 
