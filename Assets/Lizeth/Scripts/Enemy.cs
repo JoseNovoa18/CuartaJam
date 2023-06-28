@@ -4,12 +4,6 @@ using System;
 
 public class Enemy : Character
 {
-    private Animator animator;
-
-    private void Start()
-    {
-        animator = GetComponent<Animator>();
-    }
     public int hasBrains = 0;
     protected override IEnumerator PerformAttack(GameObject target)
     {
@@ -47,7 +41,6 @@ public class Enemy : Character
 
         // Reduce the life of the target object
         Health lifeController = target.GetComponent<Health>();
-        Debug.Log("lifeController: " + lifeController); 
         if (lifeController != null)
         {
             lifeController.ReduceHealth(10, target); // Adjust the amount of life to reduce according to your needs
@@ -61,6 +54,7 @@ public class Enemy : Character
 
         float movementSpeed = 5f; // Ajusta la velocidad de movimiento según tus necesidades
         float delayBetweenIterations = 0.1f; // Ajusta el tiempo de espera entre iteraciones
+       
 
         while (Vector3.Distance(transform.position, initialPosition) > 0.01f)
         {
@@ -68,6 +62,7 @@ public class Enemy : Character
             yield return new WaitForSeconds(delayBetweenIterations);
         }
 
+       
         yield return null;
     }
 }
