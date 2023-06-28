@@ -4,6 +4,12 @@ using System;
 
 public class Enemy : Character
 {
+    private Animator animator;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
     public int hasBrains = 0;
     protected override IEnumerator PerformAttack(GameObject target)
     {
@@ -17,6 +23,7 @@ public class Enemy : Character
         float distance = Vector3.Distance(transform.position, target.transform.position);
         float movementSpeed = 6f; // Ajusta la velocidad de movimiento según tus necesidades
 
+        yield return new WaitForSeconds(0.5f);
         while (distance > 1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);

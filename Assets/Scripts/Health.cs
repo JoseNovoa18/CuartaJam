@@ -31,18 +31,20 @@ public class Health : MonoBehaviour
         // Check if the object has lost all its life
         if (maxHealth <= 0)
         {
-            if (objectDestroy.GetComponent<Enemy>() is Enemy)
-            {
-                CharacterManager.Instance.RemoveCharacter<Enemy>(objectDestroy);
-                Destroy(gameObject);
-                // Actualizar el valor de currentBrains en CountBrains
+            if(objectDestroy != null && objectDestroy.GetComponent<Enemy>() is Enemy)
+{
                 if (countBrains != null)
-                {                  
+                {
                     Enemy enemy = objectDestroy.GetComponent<Enemy>();
                     CountBrains.Instance.Brainss += enemy.hasBrains;
                     brainsText.text = CountBrains.Instance.Brainss.ToString();
                 }
+
+                CharacterManager.Instance.RemoveCharacter<Enemy>(objectDestroy);
+                Destroy(objectDestroy);
             }
+
+            
             // Verificar si el objeto destruido es un Zombie
             else if (objectDestroy.GetComponent<Zombie>() is Zombie)
             {
