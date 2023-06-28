@@ -11,6 +11,7 @@ public class Health : MonoBehaviour
     public event Action<GameObject> OnObjectDestroyed;
     public event Action<GameObject> OnCollisionDetected;
     public TextMeshProUGUI brainsText;
+    public int damage = 3;
 
     private CountBrains countBrains; // Referencia a la instancia de CountBrains
 
@@ -73,7 +74,7 @@ public class Health : MonoBehaviour
         // Verificar si los nombres de los objetos contienen las palabras clave
         if (thisObject.CompareTag("Enemy") && otherObject.name.Contains("Brick"))
         {
-            ReduceHealth(1, thisObject);
+            ReduceHealth(damage, thisObject);
         }
 
         if (thisObject.CompareTag("Enemy") && otherObject.name.Contains("Doctor"))
