@@ -4,9 +4,8 @@ using UnityEngine;
 public class CharacterManager : MonoBehaviour
 {
     public static CharacterManager Instance { get; private set; } // Instancia del singleton
-    public GameObject[] enemiesObjects; // Array of zombies
-    public GameObject[] zombiesObjects;
-
+    public GameObject[] enemiesObjects; // Arreglo de objetos Enemy
+    public GameObject[] zombiesObjects; // Arreglo de objetos Zombie y ZombieWorker
 
     private void Awake()
     {
@@ -33,9 +32,24 @@ public class CharacterManager : MonoBehaviour
         {
             enemiesObjects = System.Array.ConvertAll(characters, character => character.gameObject);
         }
-        else if (typeof(T) == typeof(Zombie))
+        else if (typeof(T) == typeof(Zombie) || typeof(T) == typeof(ZombieWorker))
         {
-            zombiesObjects = System.Array.ConvertAll(characters, character => character.gameObject);
+            int existingZombiesCount = zombiesObjects != null ? zombiesObjects.Length : 0;
+            int newCharactersCount = characters != null ? characters.Length : 0;
+            int totalZombiesCount = existingZombiesCount + newCharactersCount;
+
+            GameObject[] updatedZombies = new GameObject[totalZombiesCount];
+            if (existingZombiesCount > 0)
+            {
+                zombiesObjects.CopyTo(updatedZombies, 0);
+            }
+            if (newCharactersCount > 0)
+            {
+                GameObject[] characterObjects = System.Array.ConvertAll(characters, character => character.gameObject);
+                characterObjects.CopyTo(updatedZombies, existingZombiesCount);
+            }
+
+            zombiesObjects = updatedZombies;
         }
     }
 
@@ -48,7 +62,7 @@ public class CharacterManager : MonoBehaviour
                 enemiesObjects = RemoveGameObjectFromArray(enemiesObjects, destroyedObject);
             }
         }
-        else if (typeof(T) == typeof(Zombie))
+        else if (typeof(T) == typeof(Zombie) || typeof(T) == typeof(ZombieWorker))
         {
             if (ArrayContainsGameObject(zombiesObjects, destroyedObject))
             {
@@ -57,18 +71,11 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
-    public void AddEnemy()
-    {
-        Enemy[] enemies = FindObjectsOfType<Enemy>(); // Obtener todos los objetos de tipo Zombie en la escena
-
-        // Convertir la matriz de zombies a una matriz de GameObjects
-        enemiesObjects = System.Array.ConvertAll(enemies, enemy => enemy.gameObject);
-    }
-
     public GameObject[] GetEnemies()
     {
         return enemiesObjects;
     }
+
     public GameObject[] GetZombies()
     {
         return zombiesObjects;

@@ -696,7 +696,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b5ee84ac29f254c88ac75dddd7e94c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
+  maxHealth: 40
+  brainsText: {fileID: 0}
 --- !u!54 &2654348648089395204
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -721,7 +722,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6137846846591422395}
   m_Material: {fileID: 13400000, guid: 27df744838897a04e93c94c5bc83ffc4, type: 2}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.023659917, y: 0.051567078, z: 0.015736783}

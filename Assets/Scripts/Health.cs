@@ -1,24 +1,32 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public int maxHealth = 20; // The maximum health of the object
+    public int maxHealth = 40; // The maximum health of the object
     private int currentHealth; // The current health of the object
     public event Action<GameObject> OnObjectDestroyed;
     public event Action<GameObject> OnCollisionDetected;
+    public TextMeshProUGUI brainsText;
 
+    private CountBrains countBrains; // Referencia a la instancia de CountBrains
 
     private void Start()
     {
         currentHealth = maxHealth; // Set the initial life as the maximum life
+
+        // Obtener la instancia de CountBrains
+        countBrains = CountBrains.Instance;
     }
 
     public void ReduceHealth(int amount, GameObject objectDestroy)
     {
         maxHealth -= amount;
+
+        Debug.Log("maxHealth " + maxHealth);
 
         // Check if the object has lost all its life
         if (maxHealth <= 0)
@@ -27,6 +35,13 @@ public class Health : MonoBehaviour
             {
                 CharacterManager.Instance.RemoveCharacter<Enemy>(objectDestroy);
                 Destroy(gameObject);
+                // Actualizar el valor de currentBrains en CountBrains
+                if (countBrains != null)
+                {                  
+                    Enemy enemy = objectDestroy.GetComponent<Enemy>();
+                    CountBrains.Instance.Brainss += enemy.hasBrains;
+                    brainsText.text = CountBrains.Instance.Brainss.ToString();
+                }
             }
             // Verificar si el objeto destruido es un Zombie
             else if (objectDestroy.GetComponent<Zombie>() is Zombie)
@@ -34,9 +49,11 @@ public class Health : MonoBehaviour
                 CharacterManager.Instance.RemoveCharacter<Zombie>(objectDestroy);
                 Destroy(gameObject);
             }
-
-            //GameObject[] enemies = CharacterManager.Instance.GetEnemies();
-            //CharacterManager.Instance.RemoveEnemy(enemies, objectDestroy);
+            else if (objectDestroy.GetComponent<ZombieWorker>() is ZombieWorker)
+            {
+                CharacterManager.Instance.RemoveCharacter<ZombieWorker>(objectDestroy);
+                Destroy(gameObject);
+            }
 
             // Trigger the OnObjectDestroyed event
             if (OnObjectDestroyed != null)
@@ -51,17 +68,15 @@ public class Health : MonoBehaviour
         GameObject thisObject = gameObject; // Objeto actual al que se le asigna este script
         GameObject otherObject = collision.collider.gameObject; // Otro objeto que colisionó con este objeto
 
-        
-
         // Verificar si los nombres de los objetos contienen las palabras clave
-        if (thisObject.name.Contains("Secretary") && otherObject.name.Contains("Brick"))
+        if (thisObject.CompareTag("Enemy") && otherObject.name.Contains("Brick"))
         {
             ReduceHealth(1, thisObject);
         }
 
-        if (thisObject.name.Contains("Secretary") && otherObject.name.Contains("Doctor"))
+        if (thisObject.CompareTag("Enemy") && otherObject.name.Contains("Doctor"))
         {
-            Debug.Log("colisiono " + thisObject.name + "con " + otherObject.name);
+            Debug.Log("Colisión detectada entre " + thisObject.name + " y " + otherObject.name);
             // Notificar a AttackController sobre la colisión
             OnCollisionDetected?.Invoke(otherObject);
         }
