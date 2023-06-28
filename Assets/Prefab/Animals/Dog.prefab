@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2236427257932792771}
   - component: {fileID: -759973116311014302}
+  - component: {fileID: -9187389085882080913}
+  - component: {fileID: 3013366471817883864}
   m_Layer: 0
   m_Name: Dog
   m_TagString: Enemy
@@ -46,6 +48,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5045986, y: 0.8273847, z: 0.8009882}
   m_Center: {x: -1.8200631, y: 0.4162432, z: 4.4532933}
+--- !u!114 &-9187389085882080913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459925017078110585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b5ee84ac29f254c88ac75dddd7e94c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 40
+  brainsText: {fileID: 0}
+--- !u!114 &3013366471817883864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459925017078110585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3284e272d36c5334bb3a3335f065b85d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasBrains: 0
 --- !u!1 &7624446770697134496
 GameObject:
   m_ObjectHideFlags: 0

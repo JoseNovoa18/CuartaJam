@@ -17,6 +17,7 @@ public class Enemy : Character
         float distance = Vector3.Distance(transform.position, target.transform.position);
         float movementSpeed = 6f; // Ajusta la velocidad de movimiento según tus necesidades
 
+        yield return new WaitForSeconds(0.5f);
         while (distance > 1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);
@@ -40,7 +41,6 @@ public class Enemy : Character
 
         // Reduce the life of the target object
         Health lifeController = target.GetComponent<Health>();
-        Debug.Log("lifeController: " + lifeController); 
         if (lifeController != null)
         {
             lifeController.ReduceHealth(10, target); // Adjust the amount of life to reduce according to your needs
@@ -54,6 +54,7 @@ public class Enemy : Character
 
         float movementSpeed = 5f; // Ajusta la velocidad de movimiento según tus necesidades
         float delayBetweenIterations = 0.1f; // Ajusta el tiempo de espera entre iteraciones
+       
 
         while (Vector3.Distance(transform.position, initialPosition) > 0.01f)
         {
@@ -61,6 +62,7 @@ public class Enemy : Character
             yield return new WaitForSeconds(delayBetweenIterations);
         }
 
+       
         yield return null;
     }
 }

@@ -9,7 +9,7 @@ public class MoveForwardAnimals : MonoBehaviour
 
     private void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponent<Animator >();
     }
     void Update()
     {
