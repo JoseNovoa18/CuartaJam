@@ -5,19 +5,8 @@ public class Zombie : Character
 {
     protected override IEnumerator PerformAttack(GameObject target)
     {
-        // Lógica de ataque para el zombie
-        Debug.Log("Zombie attacking: " + target.name);
-
         // Obtener la posición inicial del zombie
         Vector3 initialPosition = transform.position;
-
-        // Obtener el componente Animator del objeto
-        //Animator animator = GetComponent<Animator>();
-
-        // Iniciar la animación de ataque
-        //animator.SetTrigger("Attack");
-
-        // Esperar un breve momento para permitir que la animación se reproduzca
         yield return new WaitForSeconds(0.5f);
 
         // Mover al zombie hacia el objetivo y realizar el ataque
@@ -28,7 +17,7 @@ public class Zombie : Character
         float movementSpeed = 6f; // Ajusta la velocidad de movimiento según tus necesidades
 
 
-        while (distance > 1.2f)
+        while (distance > 1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);
             distance = Vector3.Distance(transform.position, target.transform.position);
@@ -37,13 +26,17 @@ public class Zombie : Character
         }
 
         yield return new WaitForSeconds(0.5f);
-        // Iniciar el retroceso del zombie hacia su posición inicial
-        //yield return StartCoroutine(Retreat(initialPosition));
         yield return StartCoroutine(Health(target, initialPosition));
     }
 
     protected override IEnumerator Health(GameObject target, Vector3 initialPosition)
     {
+        if (target == null)
+        {
+            // El objetivo ya no existe, salimos del método
+            yield break;
+        }
+
         // Reduce the life of the target object
         Health lifeController = target.GetComponent<Health>();
         if (lifeController != null)
@@ -56,9 +49,6 @@ public class Zombie : Character
 
     protected override IEnumerator Retreat(Vector3 initialPosition)
     {
-        // Lógica de retroceso para el zombie
-        Debug.Log("Zombie retreating");
-
         float movementSpeed = 5f; // Ajusta la velocidad de movimiento según tus necesidades
         float delayBetweenIterations = 0.1f; // Ajusta el tiempo de espera entre iteraciones
 
