@@ -1770,5 +1770,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b5ee84ac29f254c88ac75dddd7e94c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
+  maxHealth: 30
   brainsText: {fileID: 0}
+  damage: 10

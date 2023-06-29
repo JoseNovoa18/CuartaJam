@@ -922,8 +922,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b5ee84ac29f254c88ac75dddd7e94c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 40
+  maxHealth: 20
   brainsText: {fileID: 0}
+  damage: 5
 --- !u!1 &5144603075218930045
 GameObject:
   m_ObjectHideFlags: 0
