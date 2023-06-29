@@ -25,7 +25,7 @@ public class SceneController : MonoBehaviour
     }
     public void SelectLevel()
     {
-        SceneManager.LoadScene("SelectLevels");
+        SceneManager.LoadScene("PracticeLevelPrototypeFinal");
     }
 
     public void Level1()
@@ -43,5 +43,11 @@ public class SceneController : MonoBehaviour
     {
         Debug.Log("Salio del juego");
         Application.Quit();
+    }
+
+    public void BackToSelectLevelWithoutSaving()
+    {
+        CountBrains.Instance.RestoreOriginalBrains(); // Restaurar el valor original de cerebros
+        SceneManager.LoadScene("MainMenu");
     }
 }
