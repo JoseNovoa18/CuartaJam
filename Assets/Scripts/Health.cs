@@ -14,6 +14,12 @@ public class Health : MonoBehaviour
     public int damage = 3;
 
     private CountBrains countBrains; // Referencia a la instancia de CountBrains
+    private AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
 
     private void Start()
     {
@@ -41,6 +47,8 @@ public class Health : MonoBehaviour
                     brainsText.text = CountBrains.Instance.Brainss.ToString();
                 }
 
+                audioManager.PlaySFX(audioManager.SheepDeath);
+
                 CharacterManager.Instance.RemoveCharacter<Enemy>(objectDestroy);
                 Destroy(objectDestroy);
             }
@@ -49,6 +57,8 @@ public class Health : MonoBehaviour
             // Verificar si el objeto destruido es un Zombie
             else if (objectDestroy.GetComponent<Zombie>() is Zombie)
             {
+                audioManager.PlaySFX(audioManager.Zombie2Death);
+
                 CharacterManager.Instance.RemoveCharacter<Zombie>(objectDestroy);
                 Destroy(gameObject);
             }

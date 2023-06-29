@@ -4,6 +4,13 @@ using System.Collections;
 public class Zombie : Character
 {
     public int damage = 15;
+    private AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();   
+    }
+
     protected override IEnumerator PerformAttack(GameObject target)
     {
         // Obtener la posición inicial del zombie
@@ -44,6 +51,7 @@ public class Zombie : Character
         {
             lifeController.ReduceHealth(damage, target); // Adjust the amount of life to reduce according to your needs
         }
+
 
         yield return StartCoroutine(Retreat(initialPosition));
     }
