@@ -49,7 +49,7 @@ public class SelectCharacters : MonoBehaviour
         if (CountBrains.Instance.Brainss >= characterBrains1)
         {
             Vector3 reference = gameObjectReference.transform.position;
-            Vector3 randomSpawnPosition = new Vector3(Random.Range(-2f, 1.5f), 0, Random.Range(-1f, -2f));
+            Vector3 randomSpawnPosition = new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-1f, -2f));
             GameObject newCharacter = Instantiate(prefabToSpawn1, reference + randomSpawnPosition, Quaternion.Euler(0f, 180f, 0f));
             spawnedCharacters1.Add(newCharacter);
             CountBrains.Instance.Brainss -= characterBrains1;
@@ -68,7 +68,7 @@ public class SelectCharacters : MonoBehaviour
         if (CountBrains.Instance.Brainss >= characterBrains2)
         {
             Vector3 reference = gameObjectReference.transform.position;
-            Vector3 randomSpawnPosition = new Vector3(Random.Range(-2f, 2f), 0, Random.Range(3f, 2f));
+            Vector3 randomSpawnPosition = new Vector3(Random.Range(-2f, 2f), 0, Random.Range(1.5f, 1f));
             GameObject newCharacter = Instantiate(prefabToSpawn2, reference + randomSpawnPosition, Quaternion.Euler(0f, 180f, 0f));
             spawnedCharacters2.Add(newCharacter);
             CountBrains.Instance.Brainss -= characterBrains2;
@@ -81,7 +81,7 @@ public class SelectCharacters : MonoBehaviour
         if (CountBrains.Instance.Brainss >= characterBrains3)
         {
             Vector3 reference = gameObjectReference.transform.position;
-            Vector3 randomSpawnPosition = new Vector3(Random.Range(-2f, 2f), 0, Random.Range(1f, 0f));
+            Vector3 randomSpawnPosition = new Vector3(Random.Range(-2f, 2f), 0, Random.Range(0.5f, -0.5f));
             GameObject newCharacter = Instantiate(prefabToSpawn3, reference + randomSpawnPosition, Quaternion.Euler(0f, 180f, 0f));
             spawnedCharacters3.Add(newCharacter);
             CountBrains.Instance.Brainss -= characterBrains3;
@@ -94,7 +94,7 @@ public class SelectCharacters : MonoBehaviour
         if (CountBrains.Instance.Brainss >= characterBrains4)
         {
             Vector3 reference = gameObjectReference.transform.position;
-            Vector3 randomSpawnPosition = new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-3f, -4f));
+            Vector3 randomSpawnPosition = new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2.5f, -3.5f));
             GameObject newCharacter = Instantiate(prefabToSpawn4, reference + randomSpawnPosition, Quaternion.Euler(0f, 180f, 0f));
             spawnedCharacters4.Add(newCharacter);
             CountBrains.Instance.Brainss -= characterBrains4;
