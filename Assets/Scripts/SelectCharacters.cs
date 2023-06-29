@@ -49,7 +49,7 @@ public class SelectCharacters : MonoBehaviour
         if (CountBrains.Instance.Brainss >= characterBrains1)
         {
             Vector3 reference = gameObjectReference.transform.position;
-            Vector3 randomSpawnPosition = new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-1f, -2f));
+            Vector3 randomSpawnPosition = new Vector3(Random.Range(-2f, 1.5f), 0, Random.Range(-1f, -2f));
             GameObject newCharacter = Instantiate(prefabToSpawn1, reference + randomSpawnPosition, Quaternion.Euler(0f, 180f, 0f));
             spawnedCharacters1.Add(newCharacter);
             CountBrains.Instance.Brainss -= characterBrains1;

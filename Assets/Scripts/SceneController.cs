@@ -25,6 +25,46 @@ public class SceneController : MonoBehaviour
     }
     public void SelectLevel()
     {
+        SceneManager.LoadScene("SelectLevels");
+    }
+
+    public void Level1()
+    {
+        CountBrains.Instance.SaveBrains();
+        SceneManager.LoadScene("Level1");
+    }
+    public void Level2()
+    {
+        CountBrains.Instance.SaveBrains();
+        SceneManager.LoadScene("Level2");
+    }
+
+    public void MainMenuScene()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void PrototypeFinal()
+    {
+        CountBrains.Instance.SaveBrains();
+        SceneManager.LoadScene("PracticeLevelPrototypeFinal");
+    }
+
+    public void Quit()
+    {
+        Debug.Log("Salio del juego");
+        Application.Quit();
+    }
+
+    public void BackToSelectLevelWithoutSaving()
+    {
+        CountBrains.Instance.RestoreOriginalBrains(); // Restaurar el valor original de cerebros
+        SceneManager.LoadScene("SelectLevels");
+    }
+    //Antes
+    /*    
+    public void SelectLevel()
+    {
         SceneManager.LoadScene("PracticeLevelPrototypeFinal");
     }
 
@@ -50,4 +90,6 @@ public class SceneController : MonoBehaviour
         CountBrains.Instance.RestoreOriginalBrains(); // Restaurar el valor original de cerebros
         SceneManager.LoadScene("MainMenu");
     }
+    */
+
 }
