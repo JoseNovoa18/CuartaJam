@@ -34,24 +34,19 @@ public class CharacterManager : MonoBehaviour
         }
         else if (typeof(T) == typeof(Zombie) || typeof(T) == typeof(ZombieWorker))
         {
-            int existingZombiesCount = zombiesObjects != null ? zombiesObjects.Length : 0;
-            int newCharactersCount = characters != null ? characters.Length : 0;
-            int totalZombiesCount = existingZombiesCount + newCharactersCount;
-
-            GameObject[] updatedZombies = new GameObject[totalZombiesCount];
-            if (existingZombiesCount > 0)
+            foreach (var character in characters)
             {
-                zombiesObjects.CopyTo(updatedZombies, 0);
+                GameObject characterObject = character.gameObject;
+                if (!ArrayContainsGameObject(zombiesObjects, characterObject))
+                {
+                    List<GameObject> tempList = new List<GameObject>(zombiesObjects);
+                    tempList.Add(characterObject);
+                    zombiesObjects = tempList.ToArray();
+                }
             }
-            if (newCharactersCount > 0)
-            {
-                GameObject[] characterObjects = System.Array.ConvertAll(characters, character => character.gameObject);
-                characterObjects.CopyTo(updatedZombies, existingZombiesCount);
-            }
-
-            zombiesObjects = updatedZombies;
         }
     }
+
 
     public void RemoveCharacter<T>(GameObject destroyedObject) where T : MonoBehaviour
     {

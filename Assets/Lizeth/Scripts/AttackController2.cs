@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class AttackController2 : MonoBehaviour
@@ -190,6 +191,13 @@ public class AttackController2 : MonoBehaviour
             yield return new WaitForSeconds(5f); // Esperar antes de continuar con el próximo ataque
         }
 
+    }
 
+    public void ResetSceneFromMainMenu()
+    {
+        // Reinicia la escena actual
+        Debug.Log("Entro a reiniciar");
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
     }
 }
