@@ -5,6 +5,14 @@ using System;
 public class Enemy : Character
 {
     public int hasBrains = 0;
+    private Animator animator;
+
+
+    private void Start()
+    {
+        _animator = GetComponent<Animator>();
+    }
+
     protected override IEnumerator PerformAttack(GameObject target)
     {
         // Obtener la posición inicial del enemigo
@@ -19,6 +27,8 @@ public class Enemy : Character
 
         while (distance > 1f)
         {
+            // TODO ANIMACION CORRER
+            animator.SetTrigger("");
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);
             distance = Vector3.Distance(transform.position, target.transform.position);
 
@@ -43,6 +53,8 @@ public class Enemy : Character
         Debug.Log("lifeController: " + lifeController);
         if (lifeController != null)
         {
+            // TODO ANIMACION ATACAR
+            animator.SetTrigger("");
             lifeController.ReduceHealth(10, target); // Adjust the amount of life to reduce according to your needs
         }
 
@@ -57,6 +69,8 @@ public class Enemy : Character
 
         while (Vector3.Distance(transform.position, initialPosition) > 0.01f)
         {
+            // TODO ANIMACION ATACAR
+            animator.SetTrigger("");
             transform.position = Vector3.MoveTowards(transform.position, initialPosition, movementSpeed * Time.deltaTime);
             yield return new WaitForSeconds(delayBetweenIterations);
         }

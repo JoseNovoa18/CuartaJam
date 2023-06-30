@@ -5,6 +5,13 @@ public class Zombie : Character
 {
     public int damage = 15;
     private AudioManager audioManager;
+    private Animator animator;
+
+
+    private void Start()
+    {
+        _animator = GetComponent<Animator>();
+    }
 
     private void Awake()
     {
@@ -27,6 +34,8 @@ public class Zombie : Character
 
         while (distance > 1f)
         {
+            // TODO ANIMACION CORRER
+            animator.SetTrigger("");
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);
             distance = Vector3.Distance(transform.position, target.transform.position);
 
@@ -49,6 +58,8 @@ public class Zombie : Character
         Health lifeController = target.GetComponent<Health>();
         if (lifeController != null)
         {
+            // TODO ANIMACION ATACAR
+            animator.SetTrigger("");
             lifeController.ReduceHealth(damage, target); // Adjust the amount of life to reduce according to your needs
         }
 
@@ -63,6 +74,8 @@ public class Zombie : Character
 
         while (Vector3.Distance(transform.position, initialPosition) > 0.01f)
         {
+            // TODO ACTIVAR ANIMACION RETROCEDER
+            animator.SetTrigger("");
             transform.position = Vector3.MoveTowards(transform.position, initialPosition, movementSpeed * Time.deltaTime);
             yield return new WaitForSeconds(delayBetweenIterations);
         }
