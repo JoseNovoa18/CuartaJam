@@ -38,7 +38,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlayChooseCharactersMusic(AudioClip clip)
     {
-        musicSource.PlayOneShot(clip, 0.5f);
+        musicSource.PlayOneShot(clip, 0.4f);
     }
     public void PlayLevelMusic(AudioClip clip)
     {
