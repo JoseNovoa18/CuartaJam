@@ -30,10 +30,13 @@ public class SelectCharacters : MonoBehaviour
     private List<GameObject> spawnedCharacters3 = new List<GameObject>();
     private List<GameObject> spawnedCharacters4 = new List<GameObject>();
 
+    public bool thereIsAtLeastOneCharacter = false;
+
     private void Start()
     {
         originalBrains = CountBrains.Instance.Brainss;
         UpdateBrainsText();
+        IsThereCharacters();
     }
     private void UpdateBrainsText()
     {
@@ -54,12 +57,15 @@ public class SelectCharacters : MonoBehaviour
             spawnedCharacters1.Add(newCharacter);
             CountBrains.Instance.Brainss -= characterBrains1;
             UpdateBrainsText();
+            IsThereCharacters();
 
             // Disparar el evento para notificar la adici�n del nuevo personaje
+            /*
             if (OnCharacterSpawned != null)
             {
                 OnCharacterSpawned.Invoke(newCharacter);
             }
+            */
         }
     }
 
@@ -73,6 +79,7 @@ public class SelectCharacters : MonoBehaviour
             spawnedCharacters2.Add(newCharacter);
             CountBrains.Instance.Brainss -= characterBrains2;
             UpdateBrainsText();
+            IsThereCharacters();
         }
     }
 
@@ -86,6 +93,7 @@ public class SelectCharacters : MonoBehaviour
             spawnedCharacters3.Add(newCharacter);
             CountBrains.Instance.Brainss -= characterBrains3;
             UpdateBrainsText();
+            IsThereCharacters();
         }
     }
 
@@ -99,6 +107,7 @@ public class SelectCharacters : MonoBehaviour
             spawnedCharacters4.Add(newCharacter);
             CountBrains.Instance.Brainss -= characterBrains4;
             UpdateBrainsText();
+            IsThereCharacters();
         }
     }
 
@@ -111,6 +120,7 @@ public class SelectCharacters : MonoBehaviour
             Destroy(characterToRemove);
             CountBrains.Instance.Brainss += characterBrains1;
             UpdateBrainsText();
+            IsThereCharacters();
         }
     }
 
@@ -123,6 +133,7 @@ public class SelectCharacters : MonoBehaviour
             Destroy(characterToRemove);
             CountBrains.Instance.Brainss += characterBrains2;
             UpdateBrainsText();
+            IsThereCharacters();
         }
     }
 
@@ -135,6 +146,7 @@ public class SelectCharacters : MonoBehaviour
             Destroy(characterToRemove);
             CountBrains.Instance.Brainss += characterBrains3;
             UpdateBrainsText();
+            IsThereCharacters();
         }
     }
 
@@ -147,6 +159,7 @@ public class SelectCharacters : MonoBehaviour
             Destroy(characterToRemove);
             CountBrains.Instance.Brainss += characterBrains4;
             UpdateBrainsText();
+            IsThereCharacters();
         }
     }
 
@@ -154,6 +167,18 @@ public class SelectCharacters : MonoBehaviour
     {
         CountBrains.Instance.RestoreOriginalBrains(); // Restaurar el valor original de cerebros
         SceneManager.LoadScene("SelectLevels");
+    }
+
+    public void IsThereCharacters()
+    {
+        if (spawnedCharacters4.Count > 0 || spawnedCharacters3.Count > 0 || spawnedCharacters2.Count > 0 || spawnedCharacters1.Count > 0)
+        {
+            thereIsAtLeastOneCharacter = true;
+        }
+        else
+        {
+            thereIsAtLeastOneCharacter = false;
+        }
     }
 }
 

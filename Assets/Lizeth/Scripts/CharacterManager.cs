@@ -19,9 +19,6 @@ public class CharacterManager : MonoBehaviour
 
         // Si no hay una instancia, asignar esta instancia al singleton
         Instance = this;
-
-        // Mantener este objeto persistente entre las escenas
-        DontDestroyOnLoad(gameObject);
     }
 
     public void AddCharacter<T>() where T : MonoBehaviour
