@@ -6,11 +6,16 @@ public class Enemy : Character
 {
     public int hasBrains = 0;
     private Animator animator;
+    private AudioManager audioManager;
 
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
+    }
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     protected override IEnumerator PerformAttack(GameObject target)
@@ -28,7 +33,7 @@ public class Enemy : Character
         while (distance > 1f)
         {
             // TODO ANIMACION CORRER
-            animator.SetTrigger("");
+            _animator.SetTrigger("Run");
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);
             distance = Vector3.Distance(transform.position, target.transform.position);
 
@@ -54,7 +59,8 @@ public class Enemy : Character
         if (lifeController != null)
         {
             // TODO ANIMACION ATACAR
-            animator.SetTrigger("");
+            //animator.SetTrigger("");
+            audioManager.PlayAttack(audioManager.Attack);
             lifeController.ReduceHealth(10, target); // Adjust the amount of life to reduce according to your needs
         }
 
@@ -70,7 +76,7 @@ public class Enemy : Character
         while (Vector3.Distance(transform.position, initialPosition) > 0.01f)
         {
             // TODO ANIMACION ATACAR
-            animator.SetTrigger("");
+            //animator.SetTrigger("");
             transform.position = Vector3.MoveTowards(transform.position, initialPosition, movementSpeed * Time.deltaTime);
             yield return new WaitForSeconds(delayBetweenIterations);
         }

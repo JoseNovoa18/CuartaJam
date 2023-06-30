@@ -35,11 +35,12 @@ public class Zombie : Character
         while (distance > 1f)
         {
             // TODO ANIMACION CORRER
-            animator.SetTrigger("");
-            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);
-            distance = Vector3.Distance(transform.position, target.transform.position);
-
+            _animator.SetTrigger("Run");
+            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime); 
+            distance = Vector3.Distance(transform.position, target.transform.position);        
             yield return null; // Permitir que el motor de juego actualice la posición del objeto en cada iteración
+           
+
         }
 
         yield return new WaitForSeconds(0.5f);
@@ -58,9 +59,11 @@ public class Zombie : Character
         Health lifeController = target.GetComponent<Health>();
         if (lifeController != null)
         {
-            // TODO ANIMACION ATACAR
-            animator.SetTrigger("");
+            _animator.SetTrigger("Attack");
+            
             lifeController.ReduceHealth(damage, target); // Adjust the amount of life to reduce according to your needs
+            yield return new WaitForSeconds(2f);
+            audioManager.PlayAttack(audioManager.Attack);
         }
 
 
@@ -71,14 +74,15 @@ public class Zombie : Character
     {
         float movementSpeed = 5f; // Ajusta la velocidad de movimiento según tus necesidades
         float delayBetweenIterations = 0.1f; // Ajusta el tiempo de espera entre iteraciones
+        yield return new WaitForSeconds(2f);
 
         while (Vector3.Distance(transform.position, initialPosition) > 0.01f)
         {
-            // TODO ACTIVAR ANIMACION RETROCEDER
-            animator.SetTrigger("");
+            _animator.SetTrigger("RunBack");
             transform.position = Vector3.MoveTowards(transform.position, initialPosition, movementSpeed * Time.deltaTime);
             yield return new WaitForSeconds(delayBetweenIterations);
         }
+        _animator.SetTrigger("Idle");
     }
 
 }
