@@ -176,6 +176,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 3178098056334631148}
   sfxSource: {fileID: 3178098057200229528}
+  backgroundMusic: {fileID: 8300000, guid: 1eec0507b3a2500468d3fa3b2b7f98f1, type: 3}
+  nightAmbience: {fileID: 8300000, guid: 8f9a2c885dad379468721d57f4ddcc56, type: 3}
   CowDeath: {fileID: 8300000, guid: 77a50c41a25802c4484d247b2e7214d0, type: 3}
   DogDeath: {fileID: 8300000, guid: bfdcbb77f9caa324ab123637a314f59b, type: 3}
   PigDeath: {fileID: 8300000, guid: dd629ab3dbc82b140967e31e96f5b316, type: 3}

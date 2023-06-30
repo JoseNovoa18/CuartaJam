@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,10 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource sfxSource;
 
     [Header("---AudioClip---")]
+    public AudioClip MainMenuMusic;
+    public AudioClip BattleMusic;
+    public AudioClip ChooseCharactersMusic;
+    public AudioClip nightAmbience;
     public AudioClip CowDeath;
     public AudioClip DogDeath;
     public AudioClip PigDeath;
@@ -24,4 +29,28 @@ public class AudioManager : MonoBehaviour
     {
         sfxSource.PlayOneShot(clip);
     }
+
+    public void PlayMainMenuSound()
+    {
+        sfxSource.PlayOneShot(nightAmbience);
+        StartCoroutine(PlayMainMenuMusic());
+    }
+
+    public void PlayChooseCharactersMusic(AudioClip clip)
+    {
+        musicSource.PlayOneShot(clip, 0.5f);
+    }
+    public void PlayLevelMusic(AudioClip clip)
+    {
+        musicSource.PlayOneShot(clip);
+    }
+
+    IEnumerator PlayMainMenuMusic()
+    {
+        yield return new WaitForSeconds(4);
+        musicSource.PlayOneShot(MainMenuMusic);
+    }
+   
+
 }
+
