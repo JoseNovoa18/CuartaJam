@@ -5,7 +5,7 @@ public class Zombie : Character
 {
     public int damage = 15;
     private AudioManager audioManager;
-    private Animator animator;
+    private Animator _animator;
 
 
     private void Start()
@@ -39,7 +39,8 @@ public class Zombie : Character
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime); 
             distance = Vector3.Distance(transform.position, target.transform.position);        
             yield return null; // Permitir que el motor de juego actualice la posición del objeto en cada iteración
-           
+            _animator.SetTrigger("Attack");
+            audioManager.PlayAttack(audioManager.Attack);
 
         }
 
@@ -59,11 +60,11 @@ public class Zombie : Character
         Health lifeController = target.GetComponent<Health>();
         if (lifeController != null)
         {
-            _animator.SetTrigger("Attack");
+            
             
             lifeController.ReduceHealth(damage, target); // Adjust the amount of life to reduce according to your needs
             yield return new WaitForSeconds(2f);
-            audioManager.PlayAttack(audioManager.Attack);
+            
         }
 
 
@@ -74,7 +75,7 @@ public class Zombie : Character
     {
         float movementSpeed = 5f; // Ajusta la velocidad de movimiento según tus necesidades
         float delayBetweenIterations = 0.1f; // Ajusta el tiempo de espera entre iteraciones
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.2f);
 
         while (Vector3.Distance(transform.position, initialPosition) > 0.01f)
         {

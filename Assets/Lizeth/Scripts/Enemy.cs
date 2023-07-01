@@ -38,6 +38,7 @@ public class Enemy : Character
             distance = Vector3.Distance(transform.position, target.transform.position);
 
             // Realizar el ataque al objetivo (puedes agregar la lógica correspondiente aquí)
+            _animator.SetTrigger("Attack");
             yield return null;
         }
 
@@ -60,6 +61,8 @@ public class Enemy : Character
         {
             // TODO ANIMACION ATACAR
             //animator.SetTrigger("");
+            
+
             audioManager.PlayAttack(audioManager.Attack);
             lifeController.ReduceHealth(10, target); // Adjust the amount of life to reduce according to your needs
         }
@@ -69,7 +72,7 @@ public class Enemy : Character
 
     protected override IEnumerator Retreat(Vector3 initialPosition)
     {
-
+        _animator.SetTrigger("Run");
         float movementSpeed = 5f; // Ajusta la velocidad de movimiento según tus necesidades
         float delayBetweenIterations = 0.1f; // Ajusta el tiempo de espera entre iteraciones
 
