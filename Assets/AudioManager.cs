@@ -23,6 +23,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip Zombie2Death;
     public AudioClip Zombie1Spawn;
     public AudioClip Zombie2Spawn;
+    public AudioClip Attack;
 
 
     public void PlaySFX(AudioClip clip)
@@ -50,7 +51,12 @@ public class AudioManager : MonoBehaviour
         yield return new WaitForSeconds(4);
         musicSource.PlayOneShot(MainMenuMusic);
     }
-   
+
+    public void PlayAttack(AudioClip clip)
+    {
+        sfxSource.PlayOneShot(clip);
+    }
+
 
 }
 
