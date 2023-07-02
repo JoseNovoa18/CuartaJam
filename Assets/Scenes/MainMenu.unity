@@ -22284,7 +22284,7 @@ PrefabInstance:
         type: 3}
       propertyPath: nightAmbience
       value: 
-      objectReference: {fileID: 8300000, guid: 76a43992eee3b1f489fbf25af419346d, type: 3}
+      objectReference: {fileID: 8300000, guid: 13e12f97152531e4180d535cb3a5a0fd, type: 3}
     - target: {fileID: 3178098056528896175, guid: e75922fa728ead24a91125208cccb6cb,
         type: 3}
       propertyPath: backgroundMusic

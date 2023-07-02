@@ -13,6 +13,8 @@ public class Health : MonoBehaviour
     public TextMeshProUGUI brainsText;
     public int damage = 3;
 
+    public event Action<float> OnHealthPctChanged = delegate { };
+
     private CountBrains countBrains; // Referencia a la instancia de CountBrains
     private AudioManager audioManager;
 
@@ -31,12 +33,14 @@ public class Health : MonoBehaviour
 
     public void ReduceHealth(int amount, GameObject objectDestroy)
     {
-        maxHealth -= amount;
+        currentHealth -= amount;
+        float currentHealthPct = (float)currentHealth / (float)maxHealth;
+        OnHealthPctChanged(currentHealthPct);
 
-        Debug.Log("maxHealth " + maxHealth);
+        Debug.Log("maxHealth " + currentHealth);
 
         // Check if the object has lost all its life
-        if (maxHealth <= 0)
+        if (currentHealth <= 0)
         {
             if(objectDestroy != null && objectDestroy.GetComponent<Enemy>() is Enemy)
 {
