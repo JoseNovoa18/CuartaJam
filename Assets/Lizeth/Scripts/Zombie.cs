@@ -39,7 +39,7 @@ public class Zombie : Character
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime); 
             distance = Vector3.Distance(transform.position, target.transform.position);        
             yield return null; // Permitir que el motor de juego actualice la posición del objeto en cada iteración
-            _animator.SetTrigger("Attack");
+            //_animator.SetTrigger("Attack");
             audioManager.PlayAttack(audioManager.Attack);
 
         }
@@ -79,7 +79,7 @@ public class Zombie : Character
 
         while (Vector3.Distance(transform.position, initialPosition) > 0.01f)
         {
-            _animator.SetTrigger("RunBack");
+           // _animator.SetTrigger("RunBack");
             transform.position = Vector3.MoveTowards(transform.position, initialPosition, movementSpeed * Time.deltaTime);
             yield return new WaitForSeconds(delayBetweenIterations);
         }
