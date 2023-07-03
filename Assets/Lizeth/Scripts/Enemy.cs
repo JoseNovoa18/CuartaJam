@@ -58,7 +58,6 @@ public class Enemy : Character
 
         // Reduce the life of the target object
         Health lifeController = target.GetComponent<Health>();
-        Debug.Log("lifeController: " + lifeController);
         if (lifeController != null)
         {
             // TODO ANIMACION ATACAR

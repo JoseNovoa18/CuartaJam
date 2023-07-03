@@ -21,7 +21,7 @@ public class CharacterManager : MonoBehaviour
         Instance = this;
     }
 
-    public void AddCharacter<T>() where T : MonoBehaviour
+    /*public void AddCharacter<T>() where T : MonoBehaviour
     {
         T[] characters = FindObjectsOfType<T>(); // Obtener todos los objetos del tipo especificado en la escena
 
@@ -42,7 +42,30 @@ public class CharacterManager : MonoBehaviour
                 }
             }
         }
+    }*/
+
+    public void AddCharacter<T>(string zombie, string zombieWorker, string enemy) where T : MonoBehaviour
+    {
+        GameObject[] characters = null;
+
+        if (typeof(T) == typeof(Enemy))
+        {
+            characters = GameObject.FindGameObjectsWithTag(enemy);
+            enemiesObjects = characters;
+        }
+        else if (typeof(T) == typeof(Zombie) || typeof(T) == typeof(ZombieWorker))
+        {
+            characters = GameObject.FindGameObjectsWithTag(zombie);
+            List<GameObject> tempList = new List<GameObject>(characters);
+
+            // También agregar los personajes ZombieWorker
+            GameObject[] zombieWorkers = GameObject.FindGameObjectsWithTag(zombieWorker);
+            tempList.AddRange(zombieWorkers);
+
+            zombiesObjects = tempList.ToArray();
+        }
     }
+
 
 
     public void RemoveCharacter<T>(GameObject destroyedObject) where T : MonoBehaviour

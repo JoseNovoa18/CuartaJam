@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - Zombie
   - Audio
+  - ZombieWorker
+  - Enemy2
   layers:
   - Default
   - TransparentFX

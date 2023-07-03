@@ -706,7 +706,7 @@ GameObject:
   - component: {fileID: -7973944410894454854}
   m_Layer: 0
   m_Name: Worker
-  m_TagString: Untagged
+  m_TagString: ZombieWorker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -792,6 +792,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 432109081154705953, guid: af97d474efc7a0d46a2d6a551c92581a,
     type: 3}
+  enemiesObjects: []
   shootForce: 10
 --- !u!114 &-7593242158881604265
 MonoBehaviour:
@@ -819,6 +820,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 20
   brainsText: {fileID: 0}
+  damage: 1
 --- !u!1 &6799983574487067012
 GameObject:
   m_ObjectHideFlags: 0

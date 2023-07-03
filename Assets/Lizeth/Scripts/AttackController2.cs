@@ -10,9 +10,17 @@ public class AttackController2 : MonoBehaviour
     public GameObject[] zombiesObjects; // Array of enemies
     public GameObject win;
     public GameObject lost;
+
+    public Transform destinationPoint; // Punto de destino después de ganar la batalla
+    public float movementSpeed = 2f; // Velocidad de movimiento de los zombies
+
     private bool attackZombieObject = true;
     private bool isGameStartet = false;
     private Coroutine attackCoroutine;
+    private bool attacking = false;
+
+    private string zombie, zombieWorker, enemy;
+    private int round = 1;
 
     private bool shouldContinue = true; // Bandera para controlar el bucle
 
@@ -20,20 +28,26 @@ public class AttackController2 : MonoBehaviour
 
     public void OnButtonClick()
     {
-        StartGame();
+        StartGame("Zombie", "ZombieWorker", "Enemy", 1);
     }
 
     private void Update()
     {
         if (isGameStartet)
         {
+            Debug.Log("hi");
             SelectCharacters.OnCharacterSpawned += HandleCharacterSpawned;
 
             if (zombiesObjects.Length > 0 && enemiesObjects.Length < 1) {
-                if (win != null)
+                if (round == 1)
+                {
+                    StartCoroutine(MoveZombiesToDestination());
+                    //win.SetActive(true);
+                }
+                else
                 {
                     win.SetActive(true);
-                }
+                }        
             }
 
             if (enemiesObjects.Length > 0 && zombiesObjects.Length < 1)
@@ -43,7 +57,39 @@ public class AttackController2 : MonoBehaviour
                     lost.SetActive(true);
                 }
             }
+
+            if (!attacking && enemiesObjects.Length > 0 && zombiesObjects.Length > 0 )
+            {
+                enemiesObjects = CharacterManager.Instance.GetEnemies();
+                zombiesObjects = CharacterManager.Instance.GetZombies();
+
+                StartCoroutine(PerformAttacks());
+            }
+            
         }
+    }
+
+    private IEnumerator MoveZombiesToDestination()
+    {
+        // Obtener la posición de destino
+        Vector3 destination = destinationPoint.position;
+
+        while (Vector3.Distance(zombiesObjects[0].transform.position, destination) > 0.1f)
+        {
+            // Mover cada zombie hacia la posición de destino
+            foreach (var zombieObject in zombiesObjects)
+            {
+                if (zombieObject != null)
+                {
+                    zombieObject.transform.position = Vector3.MoveTowards(zombieObject.transform.position, destination, movementSpeed * Time.deltaTime);
+                }
+            }
+
+            yield return null; // Esperar al siguiente frame
+        }
+
+        // Después de llegar al destino, iniciar la pelea con el siguiente grupo de enemigos
+        StartGame("Zombie", "ZombieWorker", "Enemy2", 2);
     }
 
     private void StopAttacks()
@@ -56,12 +102,12 @@ public class AttackController2 : MonoBehaviour
 
     private void HandleCharacterSpawned(GameObject newCharacter)
     {
-        CharacterManager.Instance.AddCharacter<Enemy>();
-        CharacterManager.Instance.AddCharacter<Zombie>();
-        CharacterManager.Instance.AddCharacter<ZombieWorker>();
+        CharacterManager.Instance.AddCharacter<Enemy>(this.zombie, this.zombieWorker, this.enemy);
+        CharacterManager.Instance.AddCharacter<Zombie>(this.zombie, this.zombieWorker, this.enemy);
+        CharacterManager.Instance.AddCharacter<ZombieWorker>(this.zombie, this.zombieWorker, this.enemy);
 
         StartCoroutine(UpdateCharacterLists());
-        StartCoroutine(StartAttacksAfterDelay());
+        //StartCoroutine(StartAttacksAfterDelay());
     }
 
     private IEnumerator UpdateCharacterLists()
@@ -70,15 +116,15 @@ public class AttackController2 : MonoBehaviour
 
         enemiesObjects = CharacterManager.Instance.GetEnemies();
         zombiesObjects = CharacterManager.Instance.GetZombies();
-        shouldContinue = true;
-        StartCoroutine(WaitAndRestartAttacks());
+        //shouldContinue = true;
+        //StartCoroutine(WaitAndRestartAttacks());
     }
 
-    private IEnumerator StartAttacksAfterDelay()
+    /*private IEnumerator StartAttacksAfterDelay()
     {
         yield return new WaitForSeconds(80f); // Esperar dos segundos antes de comenzar los ataques
-        attackCoroutine = StartCoroutine(PerformAttacks());
-    }
+        //attackCoroutine = StartCoroutine(PerformAttacks());
+    }*/
 
     private void HandleObjectDestroyed(GameObject destroyedObject)
     {
@@ -89,14 +135,17 @@ public class AttackController2 : MonoBehaviour
         StartCoroutine(UpdateCharacterLists());
     }
 
-    private void StartGame()
+    private void StartGame(string zombie, string zombieWorker, string enemy, int round)
     {
         isGameStartet = true;
+        this.zombie = zombie;
+        this.zombieWorker = zombieWorker;
+        this.enemy = enemy;
 
         CharacterManager characterManager = CharacterManager.Instance;
-        characterManager.AddCharacter<Enemy>();
-        characterManager.AddCharacter<Zombie>();
-        characterManager.AddCharacter<ZombieWorker>();
+        characterManager.AddCharacter<Enemy>(this.zombie, this.zombieWorker, this.enemy);
+        characterManager.AddCharacter<Zombie>(this.zombie, this.zombieWorker, this.enemy);
+        characterManager.AddCharacter<ZombieWorker>(this.zombie, this.zombieWorker, this.enemy);
 
         // Obtener los objetos de los enemigos y zombies
         enemiesObjects = CharacterManager.Instance.GetEnemies();
@@ -134,19 +183,58 @@ public class AttackController2 : MonoBehaviour
             }
         }
 
-        StartCoroutine(PerformAttacks());
+        if (round == 2)
+        {
+            this.round = 2;
+        }
+
+
+        //StartCoroutine(PerformAttacks());
     }
 
-    private IEnumerator WaitAndRestartAttacks()
+    /*private IEnumerator WaitAndRestartAttacks()
     {
         yield return new WaitForSeconds(80f); // Esperar dos segundos
         StopAttacks();
-        attackCoroutine = StartCoroutine(PerformAttacks());
-    }
+        //attackCoroutine = StartCoroutine(PerformAttacks());
+    }*/
 
     private IEnumerator PerformAttacks()
     {
-        while (shouldContinue && zombiesObjects.Length > 0 && enemiesObjects.Length > 0)
+        attacking = true;
+        int zombiesIndex = Random.Range(0, zombiesObjects.Length);
+        GameObject zombieObject = zombiesObjects[zombiesIndex];
+
+        int enemiesIndex = Random.Range(0, enemiesObjects.Length);
+        GameObject enemyObject = enemiesObjects[enemiesIndex];
+
+        // Acceder a los componentes de los personajes
+        Character zombieCharacter = zombieObject.GetComponent<Character>();
+        Character enemyCharacter = enemyObject.GetComponent<Character>();
+
+        if (attackZombieObject)
+        {
+            // Realizar el ataque
+            do
+            {
+                zombiesIndex = Random.Range(0, zombiesObjects.Length);
+                zombieObject = zombiesObjects[zombiesIndex];
+                zombieCharacter = zombieObject.GetComponent<Character>();
+            } while (zombieObject.name.Contains("Worker") && zombiesObjects.Length > 1);
+            zombieCharacter.Attack(enemyObject);
+            attackZombieObject = false;
+        }
+        else
+        {
+            // Realizar el ataque
+            enemyCharacter.Attack(zombieObject);
+            attackZombieObject = true;
+        }
+
+        yield return new WaitForSeconds(5f); // Esperar antes de continuar con el próximo ataque
+        attacking = false;
+
+        /*while (shouldContinue && zombiesObjects.Length > 0 && enemiesObjects.Length > 0)
         {
             int zombiesIndex = Random.Range(0, zombiesObjects.Length);
             GameObject zombieObject = zombiesObjects[zombiesIndex];
@@ -189,14 +277,13 @@ public class AttackController2 : MonoBehaviour
             }
 
             yield return new WaitForSeconds(5f); // Esperar antes de continuar con el próximo ataque
-        }
+        }*/
 
     }
 
     public void ResetSceneFromMainMenu()
     {
         // Reinicia la escena actual
-        Debug.Log("Entro a reiniciar");
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
     }

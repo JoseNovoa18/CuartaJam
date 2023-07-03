@@ -6,7 +6,7 @@ using UnityEngine;
 public class Shooter : MonoBehaviour
 {
     public GameObject projectilePrefab; // Prefab of the projectile to shoot
-    private GameObject[] enemiesObjects; // Array of zombies
+    public GameObject[] enemiesObjects; // Array of zombies
 
 
     public float shootForce = 10f; // Force with which the projectile is shot

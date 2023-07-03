@@ -60,12 +60,10 @@ public class SelectCharacters : MonoBehaviour
             IsThereCharacters();
 
             // Disparar el evento para notificar la adici�n del nuevo personaje
-            /*
             if (OnCharacterSpawned != null)
             {
                 OnCharacterSpawned.Invoke(newCharacter);
             }
-            */
         }
     }
 

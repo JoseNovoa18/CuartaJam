@@ -37,8 +37,6 @@ public class Health : MonoBehaviour
         float currentHealthPct = (float)currentHealth / (float)maxHealth;
         OnHealthPctChanged(currentHealthPct);
 
-        Debug.Log("maxHealth " + currentHealth);
-
         // Check if the object has lost all its life
         if (currentHealth <= 0)
         {
@@ -87,6 +85,11 @@ public class Health : MonoBehaviour
 
         // Verificar si los nombres de los objetos contienen las palabras clave
         if (thisObject.CompareTag("Enemy") && otherObject.name.Contains("Brick"))
+        {
+            ReduceHealth(damage, thisObject);
+        }
+
+        if (thisObject.CompareTag("Enemy2") && otherObject.name.Contains("Brick"))
         {
             ReduceHealth(damage, thisObject);
         }
