@@ -31,18 +31,19 @@ public class Zombie : Character
         float distance = Vector3.Distance(transform.position, target.transform.position);
         float movementSpeed = 6f; // Ajusta la velocidad de movimiento según tus necesidades
 
-
+        _animator.SetTrigger("Run");
         while (distance > 1f)
         {
             // TODO ANIMACION CORRER
-            _animator.SetTrigger("Run");
+            
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime); 
             distance = Vector3.Distance(transform.position, target.transform.position);        
             yield return null; // Permitir que el motor de juego actualice la posición del objeto en cada iteración
-            _animator.SetTrigger("Attack");
+            
             audioManager.PlayAttack(audioManager.Attack);
 
         }
+        _animator.SetTrigger("Attack");
 
         yield return new WaitForSeconds(0.5f);
         yield return StartCoroutine(Health(target, initialPosition));
@@ -77,9 +78,10 @@ public class Zombie : Character
         float delayBetweenIterations = 0.1f; // Ajusta el tiempo de espera entre iteraciones
         yield return new WaitForSeconds(0.2f);
 
+        _animator.SetTrigger("RunBack");
         while (Vector3.Distance(transform.position, initialPosition) > 0.01f)
         {
-            _animator.SetTrigger("RunBack");
+           
             transform.position = Vector3.MoveTowards(transform.position, initialPosition, movementSpeed * Time.deltaTime);
             yield return new WaitForSeconds(delayBetweenIterations);
         }
