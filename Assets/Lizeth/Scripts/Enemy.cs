@@ -62,9 +62,7 @@ public class Enemy : Character
         {
             // TODO ANIMACION ATACAR
             //animator.SetTrigger("");
-            
-
-          
+             
             lifeController.ReduceHealth(10, target); // Adjust the amount of life to reduce according to your needs
         }
 

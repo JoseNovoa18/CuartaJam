@@ -11,7 +11,7 @@ public class Health : MonoBehaviour
     public event Action<GameObject> OnObjectDestroyed;
     public event Action<GameObject> OnCollisionDetected;
     public TextMeshProUGUI brainsText;
-    public int damage = 3;
+    public int damage = 1;
 
     public event Action<float> OnHealthPctChanged = delegate { };
 
@@ -86,10 +86,16 @@ public class Health : MonoBehaviour
         // Verificar si los nombres de los objetos contienen las palabras clave
         if (thisObject.CompareTag("Enemy") && otherObject.name.Contains("Brick"))
         {
-            ReduceHealth(damage, thisObject);
+            Debug.Log("dano " + damage);
+            ReduceHealth(3, thisObject);
         }
 
         if (thisObject.CompareTag("Enemy2") && otherObject.name.Contains("Brick"))
+        {
+            ReduceHealth(damage, thisObject);
+        }
+
+        if (thisObject.CompareTag("Enemy3") && otherObject.name.Contains("Brick"))
         {
             ReduceHealth(damage, thisObject);
         }
