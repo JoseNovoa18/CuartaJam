@@ -61,6 +61,9 @@ public class AttackController2 : MonoBehaviour
                         win.SetActive(true);
                         isGameStartet = false;
                         round = 1;
+                        this.zombie = "Zombie";
+                        this.zombieWorker = "ZombieWorker";
+                        this.enemy = "Enemy";
                         break;
                     default:
                         Console.WriteLine("Opción no reconocida");
@@ -75,6 +78,9 @@ public class AttackController2 : MonoBehaviour
                     lost.SetActive(true);
                     isGameStartet = false;
                     round = 1;
+                    this.zombie = "Zombie";
+                    this.zombieWorker = "ZombieWorker";
+                    this.enemy = "Enemy";
                 }
             }
             if (!attacking && enemiesObjects.Length > 0 && zombiesObjects.Length > 0 && canAttack)
@@ -107,20 +113,6 @@ public class AttackController2 : MonoBehaviour
         Vector3 destination = destinationPoint.position;
 
 
-        /* while (Vector3.Distance(zombiesObjects[0].transform.position, destination) > 0.1f)
-        {
-            // Mover cada zombie hacia la posición de destino
-            foreach (var zombieObject in zombiesObjects)
-            {
-                if (zombieObject != null)
-                {
-                    zombieObject.transform.position = Vector3.MoveTowards(zombieObject.transform.position, destination, movementSpeed * Time.deltaTime);
-                }
-            }
-
-            
-        }
-        */
         yield return new WaitForSeconds(4f); // Esperar al siguiente frame
         moveObjectss.MoveObjects();
         moveZombiesRun.MoveObjects();
