@@ -17,9 +17,9 @@ public class AttackController2 : MonoBehaviour
     public Transform destinationPointRound2; // Punto de destino después de ganar la batalla
     public Transform destinationPointRound3; // Punto de destino después de ganar la batalla
     public float movementSpeed = 2f; // Velocidad de movimiento de los zombies
+    public bool isGameStartet = false;
 
     private bool attackZombieObject = true;
-    private bool isGameStartet = false;
     private Coroutine attackCoroutine;
     private bool attacking = false;
 
@@ -38,7 +38,6 @@ public class AttackController2 : MonoBehaviour
     public void OnButtonClick()
     {
         StartGame("Zombie", "ZombieWorker", "Enemy", 1);
-
     }
 
     private void Update()
@@ -46,6 +45,7 @@ public class AttackController2 : MonoBehaviour
         if (isGameStartet)
         {
             SelectCharacters.OnCharacterSpawned += HandleCharacterSpawned;
+            Debug.Log("entro");
 
             if (zombiesObjects.Length > 0 && enemiesObjects.Length < 1) {
                 StartCoroutine(WaitToAttack());
@@ -59,6 +59,8 @@ public class AttackController2 : MonoBehaviour
                         break;
                     case 3:
                         win.SetActive(true);
+                        isGameStartet = false;
+                        round = 1;
                         break;
                     default:
                         Console.WriteLine("Opción no reconocida");
@@ -71,6 +73,8 @@ public class AttackController2 : MonoBehaviour
                 if (lost != null)
                 {
                     lost.SetActive(true);
+                    isGameStartet = false;
+                    round = 1;
                 }
             }
             if (!attacking && enemiesObjects.Length > 0 && zombiesObjects.Length > 0 && canAttack)
