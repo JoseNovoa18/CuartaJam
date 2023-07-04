@@ -13,9 +13,6 @@ public class Shooter : MonoBehaviour
 
     private void Start()
     {
-        //Enemy[] enemies = FindObjectsOfType<Enemy>(); // Obtener todos los objetos de tipo Zombie en la escena
-
-        //CharacterManager.Instance.AddEnemy();
 
         // Convertir la matriz de zombies a una matriz de GameObjects
         enemiesObjects = CharacterManager.Instance.GetEnemies();
