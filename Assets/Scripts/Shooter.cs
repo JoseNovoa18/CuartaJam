@@ -9,7 +9,9 @@ public class Shooter : MonoBehaviour
     public GameObject[] enemiesObjects; // Array of zombies
     private Animator _animator;
     private AttackController2 attackController;
+    private MoveSpawnAndCamera moveSpawnAndCamera;
     private bool gameStarted;
+    private bool isMoving = false; 
 
 
     public float shootForce = 10f; // Force with which the projectile is shot
@@ -17,6 +19,7 @@ public class Shooter : MonoBehaviour
     private void Start()
     {
         attackController = FindObjectOfType<AttackController2>();
+        moveSpawnAndCamera = FindObjectOfType<MoveSpawnAndCamera>();
         // Convertir la matriz de zombies a una matriz de GameObjects
         enemiesObjects = CharacterManager.Instance.GetEnemies();
 
@@ -27,6 +30,7 @@ public class Shooter : MonoBehaviour
 
     private void Update()
     {
+        isMoving = moveSpawnAndCamera.isMoving;
         gameStarted = attackController.isGameStartet;
     }
 
@@ -35,7 +39,7 @@ public class Shooter : MonoBehaviour
         enemiesObjects = CharacterManager.Instance.GetEnemies();
         
 
-        if (enemiesObjects.Length > 0 && gameStarted)
+        if (enemiesObjects.Length > 0 && gameStarted && !isMoving)
         {
             // Instantiate the projectile from the prefab and place it at the shoot point
             GameObject newProjectile = Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);

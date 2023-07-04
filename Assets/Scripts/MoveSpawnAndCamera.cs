@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoveSpawnAndCamera : MonoBehaviour
 {
     private Vector3 targetPosition;
-    private bool isMoving = false;
+    public bool isMoving = false;
     public float moveSpeed = 5f;
 
     public void MoveObjects()
