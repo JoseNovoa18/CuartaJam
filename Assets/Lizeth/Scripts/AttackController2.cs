@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class AttackController2 : MonoBehaviour
 {
@@ -11,7 +13,8 @@ public class AttackController2 : MonoBehaviour
     public GameObject win;
     public GameObject lost;
 
-    public Transform destinationPoint; // Punto de destino después de ganar la batalla
+    public Transform destinationPointRound2; // Punto de destino después de ganar la batalla
+    public Transform destinationPointRound3; // Punto de destino después de ganar la batalla
     public float movementSpeed = 2f; // Velocidad de movimiento de los zombies
 
     private bool attackZombieObject = true;
@@ -35,19 +38,25 @@ public class AttackController2 : MonoBehaviour
     {
         if (isGameStartet)
         {
-            Debug.Log("hi");
             SelectCharacters.OnCharacterSpawned += HandleCharacterSpawned;
 
             if (zombiesObjects.Length > 0 && enemiesObjects.Length < 1) {
-                if (round == 1)
+
+                switch (round)
                 {
-                    StartCoroutine(MoveZombiesToDestination());
-                    //win.SetActive(true);
+                    case 1:
+                        StartCoroutine(MoveZombiesToDestination(destinationPointRound2, 2));
+                        break;
+                    case 2:
+                        StartCoroutine(MoveZombiesToDestination(destinationPointRound3, 3));
+                        break;
+                    case 3:
+                        win.SetActive(true);
+                        break;
+                    default:
+                        Console.WriteLine("Opción no reconocida");
+                        break;
                 }
-                else
-                {
-                    win.SetActive(true);
-                }        
             }
 
             if (enemiesObjects.Length > 0 && zombiesObjects.Length < 1)
@@ -58,18 +67,18 @@ public class AttackController2 : MonoBehaviour
                 }
             }
 
-            if (!attacking && enemiesObjects.Length > 0 && zombiesObjects.Length > 0 )
+            if (!attacking && enemiesObjects.Length > 0 && zombiesObjects.Length > 0)
             {
                 enemiesObjects = CharacterManager.Instance.GetEnemies();
                 zombiesObjects = CharacterManager.Instance.GetZombies();
 
                 StartCoroutine(PerformAttacks());
             }
-            
+
         }
     }
 
-    private IEnumerator MoveZombiesToDestination()
+    private IEnumerator MoveZombiesToDestination(Transform destinationPoint, int round)
     {
         // Obtener la posición de destino
         Vector3 destination = destinationPoint.position;
@@ -81,24 +90,28 @@ public class AttackController2 : MonoBehaviour
             {
                 if (zombieObject != null)
                 {
-                    zombieObject.transform.position = Vector3.MoveTowards(zombieObject.transform.position, destination, movementSpeed * Time.deltaTime);
+                    // Generar un valor aleatorio para el desplazamiento en el eje X
+                    float randomOffsetX = Random.Range(-2f, 2f);
+                    Vector3 destinationWithOffset = destination + new Vector3(randomOffsetX, 0f, 0f);
+
+                    zombieObject.transform.position = Vector3.MoveTowards(zombieObject.transform.position, destinationWithOffset, movementSpeed * Time.deltaTime);
                 }
             }
 
             yield return null; // Esperar al siguiente frame
         }
 
-        // Después de llegar al destino, iniciar la pelea con el siguiente grupo de enemigos
-        StartGame("Zombie", "ZombieWorker", "Enemy2", 2);
+        if (round  == 2) {
+            StartGame("Zombie", "ZombieWorker", "Enemy2", 2);
+        }
+
+        if (round == 3)
+        {
+            StartGame("Zombie", "ZombieWorker", "Enemy3", 3);
+        }
+
     }
 
-    private void StopAttacks()
-    {
-        if (attackCoroutine != null)
-        {
-            StopCoroutine(attackCoroutine);
-        }
-    }
 
     private void HandleCharacterSpawned(GameObject newCharacter)
     {
@@ -186,6 +199,11 @@ public class AttackController2 : MonoBehaviour
         if (round == 2)
         {
             this.round = 2;
+        }
+
+        if (round == 3)
+        {
+            this.round = 3;
         }
 
 

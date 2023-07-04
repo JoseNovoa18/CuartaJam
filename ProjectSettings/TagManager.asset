@@ -10,6 +10,7 @@ TagManager:
   - Audio
   - ZombieWorker
   - Enemy2
+  - Enemy3
   layers:
   - Default
   - TransparentFX
