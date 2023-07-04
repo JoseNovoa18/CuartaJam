@@ -7,7 +7,6 @@ public class Zombie : Character
     private AudioManager audioManager;
     private Animator _animator;
 
-
     private void Start()
     {
         _animator = GetComponent<Animator>();
