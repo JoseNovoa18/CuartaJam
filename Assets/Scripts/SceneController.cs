@@ -66,18 +66,20 @@ public class SceneController : MonoBehaviour
     {
         CountBrains.Instance.RestoreOriginalBrains(); // Restaurar el valor original de cerebros
         SceneManager.LoadScene("MainMenu");
-
+        
         AttackController2 attackController = FindAnyObjectByType<AttackController2>();
         attackController.ResetSceneFromMainMenu();
+        
     }
 
     public void BackToSelectLevelWithoutSaving()
     {
         CountBrains.Instance.RestoreOriginalBrains(); // Restaurar el valor original de cerebros
         SceneManager.LoadScene("SelectLevels");
-
+        
         AttackController2 attackController = FindAnyObjectByType<AttackController2>();
         attackController.ResetSceneFromMainMenu();
+        
     }
     //Antes
     /*    

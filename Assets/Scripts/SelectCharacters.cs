@@ -32,6 +32,8 @@ public class SelectCharacters : MonoBehaviour
 
     public bool thereIsAtLeastOneCharacter = false;
 
+    public Transform spawnArea;
+
     private void Start()
     {
         originalBrains = CountBrains.Instance.Brainss;
@@ -55,6 +57,7 @@ public class SelectCharacters : MonoBehaviour
             Vector3 randomSpawnPosition = new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-1f, -2f));
             GameObject newCharacter = Instantiate(prefabToSpawn1, reference + randomSpawnPosition, Quaternion.Euler(0f, 180f, 0f));
             spawnedCharacters1.Add(newCharacter);
+            newCharacter.gameObject.transform.parent = spawnArea;
             CountBrains.Instance.Brainss -= characterBrains1;
             UpdateBrainsText();
             IsThereCharacters();
@@ -75,9 +78,15 @@ public class SelectCharacters : MonoBehaviour
             Vector3 randomSpawnPosition = new Vector3(Random.Range(-2f, 2f), 0, Random.Range(1.5f, 1f));
             GameObject newCharacter = Instantiate(prefabToSpawn2, reference + randomSpawnPosition, Quaternion.Euler(0f, 180f, 0f));
             spawnedCharacters2.Add(newCharacter);
+            newCharacter.gameObject.transform.parent = spawnArea;
             CountBrains.Instance.Brainss -= characterBrains2;
             UpdateBrainsText();
             IsThereCharacters();
+            // Disparar el evento para notificar la adici�n del nuevo personaje
+            if (OnCharacterSpawned != null)
+            {
+                OnCharacterSpawned.Invoke(newCharacter);
+            }
         }
     }
 
@@ -89,6 +98,7 @@ public class SelectCharacters : MonoBehaviour
             Vector3 randomSpawnPosition = new Vector3(Random.Range(-2f, 2f), 0, Random.Range(0.5f, -0.5f));
             GameObject newCharacter = Instantiate(prefabToSpawn3, reference + randomSpawnPosition, Quaternion.Euler(0f, 180f, 0f));
             spawnedCharacters3.Add(newCharacter);
+            newCharacter.gameObject.transform.parent = spawnArea;
             CountBrains.Instance.Brainss -= characterBrains3;
             UpdateBrainsText();
             IsThereCharacters();
@@ -103,6 +113,7 @@ public class SelectCharacters : MonoBehaviour
             Vector3 randomSpawnPosition = new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2.5f, -3.5f));
             GameObject newCharacter = Instantiate(prefabToSpawn4, reference + randomSpawnPosition, Quaternion.Euler(0f, 180f, 0f));
             spawnedCharacters4.Add(newCharacter);
+            newCharacter.gameObject.transform.parent = spawnArea;
             CountBrains.Instance.Brainss -= characterBrains4;
             UpdateBrainsText();
             IsThereCharacters();
