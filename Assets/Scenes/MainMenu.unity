@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.31300086, g: 0.29366922, b: 0.51406646, a: 1}
+  m_IndirectSpecularColor: {r: 0.31311646, g: 0.2938182, b: 0.51416075, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -38490,7 +38490,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 948722765}
         m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
-        m_MethodName: SelectLevel
+        m_MethodName: PrototypeFinalLIZETH
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

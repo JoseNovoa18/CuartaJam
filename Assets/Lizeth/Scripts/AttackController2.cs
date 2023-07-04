@@ -28,11 +28,17 @@ public class AttackController2 : MonoBehaviour
 
     private bool shouldContinue = true; // Bandera para controlar el bucle
 
+    public MoveSpawnAndCamera moveObjectss;
+    public MoveSpawnAndCamera moveZombiesRun;
+
     private List<Character> characters = new List<Character>(); // Lista de personajes
+
+    private bool canAttack = true;
 
     public void OnButtonClick()
     {
         StartGame("Zombie", "ZombieWorker", "Enemy", 1);
+
     }
 
     private void Update()
@@ -42,7 +48,7 @@ public class AttackController2 : MonoBehaviour
             SelectCharacters.OnCharacterSpawned += HandleCharacterSpawned;
 
             if (zombiesObjects.Length > 0 && enemiesObjects.Length < 1) {
-
+                StartCoroutine(WaitToAttack());
                 switch (round)
                 {
                     case 1:
@@ -67,25 +73,37 @@ public class AttackController2 : MonoBehaviour
                     lost.SetActive(true);
                 }
             }
-
-            if (!attacking && enemiesObjects.Length > 0 && zombiesObjects.Length > 0)
+            if (!attacking && enemiesObjects.Length > 0 && zombiesObjects.Length > 0 && canAttack)
             {
                 enemiesObjects = CharacterManager.Instance.GetEnemies();
                 zombiesObjects = CharacterManager.Instance.GetZombies();
-
                 StartCoroutine(PerformAttacks());
             }
+
 
         }
     }
 
+    public void RestartController()
+    {
+        round = 1;
+    }
+
+    private IEnumerator WaitToAttack()
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(8f);
+        canAttack = true;
+    }
+
     private IEnumerator MoveZombiesToDestination(Transform destinationPoint, int round)
     {
+
         // Obtener la posición de destino
         Vector3 destination = destinationPoint.position;
 
 
-        while (Vector3.Distance(zombiesObjects[0].transform.position, destination) > 0.1f)
+        /* while (Vector3.Distance(zombiesObjects[0].transform.position, destination) > 0.1f)
         {
             // Mover cada zombie hacia la posición de destino
             foreach (var zombieObject in zombiesObjects)
@@ -96,8 +114,12 @@ public class AttackController2 : MonoBehaviour
                 }
             }
 
-            yield return null; // Esperar al siguiente frame
+            
         }
+        */
+        yield return new WaitForSeconds(4f); // Esperar al siguiente frame
+        moveObjectss.MoveObjects();
+        moveZombiesRun.MoveObjects();
 
         if (round == 2) {
             StartGame("Zombie", "ZombieWorker", "Enemy2", 2);
@@ -107,7 +129,6 @@ public class AttackController2 : MonoBehaviour
         {
             StartGame("Zombie", "ZombieWorker", "Enemy3", 3);
         }
-
     }
 
     private void HandleCharacterSpawned(GameObject newCharacter)
@@ -240,7 +261,6 @@ public class AttackController2 : MonoBehaviour
         attacking = false;
 
     }
-
     public void ResetSceneFromMainMenu()
     {
         // Reinicia la escena actual

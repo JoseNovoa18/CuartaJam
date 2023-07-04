@@ -26,15 +26,15 @@ public class Shooter : MonoBehaviour
     public void Shoot()
     {
         enemiesObjects = CharacterManager.Instance.GetEnemies();
-        _animator.SetTrigger("Attack");
+        
 
         if (enemiesObjects.Length > 0)
         {
             // Instantiate the projectile from the prefab and place it at the shoot point
             GameObject newProjectile = Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
             Rigidbody projectileRigidbody = newProjectile.GetComponent<Rigidbody>();
-
             StartCoroutine(MoveTowardsTarget(projectileRigidbody.transform));
+            _animator.SetTrigger("Attack");
         }
     }
 
