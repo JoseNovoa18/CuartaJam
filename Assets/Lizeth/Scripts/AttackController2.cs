@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -83,7 +84,7 @@ public class AttackController2 : MonoBehaviour
         // Obtener la posición de destino
         Vector3 destination = destinationPoint.position;
 
-        while (Vector3.Distance(zombiesObjects[0].transform.position, destination) > 0.1f)
+       /*while (Vector3.Distance(zombiesObjects[0].transform.position, destination) > 0.1f)
         {
             // Mover cada zombie hacia la posición de destino
             foreach (var zombieObject in zombiesObjects)
@@ -99,9 +100,23 @@ public class AttackController2 : MonoBehaviour
             }
 
             yield return null; // Esperar al siguiente frame
+        }*/
+
+        while (Vector3.Distance(zombiesObjects[0].transform.position, destination) > 0.1f)
+        {
+            // Mover cada zombie hacia la posición de destino
+            foreach (var zombieObject in zombiesObjects)
+            {
+                if (zombieObject != null)
+                {
+                    zombieObject.transform.position = Vector3.MoveTowards(zombieObject.transform.position, destination, movementSpeed * Time.deltaTime);
+                }
+            }
+
+            yield return null; // Esperar al siguiente frame
         }
 
-        if (round  == 2) {
+        if (round == 2) {
             StartGame("Zombie", "ZombieWorker", "Enemy2", 2);
         }
 
@@ -230,16 +245,18 @@ public class AttackController2 : MonoBehaviour
         Character zombieCharacter = zombieObject.GetComponent<Character>();
         Character enemyCharacter = enemyObject.GetComponent<Character>();
 
+        
+
         if (attackZombieObject)
         {
-            // Realizar el ataque
-            do
+            GameObject[] zombies = zombiesObjects.Where(zombie => zombie.GetComponent<Zombie>() != null).ToArray();
+            if (zombies.Length > 0)
             {
-                zombiesIndex = Random.Range(0, zombiesObjects.Length);
-                zombieObject = zombiesObjects[zombiesIndex];
+                zombiesIndex = Random.Range(0, zombies.Length);
+                zombieObject = zombies[zombiesIndex];
                 zombieCharacter = zombieObject.GetComponent<Character>();
-            } while (zombieObject.name.Contains("Worker") && zombiesObjects.Length > 1);
-            zombieCharacter.Attack(enemyObject);
+                zombieCharacter.Attack(enemyObject);
+            }          
             attackZombieObject = false;
         }
         else
