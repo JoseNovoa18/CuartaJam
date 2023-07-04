@@ -86,7 +86,6 @@ public class Health : MonoBehaviour
         // Verificar si los nombres de los objetos contienen las palabras clave
         if (thisObject.CompareTag("Enemy") && otherObject.name.Contains("Brick"))
         {
-            Debug.Log("dano " + damage);
             ReduceHealth(3, thisObject);
         }
 
