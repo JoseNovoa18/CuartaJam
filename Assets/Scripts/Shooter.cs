@@ -7,6 +7,7 @@ public class Shooter : MonoBehaviour
 {
     public GameObject projectilePrefab; // Prefab of the projectile to shoot
     public GameObject[] enemiesObjects; // Array of zombies
+    private Animator _animator;
 
 
     public float shootForce = 10f; // Force with which the projectile is shot
@@ -21,11 +22,14 @@ public class Shooter : MonoBehaviour
         enemiesObjects = CharacterManager.Instance.GetEnemies();
 
         InvokeRepeating("Shoot", 2f, 2f);
+
+        _animator = GetComponent<Animator>();
     }
 
     public void Shoot()
     {
         enemiesObjects = CharacterManager.Instance.GetEnemies();
+        _animator.SetTrigger("Attack");
 
         if (enemiesObjects.Length > 0)
         {
