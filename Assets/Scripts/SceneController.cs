@@ -50,10 +50,25 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene("PracticeLevelPrototypeFinal");
     }
 
+    public void PrototypeFinalLIZETH()
+    {
+        CountBrains.Instance.SaveBrains();
+        SceneManager.LoadScene("PracticeLevelPrototypeLIZETH");
+    }
+
     public void Quit()
     {
         Debug.Log("Salio del juego");
         Application.Quit();
+    }
+
+    public void BackToMainMenuWithoutSaving()
+    {
+        CountBrains.Instance.RestoreOriginalBrains(); // Restaurar el valor original de cerebros
+        SceneManager.LoadScene("MainMenu");
+
+        AttackController2 attackController = FindAnyObjectByType<AttackController2>();
+        attackController.ResetSceneFromMainMenu();
     }
 
     public void BackToSelectLevelWithoutSaving()

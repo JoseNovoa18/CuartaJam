@@ -28,7 +28,10 @@ public class AttackController2 : MonoBehaviour
 
     private bool shouldContinue = true; // Bandera para controlar el bucle
 
+    public MoveSpawnAndCamera moveObjectss;
+
     private List<Character> characters = new List<Character>(); // Lista de personajes
+
 
     public void OnButtonClick()
     {
@@ -97,6 +100,7 @@ public class AttackController2 : MonoBehaviour
             }
 
             yield return null; // Esperar al siguiente frame
+            moveObjectss.MoveObjects();
         }
 
         if (round == 2) {
@@ -107,7 +111,7 @@ public class AttackController2 : MonoBehaviour
         {
             StartGame("Zombie", "ZombieWorker", "Enemy3", 3);
         }
-
+        
     }
 
     private void HandleCharacterSpawned(GameObject newCharacter)
