@@ -12,7 +12,7 @@ public class Health : MonoBehaviour
     public event Action<GameObject> OnCollisionDetected;
     public TextMeshProUGUI brainsText;
     //public int damage = 1;
-    public int damage = 2;
+    private int damage = 2;
 
     public event Action<float> OnHealthPctChanged = delegate { };
 
@@ -89,16 +89,19 @@ public class Health : MonoBehaviour
         {
             //ReduceHealth(3, thisObject);
             ReduceHealth(damage, thisObject);
+            print("El ladrillo hizo " + damage + " de daño al " + thisObject);
         }
 
         if (thisObject.CompareTag("Enemy2") && otherObject.name.Contains("Brick"))
         {
             ReduceHealth(damage, thisObject);
+            print("El ladrillo hizo " + damage + " de daño al " + thisObject);
         }
 
         if (thisObject.CompareTag("Enemy3") && otherObject.name.Contains("Brick"))
         {
             ReduceHealth(damage, thisObject);
+            print("El ladrillo hizo " + damage + " de daño al " + thisObject);
         }
 
         if (thisObject.CompareTag("Enemy") && otherObject.name.Contains("Doctor"))
