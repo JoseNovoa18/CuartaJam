@@ -13,7 +13,7 @@ public class MoveSpawnAndCamera : MonoBehaviour
         if (!isMoving)
         {
             targetPosition = transform.position;
-            targetPosition.z -= 10f;
+            targetPosition.z -= 14.53f;
             isMoving = true;
         }
     }
