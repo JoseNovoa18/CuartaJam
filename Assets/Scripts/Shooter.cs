@@ -23,7 +23,7 @@ public class Shooter : MonoBehaviour
         // Convertir la matriz de zombies a una matriz de GameObjects
         enemiesObjects = CharacterManager.Instance.GetEnemies();
 
-        InvokeRepeating("Shoot", 2f, 2f);
+        InvokeRepeating("Shoot", 4f, 4f);
 
         _animator = GetComponent<Animator>();
     }
