@@ -46,7 +46,6 @@ public class AttackController2 : MonoBehaviour
         if (isGameStartet)
         {
             SelectCharacters.OnCharacterSpawned += HandleCharacterSpawned;
-            Debug.Log("entro");
 
             if (zombiesObjects.Length > 0 && enemiesObjects.Length < 1) {
                 StartCoroutine(WaitToAttack());
@@ -67,6 +66,7 @@ public class AttackController2 : MonoBehaviour
                         this.zombie = "Zombie";
                         this.zombieWorker = "ZombieWorker";
                         this.enemy = "Enemy";
+                        SelectCharacters.OnCharacterSpawned-= HandleCharacterSpawned;
                         break;
                     default:
                         Console.WriteLine("Opción no reconocida");
@@ -126,7 +126,7 @@ public class AttackController2 : MonoBehaviour
             StartGame("Zombie", "ZombieWorker", "Enemy2", 2);
         }
 
-        if (round == 3 && count == 1f)
+        if (round == 3 && count == 1)
         {
             StartGame("Zombie", "ZombieWorker", "Enemy3", 3);
         }
@@ -134,11 +134,12 @@ public class AttackController2 : MonoBehaviour
 
     private void HandleCharacterSpawned(GameObject newCharacter)
     {
+        Debug.Log("entro");
         CharacterManager.Instance.AddCharacter<Enemy>(this.zombie, this.zombieWorker, this.enemy);
         CharacterManager.Instance.AddCharacter<Zombie>(this.zombie, this.zombieWorker, this.enemy);
         CharacterManager.Instance.AddCharacter<ZombieWorker>(this.zombie, this.zombieWorker, this.enemy);
 
-        StartCoroutine(UpdateCharacterLists());
+        StartCoroutine(UpdateCharacterLists()); 
         //StartCoroutine(StartAttacksAfterDelay());
     }
 
@@ -226,41 +227,46 @@ public class AttackController2 : MonoBehaviour
 
     private IEnumerator PerformAttacks()
     {
-        attacking = true;
-        int zombiesIndex = Random.Range(0, zombiesObjects.Length);
-        GameObject zombieObject = zombiesObjects[zombiesIndex];
-
-        int enemiesIndex = Random.Range(0, enemiesObjects.Length);
-        GameObject enemyObject = enemiesObjects[enemiesIndex];
-
-        // Acceder a los componentes de los personajes
-        Character zombieCharacter = zombieObject.GetComponent<Character>();
-        Character enemyCharacter = enemyObject.GetComponent<Character>();
-
-        
-
-        if (attackZombieObject)
+        if (enemiesObjects.Length > 0 && zombiesObjects.Length > 0)
         {
-            GameObject[] zombies = zombiesObjects.Where(zombie => zombie.GetComponent<Zombie>() != null).ToArray();
-            if (zombies.Length > 0)
+            enemiesObjects = CharacterManager.Instance.GetEnemies();
+            zombiesObjects = CharacterManager.Instance.GetZombies();
+
+            attacking = true;
+            int zombiesIndex = Random.Range(0, zombiesObjects.Length);
+            GameObject zombieObject = zombiesObjects[zombiesIndex];
+
+            int enemiesIndex = Random.Range(0, enemiesObjects.Length);
+            GameObject enemyObject = enemiesObjects[enemiesIndex];
+
+            // Acceder a los componentes de los personajes
+            Character zombieCharacter = zombieObject.GetComponent<Character>();
+            Character enemyCharacter = enemyObject.GetComponent<Character>();
+
+
+
+            if (attackZombieObject)
             {
-                zombiesIndex = Random.Range(0, zombies.Length);
-                zombieObject = zombies[zombiesIndex];
-                zombieCharacter = zombieObject.GetComponent<Character>();
-                zombieCharacter.Attack(enemyObject);
-            }          
-            attackZombieObject = false;
-        }
-        else
-        {
-            // Realizar el ataque
-            enemyCharacter.Attack(zombieObject);
-            attackZombieObject = true;
-        }
+                GameObject[] zombies = zombiesObjects.Where(zombie => zombie.GetComponent<Zombie>() != null).ToArray();
+                if (zombies.Length > 0)
+                {
+                    zombiesIndex = Random.Range(0, zombies.Length);
+                    zombieObject = zombies[zombiesIndex];
+                    zombieCharacter = zombieObject.GetComponent<Character>();
+                    zombieCharacter.Attack(enemyObject);
+                }
+                attackZombieObject = false;
+            }
+            else
+            {
+                // Realizar el ataque
+                enemyCharacter.Attack(zombieObject);
+                attackZombieObject = true;
+            }
 
-        yield return new WaitForSeconds(5f); // Esperar antes de continuar con el próximo ataque
-        attacking = false;
-
+            yield return new WaitForSeconds(5f); // Esperar antes de continuar con el próximo ataque
+            attacking = false;
+        }
     }
     public void ResetSceneFromMainMenu()
     {
