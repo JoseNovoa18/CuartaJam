@@ -25,6 +25,7 @@ public class AttackController2 : MonoBehaviour
 
     private string zombie, zombieWorker, enemy;
     private int round = 1;
+    private int count = 0;
 
     private bool shouldContinue = true; // Bandera para controlar el bucle
 
@@ -52,9 +53,11 @@ public class AttackController2 : MonoBehaviour
                 switch (round)
                 {
                     case 1:
+                        count = 0;
                         StartCoroutine(MoveZombiesToDestination(destinationPointRound2, 2));
                         break;
                     case 2:
+                        count = 0;
                         StartCoroutine(MoveZombiesToDestination(destinationPointRound3, 3));
                         break;
                     case 3:
@@ -117,11 +120,13 @@ public class AttackController2 : MonoBehaviour
         moveObjectss.MoveObjects();
         moveZombiesRun.MoveObjects();
 
-        if (round == 2) {
+        count++;
+
+        if (round == 2 && count == 1) {
             StartGame("Zombie", "ZombieWorker", "Enemy2", 2);
         }
 
-        if (round == 3)
+        if (round == 3 && count == 1f)
         {
             StartGame("Zombie", "ZombieWorker", "Enemy3", 3);
         }
@@ -181,7 +186,7 @@ public class AttackController2 : MonoBehaviour
             Enemy randomEnemy = randomEnemyObject.GetComponent<Enemy>();
             if (randomEnemy != null)
             {
-                randomEnemy.hasBrains = 10; 
+                randomEnemy.hasBrains = 20; 
             }
         }
 
