@@ -45,7 +45,7 @@ public class PauseMenu : MonoBehaviour
     public void Restart()
     {
         CountBrains.Instance.RestoreOriginalBrains(); // Restaurar el valor original de cerebros
-        AttackController2 attackController = FindAnyObjectByType<AttackController2>();
+        //AttackController2 attackController = FindAnyObjectByType<AttackController2>();
         //attackController.ResetSceneFromMainMenu();
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
