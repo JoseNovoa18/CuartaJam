@@ -86,5 +86,4 @@ public class Zombie : Character
         }
         _animator.SetTrigger("Idle");
     }
-
 }
