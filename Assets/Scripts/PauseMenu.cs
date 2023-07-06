@@ -47,7 +47,8 @@ public class PauseMenu : MonoBehaviour
         CountBrains.Instance.RestoreOriginalBrains(); // Restaurar el valor original de cerebros
         AttackController2 attackController = FindAnyObjectByType<AttackController2>();
         attackController.ResetSceneFromMainMenu();
-        SceneManager.LoadScene("PracticeLevelPrototypeFinal");
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
     }
 
     public void BackToSelectLevelWithoutSaving()
