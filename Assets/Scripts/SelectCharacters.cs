@@ -186,7 +186,7 @@ public class SelectCharacters : MonoBehaviour
 
     public void IsThereCharacters()
     {
-        if (spawnedCharacters4.Count > 0 || spawnedCharacters3.Count > 0 || spawnedCharacters2.Count > 0 || spawnedCharacters1.Count > 0)
+        if (spawnedCharacters4.Count > 0 || spawnedCharacters2.Count > 0 || spawnedCharacters1.Count > 0)
         {
             thereIsAtLeastOneCharacter = true;
         }
