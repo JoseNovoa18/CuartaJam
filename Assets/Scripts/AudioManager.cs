@@ -24,6 +24,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip Zombie1Spawn;
     public AudioClip Zombie2Spawn;
     public AudioClip Attack;
+    public AudioClip explosion;
 
 
     public void PlaySFX(AudioClip clip)
