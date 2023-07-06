@@ -34,6 +34,8 @@ public class SelectCharacters : MonoBehaviour
 
     public Transform spawnArea;
 
+    private StateGame stateGame;
+
     private void Start()
     {
         originalBrains = CountBrains.Instance.Brainss;
@@ -62,11 +64,13 @@ public class SelectCharacters : MonoBehaviour
             UpdateBrainsText();
             IsThereCharacters();
 
+            stateGame = FindAnyObjectByType<StateGame>();
+            Debug.Log("OnCharacterSpawned " + stateGame.isGameStarted);
             // Disparar el evento para notificar la adici�n del nuevo personaje
-            /*if (OnCharacterSpawned != null)
+            if (OnCharacterSpawned != null)
             {
                 OnCharacterSpawned.Invoke(newCharacter);
-            }*/
+            }
         }
     }
 
@@ -82,11 +86,13 @@ public class SelectCharacters : MonoBehaviour
             CountBrains.Instance.Brainss -= characterBrains2;
             UpdateBrainsText();
             IsThereCharacters();
+
+            stateGame = FindAnyObjectByType<StateGame>();
             // Disparar el evento para notificar la adici�n del nuevo personaje
-            /*if (OnCharacterSpawned != null)
+            if (OnCharacterSpawned != null && stateGame.isGameStarted)
             {
                 OnCharacterSpawned.Invoke(newCharacter);
-            }*/
+            }
         }
     }
 
