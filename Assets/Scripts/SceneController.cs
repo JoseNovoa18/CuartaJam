@@ -58,7 +58,6 @@ public class SceneController : MonoBehaviour
 
     public void Quit()
     {
-        Debug.Log("Salio del juego");
         Application.Quit();
     }
 
@@ -67,8 +66,8 @@ public class SceneController : MonoBehaviour
         CountBrains.Instance.RestoreOriginalBrains(); // Restaurar el valor original de cerebros
         SceneManager.LoadScene("MainMenu");
         
-        AttackController2 attackController = FindAnyObjectByType<AttackController2>();
-        attackController.ResetSceneFromMainMenu();
+        //AttackController2 attackController = FindAnyObjectByType<AttackController2>();
+        //attackController.ResetSceneFromMainMenu();
         
     }
 
@@ -77,39 +76,12 @@ public class SceneController : MonoBehaviour
         CountBrains.Instance.RestoreOriginalBrains(); // Restaurar el valor original de cerebros
         SceneManager.LoadScene("SelectLevels");
         
-        AttackController2 attackController = FindAnyObjectByType<AttackController2>();
-        attackController.ResetSceneFromMainMenu();
+        //AttackController2 attackController = FindAnyObjectByType<AttackController2>();
+        //attackController.ResetSceneFromMainMenu();
         
     }
-    //Antes
-    /*    
-    public void SelectLevel()
-    {
-        SceneManager.LoadScene("PracticeLevelPrototypeFinal");
-    }
 
-    public void Level1()
-    {
-        SceneManager.LoadScene("PracticeLevelPrototype");
-    }
+   
 
-    public void MainMenuScene()
-    {
-        SceneManager.LoadScene("MainMenu");
-    }
-
-
-    public void Quit()
-    {
-        Debug.Log("Salio del juego");
-        Application.Quit();
-    }
-
-    public void BackToSelectLevelWithoutSaving()
-    {
-        CountBrains.Instance.RestoreOriginalBrains(); // Restaurar el valor original de cerebros
-        SceneManager.LoadScene("MainMenu");
-    }
-    */
 
 }
