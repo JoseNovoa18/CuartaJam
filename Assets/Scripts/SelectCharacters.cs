@@ -111,7 +111,7 @@ public class SelectCharacters : MonoBehaviour
         if (CountBrains.Instance.Brainss >= characterBrains4)
         {
             Vector3 reference = gameObjectReference.transform.position;
-            Vector3 randomSpawnPosition = new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2.5f, -3.5f));
+            Vector3 randomSpawnPosition = new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2.5f, -3f));
             GameObject newCharacter = Instantiate(prefabToSpawn4, reference + randomSpawnPosition, Quaternion.Euler(0f, 180f, 0f));
             spawnedCharacters4.Add(newCharacter);
             newCharacter.gameObject.transform.parent = spawnArea;
