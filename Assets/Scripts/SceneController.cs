@@ -32,6 +32,15 @@ public class SceneController : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
+    public void SecondMainMenuScene()
+    {
+        SceneManager.LoadScene("SecondMainMenu");
+    }
+
+    public void Level2()
+    {
+        SceneManager.LoadScene("Level2");
+    }
 
     public void PrototypeFinal()
     {
@@ -50,7 +59,14 @@ public class SceneController : MonoBehaviour
         Debug.Log("Salio del juego");
         Application.Quit();
     }
-
+    public void Restart()
+    {
+        CountBrains.Instance.RestoreOriginalBrains(); // Restaurar el valor original de cerebros
+        AttackController2 attackController = FindAnyObjectByType<AttackController2>();
+        attackController.ResetSceneFromMainMenu();
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
+    }
     public void MainMenuWithoutSaving()
     {
         CountBrains.Instance.RestoreOriginalBrains(); // Restaurar el valor original de cerebros

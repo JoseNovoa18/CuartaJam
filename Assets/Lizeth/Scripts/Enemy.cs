@@ -6,13 +6,13 @@ using TMPro;
 public class Enemy : Character
 {
     public int hasBrains = 0;
-    private Animator animator;
+    private Animator _animatorEnemy;
     private AudioManager audioManager;
 
 
     private void Start()
     {
-        _animator = GetComponent<Animator>();
+        _animatorEnemy = GetComponent<Animator>();
     }
     private void Awake()
     {
@@ -34,12 +34,12 @@ public class Enemy : Character
         while (distance > 1f)
         {
             // TODO ANIMACION CORRER
-            _animator.SetTrigger("Run");
+            _animatorEnemy.SetTrigger("Run");
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);
             distance = Vector3.Distance(transform.position, target.transform.position);
 
             // Realizar el ataque al objetivo (puedes agregar la lógica correspondiente aquí)
-            _animator.SetTrigger("Attack");
+            _animatorEnemy.SetTrigger("Attack");
             audioManager.PlayAttack(audioManager.Attack);
             yield return null;
         }
@@ -71,7 +71,7 @@ public class Enemy : Character
 
     protected override IEnumerator Retreat(Vector3 initialPosition)
     {
-        _animator.SetTrigger("Run");
+        _animatorEnemy.SetTrigger("Run");
         float movementSpeed = 5f; // Ajusta la velocidad de movimiento según tus necesidades
         float delayBetweenIterations = 0.1f; // Ajusta el tiempo de espera entre iteraciones
 
@@ -85,7 +85,7 @@ public class Enemy : Character
 
         yield return null;
 
-        _animator.SetTrigger("Idle");
+        _animatorEnemy.SetTrigger("Idle");
     }
 
     
