@@ -10,6 +10,10 @@ public class ZombieSecretary : MonoBehaviour
 
     private GameObject[] enemies; // Array de enemigos
     public bool isGameInit = false;
+    private Animator _animatorSecretary;
+    private ExplosionEffect explosionEffect;
+
+
 
     private CharacterManager characterManager;
     private StateGame stateGame;
@@ -20,6 +24,9 @@ public class ZombieSecretary : MonoBehaviour
         // Obtener los objetos de los enemigos
         enemies = CharacterManager.Instance.GetEnemies();
         characterManager = FindObjectOfType<CharacterManager>();
+        explosionEffect = FindObjectOfType<ExplosionEffect>();
+        _animatorSecretary = GetComponent<Animator>();
+
     }
 
     private void Update()
@@ -32,6 +39,7 @@ public class ZombieSecretary : MonoBehaviour
         if (enemies.Length > 0 && isGameInit)
         {
             // Mover la secretaria hacia los enemigos
+            _animatorSecretary.SetTrigger("Run");
             transform.position = Vector3.MoveTowards(transform.position, enemies[0].transform.position, movementSpeed * Time.deltaTime);
         }
     }
@@ -62,6 +70,13 @@ public class ZombieSecretary : MonoBehaviour
             if (enemyHealth != null)
             {
                 enemyHealth.ReduceHealth(damage, other.gameObject);
+
+            }
+
+            ExplosionEffect explosionEffect = FindObjectOfType<ExplosionEffect>();
+            if (explosionEffect != null)
+            {
+                explosionEffect.PlayExplosion(transform.position);
             }
 
             // Avisar al CharacterManager que se ha destruido un objeto
@@ -69,6 +84,17 @@ public class ZombieSecretary : MonoBehaviour
 
             // Destruir la secretaria
             Destroy(gameObject);
+
+
         }
+
+       /* IEnumerator DestroySecretary()
+        {
+            yield return new WaitForSeconds(0);
+            Destroy(gameObject);
+        } */
+
     }
+
+
 }
