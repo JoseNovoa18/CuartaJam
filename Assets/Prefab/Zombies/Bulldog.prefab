@@ -608,9 +608,10 @@ GameObject:
   - component: {fileID: 1994728586906429700}
   - component: {fileID: 5888860587359667861}
   - component: {fileID: 5961763219575841705}
+  - component: {fileID: 8575549709553835525}
   m_Layer: 0
   m_Name: Bulldog
-  m_TagString: Untagged
+  m_TagString: Zombie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -665,7 +666,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b5ee84ac29f254c88ac75dddd7e94c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: -50
+  maxHealth: 50
+  brainsText: {fileID: 0}
 --- !u!54 &5888860587359667861
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -695,6 +697,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.06502724, y: 0.098603904, z: 0.026034089}
   m_Center: {x: -0.0014331135, y: 0.050344028, z: -0.000067335255}
+--- !u!114 &8575549709553835525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5391999170863588730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 686f510ddee405c4c9d9761cb9585547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 50
 --- !u!1 &6029260601297712272
 GameObject:
   m_ObjectHideFlags: 0

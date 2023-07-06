@@ -53,7 +53,6 @@ public class SelectCharacters : MonoBehaviour
     {
         if (CountBrains.Instance.Brainss >= characterBrains1)
         {
-            Debug.Log("llego al codigo del man");
             Vector3 reference = gameObjectReference.transform.position;
             Vector3 randomSpawnPosition = new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-1f, -2f));
             GameObject newCharacter = Instantiate(prefabToSpawn1, reference + randomSpawnPosition, Quaternion.Euler(0f, 180f, 0f));
@@ -64,10 +63,10 @@ public class SelectCharacters : MonoBehaviour
             IsThereCharacters();
 
             // Disparar el evento para notificar la adici�n del nuevo personaje
-            if (OnCharacterSpawned != null)
+            /*if (OnCharacterSpawned != null)
             {
                 OnCharacterSpawned.Invoke(newCharacter);
-            }
+            }*/
         }
     }
 
@@ -84,10 +83,10 @@ public class SelectCharacters : MonoBehaviour
             UpdateBrainsText();
             IsThereCharacters();
             // Disparar el evento para notificar la adici�n del nuevo personaje
-            if (OnCharacterSpawned != null)
+            /*if (OnCharacterSpawned != null)
             {
                 OnCharacterSpawned.Invoke(newCharacter);
-            }
+            }*/
         }
     }
 

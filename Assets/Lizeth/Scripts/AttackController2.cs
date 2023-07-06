@@ -268,10 +268,10 @@ public class AttackController2 : MonoBehaviour
             attacking = false;
         }
     }
-    public void ResetSceneFromMainMenu()
+    /*public void ResetSceneFromMainMenu()
     {
         // Reinicia la escena actual
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
-    }
+    }*/
 }
