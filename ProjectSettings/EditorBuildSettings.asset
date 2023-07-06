@@ -9,15 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: ac86f0ea4e2c5f94aa892361bae8aff2
   - enabled: 1
-    path: Assets/Scenes/SelectLevels.unity
-    guid: 63dc8fb425720834f8d2adb3d9c37705
+    path: Assets/Scenes/SecondMainMenu.unity
+    guid: e593ac7765ce3db4c92f4ffc19cae046
   - enabled: 1
     path: Assets/Lizeth/PracticeLevelPrototypeLIZETH.unity
     guid: 96ccc04041d0df146ba08da6da8f2dae
-  - enabled: 0
-    path: Assets/Scenes/Level1.unity
-    guid: 6363cd3aef1bc614da0cb78155e85c16
-  - enabled: 0
-    path: Assets/Scenes/PracticeLevelPrototypeFinal.unity
-    guid: 2fc25758eaa91f549a8d149dfaad8ab9
+  - enabled: 1
+    path: Assets/Lizeth/PracticeLevelPrototypeLIZETH 1.unity
+    guid: 3059fcd5fc698f3488986e4ccfc467dd
   m_configObjects: {}

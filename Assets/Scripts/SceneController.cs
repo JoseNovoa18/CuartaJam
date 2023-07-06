@@ -54,6 +54,18 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene("PracticeLevelPrototypeLIZETH");
     }
 
+    public void PrototypeFinalLIZETH_1()
+    {
+        CountBrains.Instance.SaveBrains();
+        SceneManager.LoadScene("PracticeLevelPrototypeLIZETH 1");
+    }
+
+    public void SecondMainMenuWithoutSaving()
+    {
+        CountBrains.Instance.RestoreOriginalBrains(); // Restaurar el valor original de cerebros
+        SceneManager.LoadScene("SecondMainMenu");
+    }
+
     public void Quit()
     {
         Application.Quit();

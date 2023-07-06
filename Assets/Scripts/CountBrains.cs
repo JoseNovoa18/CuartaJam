@@ -20,8 +20,8 @@ public class CountBrains : MonoBehaviour
         }
     }
 
-    private int brains = 100;
-    private int originalBrains; // Variable para almacenar el valor original de brains
+    [SerializeField]private int brains = 100;
+    [SerializeField]private int originalBrains; // Variable para almacenar el valor original de brains
 
     public int Brainss
     {

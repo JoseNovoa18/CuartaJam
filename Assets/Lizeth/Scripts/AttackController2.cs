@@ -207,7 +207,7 @@ public class AttackController2 : MonoBehaviour
             Enemy randomEnemy = randomEnemyObject.GetComponent<Enemy>();
             if (randomEnemy != null)
             {
-                randomEnemy.hasBrains = 20; 
+                randomEnemy.hasBrains = 80; 
             }
         }
 
