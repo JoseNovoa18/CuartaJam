@@ -7,7 +7,7 @@ public class Shooter : MonoBehaviour
 {
     public GameObject projectilePrefab; // Prefab of the projectile to shoot
     public GameObject[] enemiesObjects; // Array of zombies
-    private Animator _animator;
+    private Animator _animatorShooter;
     private AttackController2 attackController;
     private MoveSpawnAndCamera moveSpawnAndCamera;
     private bool gameStarted;
@@ -25,7 +25,7 @@ public class Shooter : MonoBehaviour
 
         InvokeRepeating("Shoot", 4f, 4f);
 
-        _animator = GetComponent<Animator>();
+        _animatorShooter = GetComponent<Animator>();
     }
 
     private void Update()
@@ -45,7 +45,7 @@ public class Shooter : MonoBehaviour
             GameObject newProjectile = Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
             Rigidbody projectileRigidbody = newProjectile.GetComponent<Rigidbody>();
             StartCoroutine(MoveTowardsTarget(projectileRigidbody.transform));
-            _animator.SetTrigger("Attack");
+            _animatorShooter.SetTrigger("Attack");
         }
     }
 
