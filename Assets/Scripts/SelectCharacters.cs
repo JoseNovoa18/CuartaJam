@@ -34,6 +34,8 @@ public class SelectCharacters : MonoBehaviour
 
     public Transform spawnArea;
 
+    private StateGame stateGame;
+
     private void Start()
     {
         originalBrains = CountBrains.Instance.Brainss;
@@ -62,11 +64,13 @@ public class SelectCharacters : MonoBehaviour
             UpdateBrainsText();
             IsThereCharacters();
 
+            stateGame = FindAnyObjectByType<StateGame>();
+            Debug.Log("OnCharacterSpawned " + stateGame.isGameStarted);
             // Disparar el evento para notificar la adici�n del nuevo personaje
-            /*if (OnCharacterSpawned != null)
+            if (OnCharacterSpawned != null)
             {
                 OnCharacterSpawned.Invoke(newCharacter);
-            }*/
+            }
         }
     }
 
@@ -82,11 +86,14 @@ public class SelectCharacters : MonoBehaviour
             CountBrains.Instance.Brainss -= characterBrains2;
             UpdateBrainsText();
             IsThereCharacters();
+
+            stateGame = FindAnyObjectByType<StateGame>();
+            Debug.Log("OnCharacterSpawned " + stateGame.isGameStarted);
             // Disparar el evento para notificar la adici�n del nuevo personaje
-            /*if (OnCharacterSpawned != null)
+            if (OnCharacterSpawned != null)
             {
                 OnCharacterSpawned.Invoke(newCharacter);
-            }*/
+            }
         }
     }
 
@@ -102,6 +109,9 @@ public class SelectCharacters : MonoBehaviour
             CountBrains.Instance.Brainss -= characterBrains3;
             UpdateBrainsText();
             IsThereCharacters();
+
+           
+
         }
     }
 
@@ -117,6 +127,14 @@ public class SelectCharacters : MonoBehaviour
             CountBrains.Instance.Brainss -= characterBrains4;
             UpdateBrainsText();
             IsThereCharacters();
+
+            stateGame = FindAnyObjectByType<StateGame>();
+            Debug.Log("OnCharacterSpawned " + stateGame.isGameStarted);
+            // Disparar el evento para notificar la adici�n del nuevo personaje
+            if (OnCharacterSpawned != null)
+            {
+                OnCharacterSpawned.Invoke(newCharacter);
+            }
         }
     }
 
@@ -180,7 +198,7 @@ public class SelectCharacters : MonoBehaviour
 
     public void IsThereCharacters()
     {
-        if (spawnedCharacters4.Count > 0 || spawnedCharacters3.Count > 0 || spawnedCharacters2.Count > 0 || spawnedCharacters1.Count > 0)
+        if (spawnedCharacters4.Count > 0 || spawnedCharacters2.Count > 0 || spawnedCharacters1.Count > 0)
         {
             thereIsAtLeastOneCharacter = true;
         }

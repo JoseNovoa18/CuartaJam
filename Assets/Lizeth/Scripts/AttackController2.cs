@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -36,16 +37,33 @@ public class AttackController2 : MonoBehaviour
 
     private bool canAttack = true;
 
+    private StateGame stateGame;
+
+    private void Start()
+    {
+        stateGame = FindAnyObjectByType<StateGame>();
+    }
+
     public void OnButtonClick()
     {
         StartGame("Zombie", "ZombieWorker", "Enemy", 1);
+    }
+
+    private void OnEnable()
+    {
+        SelectCharacters.OnCharacterSpawned += HandleCharacterSpawned;
+    }
+
+    private void OnDisable()
+    {
+        SelectCharacters.OnCharacterSpawned -= HandleCharacterSpawned;
     }
 
     private void Update()
     {
         if (isGameStartet)
         {
-            SelectCharacters.OnCharacterSpawned += HandleCharacterSpawned;
+            
 
             if (zombiesObjects.Length > 0 && enemiesObjects.Length < 1) {
                 StartCoroutine(WaitToAttack());
@@ -66,7 +84,8 @@ public class AttackController2 : MonoBehaviour
                         this.zombie = "Zombie";
                         this.zombieWorker = "ZombieWorker";
                         this.enemy = "Enemy";
-                        SelectCharacters.OnCharacterSpawned-= HandleCharacterSpawned;
+                        //SelectCharacters.OnCharacterSpawned-= HandleCharacterSpawned;
+                        stateGame.isGameStarted = false;
                         break;
                     default:
                         Console.WriteLine("Opción no reconocida");
@@ -84,6 +103,8 @@ public class AttackController2 : MonoBehaviour
                     this.zombie = "Zombie";
                     this.zombieWorker = "ZombieWorker";
                     this.enemy = "Enemy";
+                    //SelectCharacters.OnCharacterSpawned -= HandleCharacterSpawned;
+                    stateGame.isGameStarted = false;
                 }
             }
             if (!attacking && enemiesObjects.Length > 0 && zombiesObjects.Length > 0 && canAttack)
@@ -134,7 +155,6 @@ public class AttackController2 : MonoBehaviour
 
     private void HandleCharacterSpawned(GameObject newCharacter)
     {
-        Debug.Log("entro");
         CharacterManager.Instance.AddCharacter<Enemy>(this.zombie, this.zombieWorker, this.enemy);
         CharacterManager.Instance.AddCharacter<Zombie>(this.zombie, this.zombieWorker, this.enemy);
         CharacterManager.Instance.AddCharacter<ZombieWorker>(this.zombie, this.zombieWorker, this.enemy);
