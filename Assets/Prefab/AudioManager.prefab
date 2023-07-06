@@ -138,6 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3178098056528896174}
   - component: {fileID: 3178098056528896175}
+  - component: {fileID: 9195949563048971794}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Audio
@@ -176,8 +177,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 3178098056334631148}
   sfxSource: {fileID: 3178098057200229528}
-  backgroundMusic: {fileID: 8300000, guid: 1eec0507b3a2500468d3fa3b2b7f98f1, type: 3}
-  nightAmbience: {fileID: 8300000, guid: 8f9a2c885dad379468721d57f4ddcc56, type: 3}
+  MainMenuMusic: {fileID: 8300000, guid: 1eec0507b3a2500468d3fa3b2b7f98f1, type: 3}
+  BattleMusic: {fileID: 8300000, guid: bedddd38a8136fe4b8b841663841ecd3, type: 3}
+  ChooseCharactersMusic: {fileID: 8300000, guid: 14bce7bae06da364288aaca1369fa536,
+    type: 3}
+  nightAmbience: {fileID: 8300000, guid: 13e12f97152531e4180d535cb3a5a0fd, type: 3}
   CowDeath: {fileID: 8300000, guid: 77a50c41a25802c4484d247b2e7214d0, type: 3}
   DogDeath: {fileID: 8300000, guid: bfdcbb77f9caa324ab123637a314f59b, type: 3}
   PigDeath: {fileID: 8300000, guid: dd629ab3dbc82b140967e31e96f5b316, type: 3}
@@ -187,6 +191,20 @@ MonoBehaviour:
   Zombie2Death: {fileID: 8300000, guid: 6bd00c39ad731c242b8ff4205fbd60eb, type: 3}
   Zombie1Spawn: {fileID: 8300000, guid: b64eacfc72c73234a8b553b23c3fe983, type: 3}
   Zombie2Spawn: {fileID: 8300000, guid: 53a6017585a53c4479c921dc3f59b180, type: 3}
+  Attack: {fileID: 8300000, guid: 71609ec263d9f8544a69bd2521194de4, type: 3}
+  explosion: {fileID: 8300000, guid: 272a495ed588d764c95235cf40031a8c, type: 3}
+--- !u!114 &9195949563048971794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3178098056528896160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46f60bf9ae7827a48a402bf59ebdf863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3178098057200229529
 GameObject:
   m_ObjectHideFlags: 0
