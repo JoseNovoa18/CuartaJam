@@ -88,8 +88,9 @@ public class SelectCharacters : MonoBehaviour
             IsThereCharacters();
 
             stateGame = FindAnyObjectByType<StateGame>();
+            Debug.Log("OnCharacterSpawned " + stateGame.isGameStarted);
             // Disparar el evento para notificar la adici�n del nuevo personaje
-            if (OnCharacterSpawned != null && stateGame.isGameStarted)
+            if (OnCharacterSpawned != null)
             {
                 OnCharacterSpawned.Invoke(newCharacter);
             }
@@ -108,6 +109,9 @@ public class SelectCharacters : MonoBehaviour
             CountBrains.Instance.Brainss -= characterBrains3;
             UpdateBrainsText();
             IsThereCharacters();
+
+           
+
         }
     }
 
@@ -123,6 +127,14 @@ public class SelectCharacters : MonoBehaviour
             CountBrains.Instance.Brainss -= characterBrains4;
             UpdateBrainsText();
             IsThereCharacters();
+
+            stateGame = FindAnyObjectByType<StateGame>();
+            Debug.Log("OnCharacterSpawned " + stateGame.isGameStarted);
+            // Disparar el evento para notificar la adici�n del nuevo personaje
+            if (OnCharacterSpawned != null)
+            {
+                OnCharacterSpawned.Invoke(newCharacter);
+            }
         }
     }
 
